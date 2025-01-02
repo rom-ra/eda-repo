@@ -8,7 +8,7 @@
         dest: /tmp/microservice
 
     - name: Build and Push Docker image to registry
-      community.docker.docker_image_push:
+      community.docker.docker_image_tag:
         build:
           path: /tmp/microservice
         name: docker.io/roomdocker20253/eda-repo/eda_img
