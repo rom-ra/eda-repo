@@ -7,7 +7,7 @@
   rules:
     - name: Trigger build and deploy on GitHub commit
       condition: >
-         event.payload.event.events is defined
+         event.payload.events is defined
       actions:
         - debug:
             msg: Event Trigger with empty action
