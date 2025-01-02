@@ -1,0 +1,29 @@
+- name: Trigger Workflow on GitHub Commit
+  hosts: localhost
+  sources:
+    - ansible.eda.webhook:
+        url: /webhook
+        port: 8080
+  rules:
+    - name: Trigger build and deploy on GitHub commit
+      condition: >
+        event['event'] == 'push' and 'repository' in event
+      actions:
+        - ansible.builtin.debug:
+            msg: >
+              "GitHub push event received for repository: {{ event['repository']['full_name'] }}. \
+              Commit message: {{ event['head_commit']['message'] }}"
+
+        - ansible.builtin.set_fact:
+            facts:
+              repository_url: "{{ event['repository']['clone_url'] }}"
+              branch_name: "{{ event['ref'] | regex_replace('refs/heads/', '') }}"
+              commit_message: "{{ event['head_commit']['message'] }}"
+              automation_token: "{{ lookup('env', 'AUTOMATION_TOKEN') }}"
+
+        - run_job_template:
+            template_name: "Build and Deploy Workflow"
+            extra_vars:
+              repo_url: "{{ repository_url }}"
+              branch: "{{ branch_name }}"
+              commit_message: "{{ commit_message }}"
