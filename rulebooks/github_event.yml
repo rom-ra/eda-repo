@@ -2,7 +2,7 @@
   hosts: localhost
   sources:
     - ansible.eda.webhook:
-        url: /webhook
+        url: /trigger
         port: 8080
   rules:
     - name: Trigger build and deploy on GitHub commit
