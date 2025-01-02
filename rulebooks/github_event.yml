@@ -9,9 +9,8 @@
       condition: >
          true
       actions:
-        - ansible.builtin.debug:
-            msg: >
-              "GitHub push event received for repository."
+        - debug:
+            msg: Folder already exists
 
         # - ansible.builtin.set_fact:
         #     facts:
