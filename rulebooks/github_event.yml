@@ -7,10 +7,10 @@
   rules:
     - name: Trigger build and deploy on GitHub commit
       condition: >
-         true
+         event.payload.event.events is defined
       actions:
         - debug:
-            msg: Folder already exists
+            msg: Event Trigger with empty action
 
         # - ansible.builtin.set_fact:
         #     facts:
