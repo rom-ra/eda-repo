@@ -3,7 +3,7 @@
   tasks:
     - name: Clone GitHub repository
       git:
-        repo: "{{ repository_url }}"
+        repo: "{{ repo_url }}"
         dest: /tmp/microservice
 
     - name: Build and Push Docker image to registry
