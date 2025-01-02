@@ -7,7 +7,7 @@
   rules:
     - name: Trigger build and deploy on GitHub commit
       condition: >
-         event is not none
+         event is defined and event is not none
       actions:
         - ansible.builtin.debug:
             msg: >
