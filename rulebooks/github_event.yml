@@ -3,7 +3,7 @@
   sources:
     - ansible.eda.webhook:
         url: /trigger
-        port: 5000
+        port: 8080
   rules:
     - name: Trigger build and deploy on GitHub commit
       condition: >
