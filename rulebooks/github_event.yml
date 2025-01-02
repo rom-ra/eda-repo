@@ -1,5 +1,5 @@
 - name: Trigger Workflow on GitHub Commit
-  hosts: 192.168.1.144
+  hosts: localhost
   sources:
     - ansible.eda.webhook:
         url: /trigger
