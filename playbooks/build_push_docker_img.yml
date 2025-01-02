@@ -1,7 +1,5 @@
 - name: Build and Push Docker Image
   hosts: localhost
-  collections:
-    - community.docker
   gather_facts: false
   tasks:
     - name: Clone GitHub repository
@@ -10,7 +8,7 @@
         dest: /tmp/microservice
 
     - name: Build and Push Docker image to registry
-      docker_image:
+      community.docker.docker_image_push:
         build:
           path: /tmp/microservice
         name: docker.io/roomdocker20253/eda-repo/eda_img
