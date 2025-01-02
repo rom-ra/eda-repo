@@ -10,18 +10,14 @@
          "push" in  event.payload.events
       actions:
         - debug:
-            msg: Event Trigger with empty action
+            msg: Event Trigger with a action
 
-        - ansible.builtin.set_fact:
-            facts:
-              repository_url: "{{ event['repository']['clone_url'] }}"
-              branch_name: "{{ event['ref'] | regex_replace('refs/heads/', '') }}"
-              commit_message: "{{ event['head_commit']['message'] }}"
-              automation_token: "{{ lookup('env', 'AUTOMATION_TOKEN') }}"
-
-        # - run_job_template:
-        #     template_name: "Build and Deploy Workflow"
-        #     extra_vars:
-        #       repo_url: "{{ repository_url }}"
-        #       branch: "{{ branch_name }}"
-        #       commit_message: "{{ commit_message }}"
+        - vars:
+            repository_url: "{{ event.payload.event.repository.clone_url }}"
+            branch_name: "{{ event.payload.event.ref | regex_replace('refs/heads/', '') }}"
+            
+        - run_job_template:
+            template_name: "Build and Push Docker Image"
+            extra_vars:
+              repo_url: "{{ repository_url }}"
+               
