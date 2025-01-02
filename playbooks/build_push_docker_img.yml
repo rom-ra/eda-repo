@@ -1,0 +1,16 @@
+- name: Build and Push Docker Image
+  hosts: localhost
+  tasks:
+    - name: Clone GitHub repository
+      git:
+        repo: "{{ repository_url }}"
+        dest: /tmp/microservice
+
+    - name: Build and Push Docker image to registry
+      community.docker.docker_image:
+        build:
+          path: /tmp/microservice
+        name: docker.io/roomdocker20253/eda-repo/eda_img
+        tag: latest
+        push: yes
+        source: build
