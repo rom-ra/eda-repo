@@ -11,13 +11,11 @@
       actions:
         - debug:
             msg: Event Trigger with a action
-
-        - vars:
-            repository_url: "{{ event.payload.event.repository.clone_url }}"
-            branch_name: "{{ event.payload.event.ref | regex_replace('refs/heads/', '') }}"
             
         - run_job_template:
-            template_name: "Build and Push Docker Image"
-            extra_vars:
-              repo_url: "{{ repository_url }}"
+            name: "Build and Push Docker Image"
+            organization: Default
+            job_args:
+              extra_vars:
+                repo_url: "{{ event.payload.event.repository.clone_url }}"
                
