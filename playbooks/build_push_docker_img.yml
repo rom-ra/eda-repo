@@ -1,5 +1,6 @@
 - name: Build and Push Docker Image
   hosts: localhost
+  gather_facts: false
   tasks:
     - name: Clone GitHub repository
       git:
