@@ -11,7 +11,7 @@
       actions:
         - ansible.builtin.debug:
             msg: >
-              "GitHub push event received for repository: {{ event.repository.full_name }}."
+              "GitHub push event received for repository."
 
         # - ansible.builtin.set_fact:
         #     facts:
