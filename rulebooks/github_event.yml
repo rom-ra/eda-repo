@@ -7,7 +7,7 @@
   rules:
     - name: Trigger build and deploy on GitHub commit
       condition: >
-        github.event.events == 'push' or github.event.repository is defined
+        event['repository']['full_name'] is defined
       actions:
         - ansible.builtin.debug:
             msg: >
