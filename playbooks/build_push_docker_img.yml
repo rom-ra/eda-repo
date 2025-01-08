@@ -17,6 +17,7 @@
         name: docker.io/roomdocker20253/eda-repo/eda_img  # Image name on Docker Hub
         tag: latest  # Image tag
         push: yes  # Push the image after building it
+        source: build  # Specify the source as 'build' to build the image
         api_version: "auto"
         tls: false
         validate_certs: false
