@@ -6,7 +6,7 @@
   tasks:
     - name: Clone GitHub repository
       git:
-        repo: https://rom-ra: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@github.com/rom-ra/e-commerce-boot.git
+        repo: https://rom-ra:githubroom2024@github.com/rom-ra/e-commerce-boot.git
         dest: /tmp/commerace
         clone: yes
 
