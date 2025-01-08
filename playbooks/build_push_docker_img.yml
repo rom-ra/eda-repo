@@ -4,7 +4,7 @@
   tasks:
     - name: Clone GitHub repository using HTTPS with PAT
       git:
-        repo: git@github.com:rom-ra/e-commerce-boot.git
+        repo: https://github.com/rom-ra/e-commerce-boot.git
         dest: /tmp/commerace
         clone: yes
         version: HEAD
