@@ -1,18 +1,18 @@
 - name: Build and Push Docker Image
   hosts: localhost
   gather_facts: false
-  vars_files:
-    - vault.yml
   tasks:
-    - name: Clone GitHub repository
+    - name: Clone GitHub repository using HTTPS with PAT
       git:
         repo: https://github.com/rom-ra/e-commerce-boot.git
         dest: /tmp/commerace
         clone: yes
         version: HEAD
-        username: "rom-ra"  # Replace with your GitHub username
-        password: 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
-
+      environment:
+        GIT_ASKPASS: "/bin/echo"
+        GIT_TERMINAL_PROMPT: "0"
+        GIT_PASSWORD: "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"  # Your GitHub PAT
+          
     - name: Build and Push Docker image to registry
       community.docker.docker_image:
         build:
