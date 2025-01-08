@@ -4,7 +4,7 @@
   tasks:
     - name: Clone GitHub repository
       git:
-        repo: https://rom-ra:githubroom2024@github.com/rom-ra/e-commerce-boot.git
+        repo: https://rom-ra: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@github.com/rom-ra/e-commerce-boot.git
         dest: /tmp/commerace
 
     - name: Build and Push Docker image to registry
