@@ -1,16 +1,22 @@
-- name: Build and Push Docker Image
+---
+- name: Build and Push Docker image from GitHub repo
   hosts: localhost
   gather_facts: false
   tasks:
-    - name: Clone GitHub repository using HTTPS with PAT
+    - name: Clone the GitHub repository
       git:
         repo: https://github.com/rom-ra/e-commerce-boot.git
         dest: /tmp/commerace
         clone: yes
         version: HEAD
-          
-    - name: Build and Push Docker image to registry
-      community.docker.docker_image_push:
-        name: docker.io/roomdocker20253/eda-repo/eda_img
-        tag: latest
-       
+
+    - name: Build Docker image from cloned repo and push to Docker Hub
+      community.docker.docker_image:
+        build:
+          path: /tmp/commerace/E-commerce-platform/commerace-webapp/microservices/payment_service  # Path to the Dockerfile
+        name: docker.io/roomdocker20253/eda-repo/eda_img  # Image name on Docker Hub
+        tag: latest  # Image tag
+        push: yes  # Push the image after building it
+        api_version: "auto"
+        tls: false
+        validate_certs: false
