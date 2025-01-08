@@ -11,9 +11,6 @@
           
     - name: Build and Push Docker image to registry
       community.docker.docker_image_push:
-        build:
-          path: /tmp/commerace
         name: docker.io/roomdocker20253/eda-repo/eda_img
         tag: latest
-        push: yes
-        source: build
+       
