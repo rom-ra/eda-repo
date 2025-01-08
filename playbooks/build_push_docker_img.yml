@@ -1,14 +1,16 @@
 - name: Build and Push Docker Image
   hosts: localhost
   gather_facts: false
+  vars_files:
+    - vault.yml
   tasks:
     - name: Clone GitHub repository
       git:
-        repo: https://rom-ra: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@github.com/rom-ra/e-commerce-boot.git
+        repo: https://rom-ra:{{ github_token }}@github.com/rom-ra/e-commerce-boot.git
         dest: /tmp/commerace
 
     - name: Build and Push Docker image to registry
-      community.docker.docker_image_push:
+      community.docker.docker_image:
         build:
           path: /tmp/commerace
         name: docker.io/roomdocker20253/eda-repo/eda_img
