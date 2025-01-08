@@ -5,7 +5,7 @@
     - name: Clone GitHub repository
       git:
         repo: https://rom-ra:githubroom2024@github.com/rom-ra/e-commerce-boot.git
-        dest: /tmp/microservice
+        dest: /tmp/commerace
 
     - name: Build and Push Docker image to registry
       community.docker.docker_image_tag:
