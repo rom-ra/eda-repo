@@ -1,15 +1,16 @@
+---
 - name: Create a VM with custom resources
   hosts: localhost
   gather_facts: false
   vars_files:
-    - vcenter_vars.yml
+    - vcenter_vars.yml  # Include the external vars file
   tasks:
     - name: Create VM in VMware vCenter
       community.vmware.vmware_guest:
-        hostname: '10.1.0.5'
-        username: 'r.raafat@vsphere.local'
-        password: 'P@ssw0rd'
-        validate_certs: false
+        hostname: '{{ lookup("env", "vcenter_c", "host") }}'  # Directly lookup and access the host
+        username: '{{ lookup("env", "vcenter_c", "username") }}'
+        password: '{{ lookup("env", "vcenter_c", "password") }}'
+        validate_certs: "{{ validate_certs }}"
         datacenter: "{{ datacenter.name }}"
         cluster: "{{ datacenter.cluster }}"
         folder: "{{ datacenter.folder }}"
@@ -20,34 +21,7 @@
           num_cpus: "{{ vm.num_cpus }}"
         networks:
           - name: "{{ vm.network.name }}"
-        disk:
-          - size_gb: "{{ vm.disk_size_gb }}"
-            type: "{{ vm.disk_type }}"
-            datastore: "{{ datacenter.datastore }}"
-        wait_for_ip_address: "{{ vm.wait_ip_address }}"
-        state: "{{ vm.state }}"
-- name: Create a VM with custom resources
-  hosts: 192.168.1.141
-  gather_facts: false
-  vars_files:
-    - vcenter_vars.yml
-  tasks:
-    - name: Create VM in VMware vCenter
-      community.vmware.vmware_guest:
-        hostname: '10.1.0.5'
-        username: 'r.raafat@vsphere.local'
-        password: 'P@ssw0rd'
-        validate_certs: false
-        datacenter: "{{ datacenter.name }}"
-        cluster: "{{ datacenter.cluster }}"
-        folder: "{{ datacenter.folder }}"
-        name: "{{ vm.name }}"
-        guest_id: "{{ vm.guest_id }}"
-        hardware:
-          memory_mb: "{{ vm.memory_mb }}"
-          num_cpus: "{{ vm.num_cpus }}"
-        networks:
-          - name: "{{ vm.network.name }}"
+            device_type: "{{ vm.device_type}}"
         disk:
           - size_gb: "{{ vm.disk_size_gb }}"
             type: "{{ vm.disk_type }}"
