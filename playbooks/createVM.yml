@@ -6,13 +6,13 @@
     - vcenter_vars.yml  # Include the external vars file
   tasks:
     - name: Fetch vCenter credentials
-       set_fact:
+       ansible.builtin.set_fact:
          vcenter_credentials: "{{ lookup('credentials', 'vcenter_c') }}"
     - name: Create VM in VMware vCenter
       community.vmware.vmware_guest:
-        hostname: "{{ vcenter_credentials.host }}"  # Assuming 'host' is part of your vCenter credentials.
-        username: "{{ vcenter_credentials.username }}"
-        password: "{{ vcenter_credentials.password }}"
+        hostname: "{{ lookup('credentials', 'vCenter_Credential_Name').host }}"  # Directly lookup and access the host
+        username: "{{ lookup('credentials', 'vCenter_Credential_Name').username }}"  # Directly lookup and access the username
+        password: "{{ lookup('credentials', 'vCenter_Credential_Name').password }}"
         validate_certs: "{{ validate_certs }}"
         datacenter: "{{ datacenter.name }}"
         cluster: "{{ datacenter.cluster }}"
