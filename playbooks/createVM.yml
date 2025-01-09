@@ -21,10 +21,39 @@
           num_cpus: "{{ vm.num_cpus }}"
         networks:
           - name: "{{ vm.network.name }}"
-            device_type: "{{ vm.device_type}}"
+            device_type: "{{ vm.network.device_type }}"
+            type: dhcp
+            netmask: "{{ vm.network.vm_netmask }}"
+            gateway: "{{ vm.network.vm_gateway }}"
+            dns_servers: "{{ vm.network.vm_dns_servers }}"
         disk:
           - size_gb: "{{ vm.disk_size_gb }}"
             type: "{{ vm.disk_type }}"
             datastore: "{{ datacenter.datastore }}"
+        cdrom:
+          controller_type: ide
+          iso_path: "{{ vm.iso_path }}"
+          state: present
+          type: iso
         wait_for_ip_address: "{{ vm.wait_ip_address }}"
         state: "{{ vm.state }}"
+
+ 
+    - name: Install VMware Tools on the VM
+      community.vmware.vmware_vm_shell:
+        hostname: '{{ lookup("env", "vcenter_c", "host") }}'  # Directly lookup and access the host
+        username: '{{ lookup("env", "vcenter_c", "username") }}'
+        password: '{{ lookup("env", "vcenter_c", "password") }}'
+        datacenter: "{{ datacenter.name }}"
+        folder: "{{ datacenter.folder }}"
+        cluster: "{{ datacenter.cluster }}"
+        vm_id: "{{ vm.name }}"
+        vm_username: root
+        vm_password: root
+        vm_shell: "/bin/bash"
+        vm_shell_args:
+          - "-c"
+          - "cd /mnt/cdrom && tar -xzvf VMwareTools*.tar.gz -C /tmp && cd /tmp/vmware-tools-distrib && ./vmware-install.pl -d"
+        wait_for_process: true
+        timeout: 2000
+    
