@@ -1,0 +1,23 @@
+# vars.yml
+vcenter:
+  hostname: "vcenter.example.com"
+  username: "your_vcenter_username"
+  password: "your_vcenter_password"
+
+vm:
+  name: "NewVM"
+  guest_id: "otherGuest"
+  memory_mb: 4096
+  num_cpus: 2
+  disk_size_gb: 40
+  datastore: "Datastore1"
+  network:
+    name: "VM Network"
+    ip: "10.0.0.100"
+    netmask: "255.255.255.0"
+    gateway: "10.0.0.1"
+
+datacenter:
+  name: "Datacenter"
+  cluster: "Non-Prod"
+  folder: "10/Romany"
