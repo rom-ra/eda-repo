@@ -23,7 +23,7 @@
           - name: "{{ vm.network.name }}"
             device_type: "{{ vm.network.device_type }}"
             type: static
-            ip: "{{ vm.vm_ip}}"
+            ip: "{{ vm.network.vm_ip}}"
             netmask: "{{ vm.network.vm_netmask }}"
             gateway: "{{ vm.network.vm_gateway }}"
             dns_servers: "{{ vm.network.vm_dns_servers }}"
