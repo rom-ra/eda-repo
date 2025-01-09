@@ -1,5 +1,5 @@
 - name: Create a VM with custom resources
-  hosts: 192.168.1.141
+  hosts: localhost
   gather_facts: false
   vars_files:
     - vcenter_vars.yml
@@ -7,9 +7,8 @@
     - name: Create VM in VMware vCenter
       community.vmware.vmware_guest:
         hostname: '10.1.0.5'
-        username: '{{ lookup("env", "vcenter_c", "username") }}'
-        password: '{{ lookup("env", "vcenter_c", "password") }}'
-        port: 443
+        username: 'r.raafat@vsphere.local'
+        password: 'P@ssw0rd'
         validate_certs: false
         datacenter: "{{ datacenter.name }}"
         cluster: "{{ datacenter.cluster }}"
