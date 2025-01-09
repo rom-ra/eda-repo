@@ -1,0 +1,23 @@
+vm_list: |
+      {% for vm in vm_details %}
+      - name: "{{ vm.name }}"
+        cpu: {{ loop.index * 2 }}
+        memory: {{ loop.index * 2048 }}
+        disk: {{ loop.index * 40 }}
+        datastore: "{{ vm.datastore }}"
+        network:
+          - name: "VM Network"
+            type: static
+            ip: "{{ vm.ip }}"
+            netmask: "255.255.255.0"
+            gateway: "192.168.1.1"
+            dns_servers:
+              - "8.8.8.8"
+              - "8.8.4.4"
+      {% endfor %}
+
+
+vm_details:
+  - name: "vm1"
+    ip: "192.168.1.101"
+
