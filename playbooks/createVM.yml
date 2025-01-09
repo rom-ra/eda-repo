@@ -22,11 +22,11 @@
         networks:
           - name: "{{ vm.network.name }}"
             device_type: "{{ vm.network.device_type }}"
-            type: static
-            ip: "{{ vm.network.vm_ip}}"
-            netmask: "{{ vm.network.vm_netmask }}"
-            gateway: "{{ vm.network.vm_gateway }}"
-            dns_servers: "{{ vm.network.vm_dns_servers }}"
+            # type: static
+            # ip: "{{ vm.network.vm_ip}}"
+            # netmask: "{{ vm.network.vm_netmask }}"
+            # gateway: "{{ vm.network.vm_gateway }}"
+            # dns_servers: "{{ vm.network.vm_dns_servers }}"
         disk:
           - size_gb: "{{ vm.disk_size_gb }}"
             type: "{{ vm.disk_type }}"
