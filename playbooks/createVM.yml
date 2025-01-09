@@ -22,8 +22,8 @@
         networks:
           - name: "{{ vm.network.name }}"
         disk:
-          size_gb: "{{ vm.disk_size_gb }}"
-          type: "{{ vm.disk_type}}"
-          datastore: "{{ datacenter.datastore }}"
+          - size_gb: "{{ vm.disk_size_gb }}"
+            type: "{{ vm.disk_type }}"
+            datastore: "{{ datacenter.datastore }}"
         wait_for_ip_address: "{{ vm.wait_ip_address }}"
         state: "{{ vm.state }}"
