@@ -31,10 +31,10 @@
             type: "{{ vm.disk_type }}"
             datastore: "{{ datacenter.datastore }}"
         cdrom:
-          controller_type: ide
-          iso_path: "{{ vm.iso_path }}"
-          state: present
-          type: iso
+          - controller_type: ide
+            iso_path: "{{ vm.iso_path }}"
+            state: present
+            type: iso
         wait_for_ip_address: "{{ vm.wait_ip_address }}"
         state: "{{ vm.state }}"
 
