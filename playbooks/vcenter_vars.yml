@@ -12,7 +12,7 @@ vm:
   disk_type: thin
   network:
     name: "VM Network"
-  state: powered_on 
+  state: poweredon
   wait_ip_address: true
 
 datacenter:
