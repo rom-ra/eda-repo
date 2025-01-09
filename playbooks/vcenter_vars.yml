@@ -5,31 +5,8 @@ vcenter:
   password: "P@ssw0rd"
   
 validate_certs: false  
-vm:
-  name: "NewVM"
-  guest_id: "rhel9_64Guest"
-  memory_mb: 4096
-  num_cpus: 2
-  disk_size_gb: 20
-  disk_type: thin
-  network:
-    name: "VM Network"
-    device_type: vmxnet3
-    vm_ip: "192.168.1.100"
-    vm_netmask: "255.255.255.0"
-    vm_gateway: "192.168.1.1"
-    vm_dns_servers:
-      - "192.168.1.20"
-      - "8.8.8.8"
-  state: poweredon
-  wait_ip_address: true
-  cdrom:
-    controller_type: sata
-    iso_path: "[datastore1 (1)] ISO/rhel-9.3-x86_64-dvd.iso"
-  
+
 
 datacenter:
   name: "Datacenter"
   cluster: "Non-Prod"
-  datastore: "datastore-14"
-  folder: "Romany"
