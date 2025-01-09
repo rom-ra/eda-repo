@@ -22,22 +22,22 @@
         networks:
           - name: "{{ vm.network.name }}"
             device_type: "{{ vm.network.device_type }}"
-            # type: static
-            # ip: "{{ vm.network.vm_ip}}"
-            # netmask: "{{ vm.network.vm_netmask }}"
-            # gateway: "{{ vm.network.vm_gateway }}"
-            # dns_servers: "{{ vm.network.vm_dns_servers }}"
+            type: static
+            ip: "{{ vm.network.vm_ip}}"
+            netmask: "{{ vm.network.vm_netmask }}"
+            gateway: "{{ vm.network.vm_gateway }}"
+            dns_servers: "{{ vm.network.vm_dns_servers }}"
         disk:
           - size_gb: "{{ vm.disk_size_gb }}"
             type: "{{ vm.disk_type }}"
             datastore: "{{ datacenter.datastore }}"
-        cdrom:
-          - controller_number: 0
-            unit_number: 0
-            controller_type: sata
-            iso_path: "{{ vm.iso_path }}"
-            state: present
-            type: iso
+        # cdrom:
+        #   - controller_number: 0
+        #     unit_number: 0
+        #     controller_type: sata
+        #     iso_path: "{{ vm.iso_path }}"
+        #     state: present
+        #     type: iso
         wait_for_ip_address: "{{ vm.wait_ip_address }}"
         state: "{{ vm.state }}"
 
