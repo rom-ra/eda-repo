@@ -7,7 +7,7 @@
   tasks:
     - name: Create VM in VMware vCenter
       community.vmware.vmware_guest:
-        hostname: '{{ lookup("env", "vcenter_c", "host") }}'  # Directly lookup and access the host
+        hostname: '10.1.0.5'  # Directly lookup and access the host
         username: '{{ lookup("env", "vcenter_c", "username") }}'
         password: '{{ lookup("env", "vcenter_c", "password") }}'
         validate_certs: "{{ validate_certs }}"
