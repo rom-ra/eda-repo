@@ -7,9 +7,9 @@
   tasks:
     - name: Create VM in VMware vCenter
       community.vmware.vmware_guest:
-        hostname: "{{ lookup('credentials', 'vcenter_c').host }}"  # Directly lookup and access the host
-        username: "{{ lookup('credentials', 'vcenter_c').username }}"  # Directly lookup and access the username
-        password: "{{ lookup('credentials', 'vcenter_c').password }}"
+        hostname: '{{ lookup("credential", "vcenter_c", "host") }}'  # Directly lookup and access the host
+        username: '{{ lookup("credential", "vcenter_c", "username") }}'
+        password: '{{ lookup("credential", "vcenter_c", "password") }}'
         validate_certs: "{{ validate_certs }}"
         datacenter: "{{ datacenter.name }}"
         cluster: "{{ datacenter.cluster }}"
