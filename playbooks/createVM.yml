@@ -7,7 +7,7 @@
   tasks:
     - name: Create VM in VMware vCenter
       community.vmware.vmware_guest:
-        hostname: '10.1.0.5'  # Directly lookup and access the host
+        hostname: "{{ vcenter.hostname }}"
         username: "{{ vcenter.username }}"
         password: "{{ vcenter.password }}"
         validate_certs: "{{ validate_certs }}"
@@ -34,8 +34,8 @@
         cdrom:
             - controller_number: 0
               unit_number: 0
-              controller_type: sata
-              iso_path: "{{ vm.iso_path }}"
+              controller_type: "{{ vm.cdrom.contoller_type }}"
+              iso_path: "{{ vm.cdrom.iso_path }}"
               state: present
               type: iso
         wait_for_ip_address: "{{ vm.wait_ip_address }}"
@@ -44,9 +44,9 @@
  
     - name: Install VMware Tools on the VM
       community.vmware.vmware_vm_shell:
-        hostname: '{{ lookup("env", "vcenter_c", "host") }}'  # Directly lookup and access the host
-        username: '{{ lookup("env", "vcenter_c", "username") }}'
-        password: '{{ lookup("env", "vcenter_c", "password") }}'
+        hostname: "{{ vcenter.hostname }}"
+        username: "{{ vcenter.username }}"
+        password: "{{ vcenter.password }}"
         datacenter: "{{ datacenter.name }}"
         folder: "{{ datacenter.folder }}"
         cluster: "{{ datacenter.cluster }}"
