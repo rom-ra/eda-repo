@@ -16,55 +16,16 @@
         cluster: "{{ datacenter.cluster }}"
         folder: "{{ item.folder }}"
         name: "{{ item.name }}"
+        guest_id: "{{ item.guest_id }}"
         state: "{{ item.state}}"
         wait_for_ip_address: "{{ item.wait_ip_address }}"
         hardware:
-          num_cpus: "{{ item.cpu }}"
-          memory_mb: "{{ item.memory }}"
-        disks:
-          - size_gb: "{{ item.disk }}"
-            datastore: "{{ item.datastore }}"
-        networks: "{{ item.network }}"
+          num_cpus: "{{ item.num_cpus }}"
+          memory_mb: "{{ item.memory_mb }}"
+        networks: "{{ item.networks }}"
+        disks: "{{ item.disks}}"
+        cdrom: "{{ item.cdrom}}"
       loop: "{{ vm_list }}"
-
-
-
-  
-    - name: Create VM in VMware vCenter
-      community.vmware.vmware_guest:
-        hostname: "{{ vcenter.hostname }}"
-        username: "{{ vcenter.username }}"
-        password: "{{ vcenter.password }}"
-        validate_certs: "{{ validate_certs }}"
-        datacenter: "{{ datacenter.name }}"
-        cluster: "{{ datacenter.cluster }}"
-        folder: "{{ datacenter.folder }}"
-        name: "{{ vm.name }}"
-        guest_id: "{{ vm.guest_id }}"
-        hardware:
-          memory_mb: "{{ vm.memory_mb }}"
-          num_cpus: "{{ vm.num_cpus }}"
-        networks:
-          - name: "{{ vm.network.name }}"
-            device_type: "{{ vm.network.device_type }}"
-            type: static
-            ip: "{{ vm.network.vm_ip}}"
-            netmask: "{{ vm.network.vm_netmask }}"
-            gateway: "{{ vm.network.vm_gateway }}"
-            dns_servers: "{{ vm.network.vm_dns_servers }}"
-        disk:
-          - size_gb: "{{ vm.disk_size_gb }}"
-            type: "{{ vm.disk_type }}"
-            datastore: "{{ datacenter.datastore }}"
-        cdrom:
-            - controller_number: 0
-              unit_number: 0
-              controller_type: "{{ vm.cdrom.contoller_type }}"
-              iso_path: "{{ vm.cdrom.iso_path }}"
-              state: present
-              type: iso
-        wait_for_ip_address: "{{ vm.wait_ip_address }}"
-        state: "{{ vm.state }}"
 
  
     - name: Install VMware Tools on the VM
@@ -73,9 +34,9 @@
         username: "{{ vcenter.username }}"
         password: "{{ vcenter.password }}"
         datacenter: "{{ datacenter.name }}"
-        folder: "{{ datacenter.folder }}"
         cluster: "{{ datacenter.cluster }}"
-        vm_id: "{{ vm.name }}"
+        folder: "{{ item.folder }}"
+        vm_id: "{{ item.name }}"
         vm_username: root
         vm_password: root
         vm_shell: "/bin/bash"
@@ -84,4 +45,6 @@
           - "cd /mnt/cdrom && tar -xzvf VMwareTools*.tar.gz -C /tmp && cd /tmp/vmware-tools-distrib && ./vmware-install.pl -d"
         wait_for_process: true
         timeout: 2000
+        loop: "{{ vm_list }}"
+
     
