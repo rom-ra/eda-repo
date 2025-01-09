@@ -1,6 +1,8 @@
 # vars.yml
 vcenter:
   hostname: "10.1.0.5"
+  username: "r.raafat@vsphere.local"
+  password: "P@ssw0rd"
   
 validate_certs: false  
 vm:
