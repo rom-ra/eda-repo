@@ -10,7 +10,6 @@
         hostname: '{{ lookup("env", "vcenter_c", "host") }}'  # Directly lookup and access the host
         username: '{{ lookup("env", "vcenter_c", "username") }}'
         password: '{{ lookup("env", "vcenter_c", "password") }}'
-        port: 80
         validate_certs: "{{ validate_certs }}"
         datacenter: "{{ datacenter.name }}"
         cluster: "{{ datacenter.cluster }}"
