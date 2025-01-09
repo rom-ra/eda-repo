@@ -5,7 +5,7 @@ vcenter:
 validate_certs: false  
 vm:
   name: "NewVM"
-  guest_id: "otherGuest"
+  guest_id: "rhel9_64Guest"
   memory_mb: 4096
   num_cpus: 2
   disk_size_gb: 20
