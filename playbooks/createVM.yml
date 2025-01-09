@@ -3,8 +3,33 @@
   hosts: localhost
   gather_facts: false
   vars_files:
-    - vcenter_vars.yml  # Include the external vars file
+    - vcenter_vars.yml
+    - vm_list.yml
   tasks:
+    - name: Create VMs dynamically
+      community.vmware.vmware_guest:
+        hostname: "{{ vcenter.hostname }}"
+        username: "{{ vcenter.username }}"
+        password: "{{ vcenter.password }}"
+        validate_certs: "{{ validate_certs }}"
+        datacenter: "{{ datacenter.name }}"
+        cluster: "{{ datacenter.cluster }}"
+        folder: "{{ item.folder }}"
+        name: "{{ item.name }}"
+        state: "{{ item.state}}"
+        wait_for_ip_address: "{{ item.wait_ip_address }}"
+        hardware:
+          num_cpus: "{{ item.cpu }}"
+          memory_mb: "{{ item.memory }}"
+        disks:
+          - size_gb: "{{ item.disk }}"
+            datastore: "{{ item.datastore }}"
+        networks: "{{ item.network }}"
+      loop: "{{ vm_list }}"
+
+
+
+  
     - name: Create VM in VMware vCenter
       community.vmware.vmware_guest:
         hostname: "{{ vcenter.hostname }}"
