@@ -21,7 +21,7 @@ vm:
       - "8.8.8.8"
   state: poweredon
   wait_ip_address: true
-  iso_path: "[datastore1] ISO/rhel-9.3-x86_64-dvd.iso
+  iso_path: "[datastore1] ISO/rhel-9.3-x86_64-dvd.iso"
   
 
 datacenter:
