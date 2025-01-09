@@ -24,6 +24,6 @@
         disk:
           size_gb: "{{ vm.disk_size_gb }}"
           type: "{{ vm.disk_type}}"
-          datastore: "{{ vm.datastore }}"
-        wait_for_ip_address: "{{ wait_ip_address }}"
+          datastore: "{{ datacenter.datastore }}"
+        wait_for_ip_address: "{{ vm.wait_ip_address }}"
         state: "{{ vm.state }}"
