@@ -1,0 +1,22 @@
+- name: Create a VM with custom resources
+  community.vmware.vmware_guest:
+    hostname: "{{ vcenter_hostname }}"
+    username: "{{ vcenter_username }}"
+    password: "{{ vcenter_password }}"
+    validate_certs: false
+    datacenter: "Datacenter"
+    cluster: "Non-Prod"  
+    folder: "10/Romany"
+    name: "{{ vm_name }}"
+    guest_id: "{{ vm_guest_id }}"
+    hardware:
+      memory_mb: "{{ memory}}"
+      num_cpus: "{{ cpu }}"
+    networks:
+      - name: "{{ network_name }}"
+    disk:
+      size_gb: 40
+      type: thin
+      datastore: "{{ datastore_name }}"
+    wait_for_ip_address: true  
+    state: powered_on
