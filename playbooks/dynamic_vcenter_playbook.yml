@@ -8,8 +8,10 @@
     - dynamic_tasks.yml
   tasks:
     - name: Execute defined dynamic tasks
-      include_tasks: "{{ task.module }}"
+      include_tasks: "{{ item.module }}"
       vars:
-        args: "{{ task.args }}"
-        loop: "{{ task.loop }}"
-      with_items: "{{ dynamic_tasks }}"
+        args: "{{ item.args }}"
+        loop: "{{ item.loop }}"
+      loop: "{{ dynamic_tasks }}"
+      loop_control:
+        label: "{{ item.name }}"
