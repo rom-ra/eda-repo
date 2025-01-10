@@ -8,7 +8,7 @@
   tasks:
     - name: Create VMs dynamically
       community.vmware.vmware_guest:
-        # hostname: "{{ vcenter.hostname }}"
+        hostname: "{{ vcenter.hostname }}"
         username: "{{ vcenter.username }}"
         password: "{{ vcenter.password }}"
         validate_certs: "{{ validate_certs }}"
