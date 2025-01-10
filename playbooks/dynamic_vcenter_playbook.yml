@@ -7,7 +7,7 @@
     - vm_list.yml
     - dynamic_tasks.yml
   tasks:
-    - name: Execute defined dynamic tasks
+    - name: Execute defined dynamic tasks on VCenter
       include_tasks: "{{ item.module }}"
       vars:
         args: "{{ item.args }}"
