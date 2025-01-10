@@ -1,0 +1,44 @@
+dynamic_tasks:
+  - name: Create VMs dynamically
+    module: community.vmware.vmware_guest
+    args:
+      hostname: "{{ vcenter.hostname }}"
+      username: "{{ vcenter.username }}"
+      password: "{{ vcenter.password }}"
+      validate_certs: "{{ validate_certs }}"
+      datacenter: "{{ datacenter.name }}"
+      cluster: "{{ datacenter.cluster }}"
+      folder: "{{ item.folder }}"
+      name: "{{ item.name }}"
+      guest_id: "{{ item.guest_id }}"
+      state: "{{ item.state }}"
+      wait_for_ip_address: "{{ item.wait_ip_address }}"
+      hardware:
+        num_cpus: "{{ item.num_cpus }}"
+        memory_mb: "{{ item.memory_mb }}"
+      networks: "{{ item.networks }}"
+      disks: "{{ item.disks }}"
+      cdrom: "{{ item.cdrom }}"
+    loop_var: item
+    loop: "{{ vm_list }}"
+
+  - name: Install VMware Tools on the VM
+    module: community.vmware.vmware_vm_shell
+    args:
+      hostname: "{{ vcenter.hostname }}"
+      username: "{{ vcenter.username }}"
+      password: "{{ vcenter.password }}"
+      datacenter: "{{ datacenter.name }}"
+      cluster: "{{ datacenter.cluster }}"
+      folder: "{{ item.folder }}"
+      vm_id: "{{ item.name }}"
+      vm_username: root
+      vm_password: root
+      vm_shell: "/bin/bash"
+      vm_shell_args:
+        - "-c"
+        - "cd /mnt/cdrom && tar -xzvf VMwareTools*.tar.gz -C /tmp && cd /tmp/vmware-tools-distrib && ./vmware-install.pl -d"
+      wait_for_process: true
+      timeout: 2000
+    loop_var: item
+    loop: "{{ vm_list }}"
