@@ -1,1 +1,15 @@
-
+---
+- name: Execute dynamic tasks
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - vcenter_vars.yml
+    - vm_list.yml
+    - dynamic_tasks.yml
+  tasks:
+    - name: Execute defined dynamic tasks
+      include_tasks: "{{ task.module }}"
+      vars:
+        args: "{{ task.args }}"
+        loop: "{{ task.loop }}"
+      with_items: "{{ dynamic_tasks }}"
