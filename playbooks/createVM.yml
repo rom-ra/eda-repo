@@ -32,34 +32,31 @@
     #   loop: "{{ vm_details }}"
     #   register: vm
 
-    - name: Install VMware Tools via SSH
-      hosts: localhost
-      gather_facts: false
-      tasks:
-        - name: Update package repository
-          ansible.builtin.shell: |
-            sudo apt-get update || sudo yum update -y || sudo dnf update -y
-          register: update_result
-          ignore_errors: yes
 
-        - name: Install VMware Tools (open-vm-tools)
-          ansible.builtin.package:
-            name: open-vm-tools
-            state: present
-          when: update_result is not failed
+    - name: Update package repository
+        ansible.builtin.shell: |
+          sudo apt-get update || sudo yum update -y || sudo dnf update -y
+        register: update_result
+        ignore_errors: yes
 
-        - name: Start VMware Tools service
-          ansible.builtin.service:
-            name: vmtoolsd
-            state: started
-            enabled: true
+    - name: Install VMware Tools (open-vm-tools)
+        ansible.builtin.package:
+          name: open-vm-tools
+          state: present
+        when: update_result is not failed
 
-        - name: Verify VMware Tools installation
-          ansible.builtin.shell: |
-            vmtoolsd --version
-          register: tools_version
-        - debug:
-            msg: "VMware Tools installed. Version: {{ tools_version.stdout }}"
+    - name: Start VMware Tools service
+        ansible.builtin.service:
+          name: vmtoolsd
+          state: started
+          enabled: true
+
+    - name: Verify VMware Tools installation
+        ansible.builtin.shell: |
+          vmtoolsd --version
+        register: tools_version
+    - debug:
+        msg: "VMware Tools installed. Version: {{ tools_version.stdout }}"
  
     # - name: Run commands on VM
     #   community.vmware.vmware_vm_shell:
