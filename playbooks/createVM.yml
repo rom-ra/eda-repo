@@ -34,34 +34,46 @@
     #   register: vm
 
       
-    - name: Run commands on VM
-      community.vmware.vmware_vm_shell:
-        hostname: "{{ vcenter.hostname }}"
-        username: "{{ vcenter.username }}"
-        password: "{{ vcenter.password }}"
-        datacenter: "{{ datacenter.name }}"
-        folder: "{{ item.folder }}"
-        validate_certs: "{{ validate_certs }}"
-        vm_id: "{{ item.name }}"
-        vm_username: root
-        vm_password: root
-        vm_shell: "/usr/bin/hostnamectl"
-        vm_shell_args:
-            - "set-hostname new_hostname"
-        wait_for_process: true
-        timeout: 3600  
-      loop: "{{ vm_details }}"
-      register: vm_shell_result
-      ignore_errors: true
-      delegate_to: localhost
+    # - name: Run commands on VM
+    #   community.vmware.vmware_vm_shell:
+    #     hostname: "{{ vcenter.hostname }}"
+    #     username: "{{ vcenter.username }}"
+    #     password: "{{ vcenter.password }}"
+    #     datacenter: "{{ datacenter.name }}"
+    #     folder: "{{ item.folder }}"
+    #     validate_certs: "{{ validate_certs }}"
+    #     vm_id: "{{ item.name }}"
+    #     vm_username: root
+    #     vm_password: root
+    #     vm_shell: "/usr/bin/hostnamectl"
+    #     vm_shell_args:
+    #         - "set-hostname new_hostname"
+    #     wait_for_process: true
+    #     timeout: 3600  
+    #   loop: "{{ vm_details }}"
+    #   register: vm_shell_result
+    #   ignore_errors: true
+    #   delegate_to: localhost
 
-    - name: Display shell execution result if failed
+    # - name: Display shell execution result if failed
+    #   debug:
+    #     msg:
+    #       - "Standard Error: {{ item }}"
+    #   when: item.failed
+    #   loop: "{{ vm_shell_result.results }}"
+
+
+      - name: Change hostname on the remote VM
+        command: hostnamectl set-hostname "{{ new_hostname }}"
+        delegate_to: "{{ item.name }}"
+        loop: "{{ vm_details }}"
+        register: change_hostname_result
+        ignore_errors: true
+
+    - name: Display hostname change result
       debug:
-        msg:
-          - "Standard Error: {{ item }}"
-      when: item.failed
-      loop: "{{ vm_shell_result.results }}"
-        
+        var: change_hostname_result
+      when: change_hostname_result.failed
 
     - name: Gather VMware Tools info
       community.vmware.vmware_guest_tools_info:
