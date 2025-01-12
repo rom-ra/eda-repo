@@ -53,10 +53,12 @@
         timeout: 3600  
       loop: "{{ vm_details }}"
       register: vm_shell_result
+      ignore_errors: true
 
     - name: Display shell execution result
       debug:
         var: vm_shell_result
+        
 
     - name: Gather VMware Tools info
       community.vmware.vmware_guest_tools_info:
