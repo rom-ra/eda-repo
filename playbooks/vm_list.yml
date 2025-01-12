@@ -9,13 +9,7 @@ vm_list: |
         state: "{{ vm.state}}"
         wait_for_ip_address: "{{ vm.wait_for_ip_address}}"
         cdrom: "{{vm.cdrom}}"
-        networks:
-          - name: "{{ vm.networks.name}}"
-            device_type: "{{vm.networks.device_type}}"
-            ip: "{{ vm.networks.ip }}"
-            netmask: "255.255.255.0"
-            gateway: "192.168.1.1"
-            dns_servers: "{{ vm.networks.dns_servers}}"
+        networks: " {{ vm.networks}}"
       {% endfor %}
 
 vm_details:
@@ -29,7 +23,9 @@ vm_details:
     networks:
       - name: "VM Network"
         device_type: vmxnet3
-        ip: "192.168.1.101"
+        ip: "192.168.1.115"
+        netmask: "255.255.255.0"
+        gateway: "192.168.1.1"
         dns_servers:
             - "192.168.1.20"
             - "8.8.8.8"
