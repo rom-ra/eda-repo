@@ -28,7 +28,7 @@
         networks: "{{ item.networks }}"
         disks: "{{ item.disks}}"
         cdrom: "{{ item.cdrom}}"
-      loop: "{{ lookup('file', 'vm_list.yml', wantlist=true) | from_yaml }}"
+      loop: "{{ vm_details }}"
 
  
     # - name: Install VMware Tools on the VM
