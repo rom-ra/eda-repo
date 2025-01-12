@@ -77,7 +77,7 @@
         hostname: "{{ vcenter.hostname }}"
         username: "{{ vcenter.username }}"
         password: "{{ vcenter.password }}"
-         datacenter: "{{ datacenter.name }}"
+        datacenter: "{{ datacenter.name }}"
         cluster: "{{ datacenter.cluster }}"
         validate_certs: "{{ validate_certs }}"
         name: "{{ item.name }}"
