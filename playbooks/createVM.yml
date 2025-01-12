@@ -31,22 +31,51 @@
     #   loop: "{{ vm_details }}"
 
  
-    - name: Install VMware Tools on the VM
-      community.vmware.vmware_vm_shell:
+    # - name: Install VMware Tools on the VM
+    #   community.vmware.vmware_vm_shell:
+    #     hostname: "{{ vcenter.hostname }}"
+    #     username: "{{ vcenter.username }}"
+    #     password: "{{ vcenter.password }}"
+    #     datacenter: "{{ datacenter.name }}"
+    #     cluster: "{{ datacenter.cluster }}"
+    #     folder: "{{ item.folder }}"
+    #     vm_id: "{{ item.name }}"
+    #     vm_username: root
+    #     vm_password: root
+    #     vm_shell: "/bin/bash"
+    #     vm_shell_args:
+    #       - "-c"
+    #       - "cd /mnt/cdrom && tar -xzvf VMwareTools*.tar.gz -C /tmp && cd /tmp/vmware-tools-distrib && ./vmware-install.pl -d"
+    #     wait_for_process: true
+    #     timeout: 2000
+    #   loop: "{{ vm_details }}"
+
+    - name: Gather VMware Tools info
+      community.vmware.vmware_guest_tools_info:
         hostname: "{{ vcenter.hostname }}"
         username: "{{ vcenter.username }}"
         password: "{{ vcenter.password }}"
-        datacenter: "{{ datacenter.name }}"
-        cluster: "{{ datacenter.cluster }}"
-        folder: "{{ item.folder }}"
-        vm_id: "{{ item.name }}"
-        vm_username: root
-        vm_password: root
-        vm_shell: "/bin/bash"
-        vm_shell_args:
-          - "-c"
-          - "cd /mnt/cdrom && tar -xzvf VMwareTools*.tar.gz -C /tmp && cd /tmp/vmware-tools-distrib && ./vmware-install.pl -d"
-        wait_for_process: true
-        timeout: 2000
+        validate_certs: "{{ validate_certs }}"
+        name: "{{ item.name }}"
+      register: vm_tools_info
+      loop: "{{ vm_details }}"
+    
+    - name: Install or upgrade VMware Tools if needed
+      community.vmware.vmware_guest_tools_upgrade:
+        hostname: "{{ vcenter.hostname }}"
+        username: "{{ vcenter.username }}"
+        password: "{{ vcenter.password }}"
+        validate_certs: "{{ validate_certs }}"
+        name: "{{ item.name }}"
+      when: vm_tools_info.results[ansible_loop.index0].vmtools_version is not defined or vm_tools_info.results[ansible_loop.index0].vmtools_version != "latest"
+      loop: "{{ vm_details }}"
+
+    - name: Wait for VMware Tools to become available
+      community.vmware.vmware_guest_tools_wait:
+        hostname: "{{ vcenter.hostname }}"
+        username: "{{ vcenter.username }}"
+        password: "{{ vcenter.password }}"
+        validate_certs: "{{ validate_certs }}"
+        name: "{{ item.name }}"
       loop: "{{ vm_details }}"
 
