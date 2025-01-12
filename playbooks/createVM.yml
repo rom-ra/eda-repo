@@ -64,7 +64,7 @@
 
 
     - name: Change hostname on the remote VM
-      command: hostname
+      command: hostnamectl set-hostname MadeByAnsible
       loop: "{{ vm_details }}"
       register: change_hostname_result
       ignore_errors: false
