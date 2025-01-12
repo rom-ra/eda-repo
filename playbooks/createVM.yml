@@ -57,6 +57,7 @@
         vcenter_hostname: "{{ vcenter.hostname }}"
         vcenter_username: "{{ vcenter.username }}"
         vcenter_password: "{{ vcenter.password }}"
+        upgrade_policy: UPGRADE_AT_POWER_CYCLE
         vm: vm-49279
         # state: connect
 
