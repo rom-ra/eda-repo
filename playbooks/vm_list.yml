@@ -9,7 +9,7 @@ vm_list: |
         state: "{{ vm.state}}"
         wait_for_ip_address: "{{ vm.wait_for_ip_address}}"
         cdrom: "{{vm.cdrom}}"
-        networks: " {{ vm.networks}}"
+        networks: {{ vm.networks | to_nice_yaml(indent=4) }}
       {% endfor %}
 
 vm_details:
