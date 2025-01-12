@@ -21,7 +21,7 @@
         name: "{{ item.name }}"
         guest_id: "{{ item.guest_id }}"
         state: "{{ item.state}}"
-        wait_for_ip_address: "{{ item.wait_ip_address }}"
+        wait_for_ip_address: "{{ item.wait_for_ip_address }}"
         hardware:
           num_cpus: "{{ item.num_cpus }}"
           memory_mb: "{{ item.memory_mb }}"
