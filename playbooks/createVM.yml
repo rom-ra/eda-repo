@@ -51,13 +51,13 @@
     #     timeout: 2000
     #   loop: "{{ vm_details }}"
 
-    - name: Update the vm-tools
-      vmware.vmware_rest.vcenter_vm_tools_installer:
-        vcenter_hostname: "{{ vcenter.hostname }}"
-        vcenter_username: "{{ vcenter.username }}"
-        vcenter_password: "{{ vcenter.password }}"
-        vm: vm-49279
-        state: connect
+    # - name: Update the vm-tools
+    #   vmware.vmware_rest.vcenter_vm_tools_installer:
+    #     vcenter_hostname: "{{ vcenter.hostname }}"
+    #     vcenter_username: "{{ vcenter.username }}"
+    #     vcenter_password: "{{ vcenter.password }}"
+    #     vm: vm-49279
+    #     state: connect
 
     - name: Wait for VMware Tools to become available
       community.vmware.vmware_guest_tools_wait:
@@ -65,7 +65,6 @@
         username: "{{ vcenter.username }}"
         password: "{{ vcenter.password }}"
         datacenter: "{{ datacenter.name }}"
-        cluster: "{{ datacenter.cluster }}"
         validate_certs: "{{ validate_certs }}"
         name: "{{ item.name }}"
       loop: "{{ vm_details }}"
