@@ -45,9 +45,9 @@
         vm_id: "{{ item.name }}"
         vm_username: root
         vm_password: root
-        vm_shell: "/bin/bash"
+        vm_shell: "/usr/bin/hostnamectl"
         vm_shell_args:
-          - "/usr/bin/hostnamectl set-hostname new_hostname > /tmp/$$.txt 2>&1"
+          - "set-hostname new_hostname > /tmp/$$.txt 2>&1"
         wait_for_process: true
         timeout: 2000  
       loop: "{{ vm_details }}"
