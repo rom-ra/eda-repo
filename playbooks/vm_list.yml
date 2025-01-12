@@ -2,7 +2,7 @@ vm_details:
   - name: "MadeByAnsible"
     folder: "Romany"
     template: "rhel9_template"
-    guest_id: "rhel8_64Guest"
+    guest_id: "rhel9_64Guest"
     memory_mb: 4096
     num_cpus: 2
     state: poweredon
