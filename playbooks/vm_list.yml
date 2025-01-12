@@ -5,10 +5,10 @@ vm_list: |
         guest_id: "{{ vm.guest_id}}"
         num_cpus: "{{ vm.num_cpus }}"
         memory_mb: "{{ vm.memory_mb }}"
-        disks: "{{ vm.disks }}"
         state: "{{ vm.state}}"
         wait_for_ip_address: "{{ vm.wait_for_ip_address}}"
-        cdrom: "{{vm.cdrom}}"
+        disks: {{ vm.disks | to_nice_yaml(indent=4) }}
+        cdrom: {{ vm.cdrom | to_nice_yaml(indent=4) }}
         networks: {{ vm.networks | to_nice_yaml(indent=4) }}
       {% endfor %}
 
