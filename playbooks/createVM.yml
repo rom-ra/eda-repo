@@ -44,12 +44,10 @@
         vm_id: "{{ item.name }}"
         vm_username: admin
         vm_password: admin
-        vm_shell: "/usr/bin/bash"
+        vm_shell: "/bin/bash"
         vm_shell_args:
           - "-c"
-          - |
-            hostnamectl set-hostname MadeByAnsible &&
-            systemctl status NetworkManager
+          - "echo 'Hello from Ansible'"
         wait_for_process: true
         timeout: 2000
       loop: "{{ vm_details }}"
