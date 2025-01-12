@@ -18,7 +18,7 @@
         datacenter: "{{ datacenter.name }}"
         cluster: "{{ datacenter.cluster }}"
         folder: "{{ item.folder }}"
-        template: "{{ item.template }}"
+        # template: "{{ item.template }}"
         name: "{{ item.name }}"
         guest_id: "{{ item.guest_id }}"
         state: "{{ item.state}}"
