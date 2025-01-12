@@ -9,56 +9,56 @@
     - name: Debug vm_list
       debug:
         var: vm_list
-    # - name: Create VMs dynamically
-    #   community.vmware.vmware_guest:
-    #     hostname: "{{ vcenter.hostname }}"
-    #     username: "{{ vcenter.username }}"
-    #     password: "{{ vcenter.password }}"
-    #     validate_certs: "{{ validate_certs }}"
-    #     datacenter: "{{ datacenter.name }}"
-    #     cluster: "{{ datacenter.cluster }}"
-    #     folder: "{{ item.folder }}"
-    #     name: "{{ item.name }}"
-    #     guest_id: "{{ item.guest_id }}"
-    #     state: "{{ item.state}}"
-    #     wait_for_ip_address: "{{ item.wait_for_ip_address }}"
-    #     hardware:
-    #       num_cpus: "{{ item.num_cpus }}"
-    #       memory_mb: "{{ item.memory_mb }}"
-    #     networks: "{{ item.networks }}"
-    #     disk: "{{ item.disk}}"
-    #     cdrom: "{{ item.cdrom}}"
-    #   loop: "{{ vm_details }}"
-    #   register: vm
+    - name: Create VMs dynamically
+      community.vmware.vmware_guest:
+        hostname: "{{ vcenter.hostname }}"
+        username: "{{ vcenter.username }}"
+        password: "{{ vcenter.password }}"
+        validate_certs: "{{ validate_certs }}"
+        datacenter: "{{ datacenter.name }}"
+        cluster: "{{ datacenter.cluster }}"
+        folder: "{{ item.folder }}"
+        template: "{{ item.template }}"
+        name: "{{ item.name }}"
+        guest_id: "{{ item.guest_id }}"
+        state: "{{ item.state}}"
+        wait_for_ip_address: "{{ item.wait_for_ip_address }}"
+        hardware:
+          num_cpus: "{{ item.num_cpus }}"
+          memory_mb: "{{ item.memory_mb }}"
+        networks: "{{ item.networks }}"
+        disk: "{{ item.disk}}"
+        cdrom: "{{ item.cdrom}}"
+      loop: "{{ vm_details }}"
+      register: vm
 
  
-    # - name: Install VMware Tools on the VM
-    #   community.vmware.vmware_vm_shell:
-    #     hostname: "{{ vcenter.hostname }}"
-    #     username: "{{ vcenter.username }}"
-    #     password: "{{ vcenter.password }}"
-    #     datacenter: "{{ datacenter.name }}"
-    #     cluster: "{{ datacenter.cluster }}"
-    #     folder: "{{ item.folder }}"
-    #     vm_id: "{{ item.name }}"
-    #     vm_username: root
-    #     vm_password: root
-    #     vm_shell: "/bin/bash"
-    #     vm_shell_args:
-    #       - "-c"
-    #       - "cd /mnt/cdrom && tar -xzvf VMwareTools*.tar.gz -C /tmp && cd /tmp/vmware-tools-distrib && ./vmware-install.pl -d"
-    #     wait_for_process: true
-    #     timeout: 2000
-    #   loop: "{{ vm_details }}"
+    - name: Install VMware Tools on the VM
+      community.vmware.vmware_vm_shell:
+        hostname: "{{ vcenter.hostname }}"
+        username: "{{ vcenter.username }}"
+        password: "{{ vcenter.password }}"
+        datacenter: "{{ datacenter.name }}"
+        cluster: "{{ datacenter.cluster }}"
+        folder: "{{ item.folder }}"
+        vm_id: "{{ item.name }}"
+        vm_username: root
+        vm_password: root
+        vm_shell: "/bin/bash"
+        vm_shell_args:
+          - "systemctl status NetworkManger"
+        wait_for_process: true
+        timeout: 2000
+      loop: "{{ vm_details }}"
 
       
-    - name: Install or update the vm-tools
-      vmware.vmware_rest.vcenter_vm_tools:
-        vcenter_hostname: "{{ vcenter.hostname }}"
-        vcenter_username: "{{ vcenter.username }}"
-        vcenter_password: "{{ vcenter.password }}"
-        upgrade_policy: UPGRADE_AT_POWER_CYCLE
-        vm: vm-49279
+    # - name: Install or update the vm-tools
+    #   vmware.vmware_rest.vcenter_vm_tools:
+    #     vcenter_hostname: "{{ vcenter.hostname }}"
+    #     vcenter_username: "{{ vcenter.username }}"
+    #     vcenter_password: "{{ vcenter.password }}"
+    #     upgrade_policy: UPGRADE_AT_POWER_CYCLE
+    #     vm: vm-49279
         # state: connect
 
 
