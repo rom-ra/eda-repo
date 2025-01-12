@@ -1,6 +1,7 @@
 ---
 - name: Create a VM with custom resources
   hosts: localhost
+  become: true
   gather_facts: false
   vars_files:
     - vcenter_vars.yml
@@ -42,8 +43,13 @@
         cluster: "{{ datacenter.cluster }}"
         folder: "{{ item.folder }}"
         vm_id: "{{ item.name }}"
-        vm_shell: "/usr/bin/hostnamectl"
-        vm_shell_args: "set-hostname new_hostname > /tmp/$$.txt 2>&1"
+        vm_username: admin
+        vm_password: admin
+        vm_shell: "/usr/bin/sudo"
+        vm_shell_args:
+          - "/usr/bin/hostnamectl set-hostname new_hostname > /tmp/$$.txt 2>&1"
+        wait_for_process: true
+        timeout: 2000  
       loop: "{{ vm_details }}"
 
 
