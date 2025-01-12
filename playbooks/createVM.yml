@@ -67,7 +67,7 @@
       command: hostname
       loop: "{{ vm_details }}"
       register: change_hostname_result
-      ignore_errors: true
+      ignore_errors: false
 
     - name: Display hostname change result
       debug:
