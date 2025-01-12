@@ -44,7 +44,7 @@
         vm_id: "{{ item.name }}"
         vm_username: admin
         vm_password: admin
-        vm_shell: "/usr/bin/systemctl"
+        vm_shell: "/usr/bin/"
         vm_shell_args:
           - "-c"
           - |
