@@ -57,7 +57,7 @@
         vcenter_username: "{{ vcenter.username }}"
         vcenter_password: "{{ vcenter.password }}"
         vm: vm-49279
-        state: connect
+        # state: connect
 
     # - name: Wait for VMware Tools to become available
     #   community.vmware.vmware_guest_tools_wait:
