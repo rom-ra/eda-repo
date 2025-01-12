@@ -46,8 +46,10 @@
         vm_password: admin
         vm_shell: "/usr/bin/systemctl"
         vm_shell_args:
-          - "set-hostname MadeByAnsible"
-          - "status NetworkManger"
+          - "-c"
+          - |
+            hostnamectl set-hostname MadeByAnsible &&
+            systemctl status NetworkManager
         wait_for_process: true
         timeout: 2000
       loop: "{{ vm_details }}"
