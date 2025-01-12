@@ -54,6 +54,7 @@
       loop: "{{ vm_details }}"
       register: vm_shell_result
       ignore_errors: true
+      delegate_to: localhost
 
     - name: Display shell execution result if failed
       debug:
