@@ -62,6 +62,6 @@
           username: "{{ vcenter.username }}"
           password: "{{ vcenter.password }}"
           validate_certs: "{{ validate_certs }}"
-          name: "OCP1-Romany"
+          name: "OCP1_Romany"
       register: vm_tools_info
       loop: "{{ vm_details }}"
