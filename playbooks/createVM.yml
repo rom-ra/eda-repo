@@ -29,26 +29,6 @@
         networks: "{{ item.networks }}"
         disk: "{{ item.disk}}"
         cdrom: "{{ item.cdrom}}"
-        customization:
-          script_text: |
-            #!/bin/bash
-            # Install VMware Tools if not already installed
-            if ! dpkg -l | grep -q open-vm-tools; then
-              echo "Installing VMware Tools..."
-              apt-get update -y && apt-get install -y open-vm-tools
-            else
-              echo "VMware Tools already installed"
-            fi
-
-            # Restart VMware Tools service
-            systemctl restart open-vm-tools
-
-            # Verify VMware Tools is running
-            if systemctl is-active --quiet open-vm-tools; then
-              echo "VMware Tools is running"
-            else
-              echo "VMware Tools service failed to start"
-            fi
       loop: "{{ vm_details }}"
       register: vm
 
@@ -72,14 +52,13 @@
     #   loop: "{{ vm_details }}"
 
       
-    # - name: Install or update the vm-tools
-    #   vmware.vmware_rest.vcenter_vm_tools:
-    #     vcenter_hostname: "{{ vcenter.hostname }}"
-    #     vcenter_username: "{{ vcenter.username }}"
-    #     vcenter_password: "{{ vcenter.password }}"
-    #     upgrade_policy: UPGRADE_AT_POWER_CYCLE
-    #     vm: vm-49279
-        # state: connect
+    - name: Install or update the vm-tools
+      vmware.vmware_rest.vcenter_vm_tools_installer:
+        vcenter_hostname: "{{ vcenter.hostname }}"
+        vcenter_username: "{{ vcenter.username }}"
+        vcenter_password: "{{ vcenter.password }}"
+        vm: vm-49292
+        state: connect
 
 
     - name: Gather VMware Tools info
