@@ -58,8 +58,7 @@
     - name: Display shell execution result if failed
       debug:
         msg:
-          - "Standard Output: {{ item.stdout }}"
-          - "Standard Error: {{ item.stderr }}"
+          - "Standard Error: {{ item }}"
       when: item.failed
       loop: "{{ vm_shell_result.results }}"
         
