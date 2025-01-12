@@ -55,9 +55,13 @@
       register: vm_shell_result
       ignore_errors: true
 
-    - name: Display shell execution result
+    - name: Display shell execution result if failed
       debug:
-        var: vm_shell_result
+        msg:
+          - "Command failed with exit code: {{ vm_shell_result.rc }}"
+          - "Standard Output: {{ vm_shell_result.stdout }}"
+          - "Standard Error: {{ vm_shell_result.stderr }}"
+      when: vm_shell_result.failed
         
 
     - name: Gather VMware Tools info
