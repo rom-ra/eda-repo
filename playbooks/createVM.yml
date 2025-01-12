@@ -9,28 +9,28 @@
     - name: Debug vm_list
       debug:
         var: vm_list
-    - name: Create VMs dynamically
-      community.vmware.vmware_guest:
-        hostname: "{{ vcenter.hostname }}"
-        username: "{{ vcenter.username }}"
-        password: "{{ vcenter.password }}"
-        validate_certs: "{{ validate_certs }}"
-        datacenter: "{{ datacenter.name }}"
-        cluster: "{{ datacenter.cluster }}"
-        folder: "{{ item.folder }}"
-        # template: "{{ item.template }}"
-        name: "{{ item.name }}"
-        guest_id: "{{ item.guest_id }}"
-        state: "{{ item.state}}"
-        wait_for_ip_address: "{{ item.wait_for_ip_address }}"
-        hardware:
-          num_cpus: "{{ item.num_cpus }}"
-          memory_mb: "{{ item.memory_mb }}"
-        networks: "{{ item.networks }}"
-        disk: "{{ item.disk}}"
-        cdrom: "{{ item.cdrom}}"
-      loop: "{{ vm_details }}"
-      register: vm
+    # - name: Create VMs dynamically
+    #   community.vmware.vmware_guest:
+    #     hostname: "{{ vcenter.hostname }}"
+    #     username: "{{ vcenter.username }}"
+    #     password: "{{ vcenter.password }}"
+    #     validate_certs: "{{ validate_certs }}"
+    #     datacenter: "{{ datacenter.name }}"
+    #     cluster: "{{ datacenter.cluster }}"
+    #     folder: "{{ item.folder }}"
+    #     template: "{{ item.template }}"
+    #     name: "{{ item.name }}"
+    #     guest_id: "{{ item.guest_id }}"
+    #     state: "{{ item.state}}"
+    #     wait_for_ip_address: "{{ item.wait_for_ip_address }}"
+    #     hardware:
+    #       num_cpus: "{{ item.num_cpus }}"
+    #       memory_mb: "{{ item.memory_mb }}"
+    #     networks: "{{ item.networks }}"
+    #     disk: "{{ item.disk}}"
+    #     cdrom: "{{ item.cdrom}}"
+    #   loop: "{{ vm_details }}"
+    #   register: vm
 
  
     # - name: Install VMware Tools on the VM
@@ -44,9 +44,10 @@
     #     vm_id: "{{ item.name }}"
     #     vm_username: admin
     #     vm_password: admin
-    #     vm_shell: "/bin/bash"
+    #     vm_shell: "/usr/bin/systemctl"
     #     vm_shell_args:
-    #       - "systemctl status NetworkManger"
+    #       - "set-hostname MadeByAnsible"
+    #       - "status NetworkManger"
     #     wait_for_process: true
     #     timeout: 2000
     #   loop: "{{ vm_details }}"
@@ -57,9 +58,8 @@
         vcenter_hostname: "{{ vcenter.hostname }}"
         vcenter_username: "{{ vcenter.username }}"
         vcenter_password: "{{ vcenter.password }}"
-        vm: vm-49292
+        vm: vm-49293
         state: connect
-
 
     - name: Gather VMware Tools info
       community.vmware.vmware_guest_tools_info:
