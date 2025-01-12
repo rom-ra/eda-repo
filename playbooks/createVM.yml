@@ -58,7 +58,6 @@
     - name: Display shell execution result if failed
       debug:
         msg:
-          - "Command failed with exit code: {{ item.rc }}"
           - "Standard Output: {{ item.stdout }}"
           - "Standard Error: {{ item.stderr }}"
       when: item.failed
