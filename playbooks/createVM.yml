@@ -57,11 +57,12 @@
 
     - name: Display shell execution result if failed
       debug:
-        var:
-          - "Command failed with exit code: {{ vm_shell_result.rc }}"
-          - "Standard Output: {{ vm_shell_result.stdout }}"
-          - "Standard Error: {{ vm_shell_result.stderr }}"
-      when: vm_shell_result.failed
+        msg:
+          - "Command failed with exit code: {{ item.rc }}"
+          - "Standard Output: {{ item.stdout }}"
+          - "Standard Error: {{ item.stderr }}"
+      when: item.failed
+      loop: "{{ vm_shell_result.results }}"
         
 
     - name: Gather VMware Tools info
