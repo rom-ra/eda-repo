@@ -57,7 +57,7 @@
 
     - name: Display shell execution result if failed
       debug:
-        msg:
+        var:
           - "Command failed with exit code: {{ vm_shell_result.rc }}"
           - "Standard Output: {{ vm_shell_result.stdout }}"
           - "Standard Error: {{ vm_shell_result.stderr }}"
