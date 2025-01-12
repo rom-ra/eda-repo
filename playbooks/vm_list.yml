@@ -30,7 +30,7 @@ vm_details:
         dns_servers:
             - "192.168.1.20"
             - "8.8.8.8"
-    disks:
+    disk:
       - size_gb: 20
         type: thin
         datastore: "datastore-14"
