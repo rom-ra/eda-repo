@@ -34,46 +34,27 @@
     #   register: vm
 
       
-    - name: Run commands on VM
-      community.vmware.vmware_vm_shell:
-        hostname: "{{ vcenter.hostname }}"
-        username: "{{ vcenter.username }}"
-        password: "{{ vcenter.password }}"
-        datacenter: "{{ datacenter.name }}"
-        folder: "{{ item.folder }}"
-        validate_certs: "{{ validate_certs }}"
-        vm_id: "{{ item.name }}"
-        vm_username: root
-        vm_password: root
-        vm_shell: "/bin/bash"
-        vm_shell_args:
-          - "hostname"
-        vm_shell_env:
-          - "PATH=/usr/bin:/bin:/usr/sbin:/sbin"
-        wait_for_process: true
-        timeout: 3600  
-      loop: "{{ vm_details }}"
-      register: vm_shell_result
-      ignore_errors: true
-
-    # - name: Display shell execution result if failed
-    #   debug:
-    #     msg:
-    #       - "Standard Error: {{ item }}"
-    #   when: item.failed
-    #   loop: "{{ vm_shell_result.results }}"
-
-
-    # - name: Change hostname on the remote VM
-    #   command: hostnamectl set-hostname MadeByAnsible
+    # - name: Run commands on VM
+    #   community.vmware.vmware_vm_shell:
+    #     hostname: "{{ vcenter.hostname }}"
+    #     username: "{{ vcenter.username }}"
+    #     password: "{{ vcenter.password }}"
+    #     datacenter: "{{ datacenter.name }}"
+    #     folder: "{{ item.folder }}"
+    #     validate_certs: "{{ validate_certs }}"
+    #     vm_id: "{{ item.name }}"
+    #     vm_username: root
+    #     vm_password: root
+    #     vm_shell: "/bin/bash"
+    #     vm_shell_args:
+    #       - "hostname"
+    #     vm_shell_env:
+    #       - "PATH=/usr/bin:/bin:/usr/sbin:/sbin"
+    #     wait_for_process: true
+    #     timeout: 3600  
     #   loop: "{{ vm_details }}"
-    #   register: change_hostname_result
-    #   ignore_errors: false
-
-    # - name: Display hostname change result
-    #   debug:
-    #     var: change_hostname_result
-    #   when: change_hostname_result.changed
+    #   register: vm_shell_result
+    #   ignore_errors: true
 
     - name: Gather VMware Tools info
       community.vmware.vmware_guest_tools_info:
@@ -81,6 +62,6 @@
           username: "{{ vcenter.username }}"
           password: "{{ vcenter.password }}"
           validate_certs: "{{ validate_certs }}"
-          name: "{{ item.name }}"
+          name: "OCP1-Romany"
       register: vm_tools_info
       loop: "{{ vm_details }}"
