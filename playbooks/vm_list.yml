@@ -10,12 +10,12 @@ vm_list: |
         wait_for_ip_address: "{{ vm.wait_for_ip_address}}"
         cdrom: "{{vm.cdrom}}"
         networks:
-          - name: "{{ vm.network.name}}"
-            device_type: "{{vm.network.device_type}}"
-            ip: "{{ vm.network.ip }}"
+          - name: "{{ vm.networks.name}}"
+            device_type: "{{vm.networks.device_type}}"
+            ip: "{{ vm.networks.ip }}"
             netmask: "255.255.255.0"
             gateway: "192.168.1.1"
-            dns_servers: "{{ vm.network.dns_servers}}"
+            dns_servers: "{{ vm.networks.dns_servers}}"
       {% endfor %}
 
 vm_details:
