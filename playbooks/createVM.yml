@@ -28,7 +28,7 @@
         networks: "{{ item.networks }}"
         disks: "{{ item.disks}}"
         cdrom: "{{ item.cdrom}}"
-      loop: "{{ vm_list }}"
+      loop: "{{ lookup('file', 'vm_list.yml', wantlist=True) }}"
 
  
     - name: Install VMware Tools on the VM
@@ -48,4 +48,5 @@
           - "cd /mnt/cdrom && tar -xzvf VMwareTools*.tar.gz -C /tmp && cd /tmp/vmware-tools-distrib && ./vmware-install.pl -d"
         wait_for_process: true
         timeout: 2000
-      loop: "{{ vm_list }}"
+      loop: "{{ lookup('file', 'vm_list.yml', wantlist=True) }}"
+
