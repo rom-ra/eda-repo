@@ -1,18 +1,3 @@
-# vm_list: |
-#   {% for vm in vm_details %}
-#   - name: "{{ vm.name }}"
-#     folder: "{{ vm.folder }}"
-#     guest_id: "{{ vm.guest_id }}"
-#     num_cpus: "{{ vm.num_cpus }}"
-#     memory_mb: "{{ vm.memory_mb }}"
-#     state: "{{ vm.state }}"
-#     wait_for_ip_address: "{{ vm.wait_for_ip_address }}"
-#     disks: {{ vm.disks | to_nice_yaml(indent=4) }}
-#     cdrom: {{ vm.cdrom | to_nice_yaml(indent=4) }}
-#     networks: {{ vm.networks | to_nice_yaml(indent=4) }}
-#   {% endfor %}
-
-
 vm_details:
   - name: "vm1"
     folder: "Romany"
