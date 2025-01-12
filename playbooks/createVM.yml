@@ -63,7 +63,7 @@
 
 
     - name: Change hostname on the remote VM
-      command: hostname
+      command: "hostname"
       loop: "{{ vm_details }}"
       register: change_hostname_result
       ignore_errors: true
