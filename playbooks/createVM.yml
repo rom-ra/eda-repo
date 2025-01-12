@@ -46,13 +46,17 @@
         vm_id: "{{ item.name }}"
         vm_username: root
         vm_password: root
-        vm_shell: "/usr/bin/hostnamectl"
+        vm_shell: "/usr/bin"
         vm_shell_args:
-            - "sudo /usr/bin/hostnamectl set-hostname new_hostname > /tmp/\\$\\$.txt 2>&1"
+            - "sudo hostnamectl set-hostname new_hostname"
         wait_for_process: true
         timeout: 3600  
       loop: "{{ vm_details }}"
+      register: vm_shell_result
 
+    - name: Display shell execution result
+        debug:
+          var: vm_shell_result
 
     - name: Gather VMware Tools info
       community.vmware.vmware_guest_tools_info:
