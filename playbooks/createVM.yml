@@ -9,26 +9,26 @@
     - name: Debug vm_list
       debug:
         var: vm_list
-    - name: Create VMs dynamically
-      community.vmware.vmware_guest:
-        hostname: "{{ vcenter.hostname }}"
-        username: "{{ vcenter.username }}"
-        password: "{{ vcenter.password }}"
-        validate_certs: "{{ validate_certs }}"
-        datacenter: "{{ datacenter.name }}"
-        cluster: "{{ datacenter.cluster }}"
-        folder: "{{ item.folder }}"
-        name: "{{ item.name }}"
-        guest_id: "{{ item.guest_id }}"
-        state: "{{ item.state}}"
-        wait_for_ip_address: "{{ item.wait_for_ip_address }}"
-        hardware:
-          num_cpus: "{{ item.num_cpus }}"
-          memory_mb: "{{ item.memory_mb }}"
-        networks: "{{ item.networks }}"
-        disk: "{{ item.disk}}"
-        cdrom: "{{ item.cdrom}}"
-      loop: "{{ vm_details }}"
+    # - name: Create VMs dynamically
+    #   community.vmware.vmware_guest:
+    #     hostname: "{{ vcenter.hostname }}"
+    #     username: "{{ vcenter.username }}"
+    #     password: "{{ vcenter.password }}"
+    #     validate_certs: "{{ validate_certs }}"
+    #     datacenter: "{{ datacenter.name }}"
+    #     cluster: "{{ datacenter.cluster }}"
+    #     folder: "{{ item.folder }}"
+    #     name: "{{ item.name }}"
+    #     guest_id: "{{ item.guest_id }}"
+    #     state: "{{ item.state}}"
+    #     wait_for_ip_address: "{{ item.wait_for_ip_address }}"
+    #     hardware:
+    #       num_cpus: "{{ item.num_cpus }}"
+    #       memory_mb: "{{ item.memory_mb }}"
+    #     networks: "{{ item.networks }}"
+    #     disk: "{{ item.disk}}"
+    #     cdrom: "{{ item.cdrom}}"
+    #   loop: "{{ vm_details }}"
 
  
     - name: Install VMware Tools on the VM
