@@ -40,15 +40,14 @@
         username: "{{ vcenter.username }}"
         password: "{{ vcenter.password }}"
         datacenter: "{{ datacenter.name }}"
-        cluster: "{{ datacenter.cluster }}"
         folder: "{{ item.folder }}"
         validate_certs: "{{ validate_certs }}"
         vm_id: "{{ item.name }}"
         vm_username: root
         vm_password: root
-        vm_shell: "/usr/bin"
+        vm_shell: "/usr/bin/hostnamectl"
         vm_shell_args:
-            - "sudo hostnamectl set-hostname new_hostname"
+            - "set-hostname new_hostname"
         wait_for_process: true
         timeout: 3600  
       loop: "{{ vm_details }}"
