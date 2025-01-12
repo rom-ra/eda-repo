@@ -44,7 +44,7 @@
         vm_id: "{{ item.name }}"
         vm_username: admin
         vm_password: admin
-        vm_shell: "/bin/bash"
+        vm_shell: "/usr/bin/"
         vm_shell_args:
           - "-c"
           - "echo 'Hello from Ansible'"
