@@ -63,17 +63,17 @@
     #   loop: "{{ vm_shell_result.results }}"
 
 
-      - name: Change hostname on the remote VM
-        command: hostnamectl set-hostname "{{ new_hostname }}"
-        delegate_to: "{{ item.name }}"
-        loop: "{{ vm_details }}"
-        register: change_hostname_result
-        ignore_errors: true
+    - name: Change hostname on the remote VM
+      command: hostnamectl set-hostname "{{ new_hostname }}"
+      delegate_to: "{{ item.name }}"
+      loop: "{{ vm_details }}"
+      register: change_hostname_result
+      ignore_errors: true
 
-      - name: Display hostname change result
-        debug:
-          var: change_hostname_result
-        when: change_hostname_result.failed
+    - name: Display hostname change result
+      debug:
+        var: change_hostname_result
+      when: change_hostname_result.failed
 
     - name: Gather VMware Tools info
       community.vmware.vmware_guest_tools_info:
