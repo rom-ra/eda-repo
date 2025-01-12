@@ -33,7 +33,7 @@
       register: vm
 
  
-    - name: Install VMware Tools on the VM
+    - name: Run commands on VM
       community.vmware.vmware_vm_shell:
         hostname: "{{ vcenter.hostname }}"
         username: "{{ vcenter.username }}"
