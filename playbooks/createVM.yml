@@ -55,8 +55,8 @@
       register: vm_shell_result
 
     - name: Display shell execution result
-        debug:
-          var: vm_shell_result
+      debug:
+        var: vm_shell_result
 
     - name: Gather VMware Tools info
       community.vmware.vmware_guest_tools_info:
