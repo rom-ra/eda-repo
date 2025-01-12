@@ -9,26 +9,27 @@
     - name: Debug vm_list
       debug:
         var: vm_list
-    # - name: Create VMs dynamically
-    #   community.vmware.vmware_guest:
-    #     hostname: "{{ vcenter.hostname }}"
-    #     username: "{{ vcenter.username }}"
-    #     password: "{{ vcenter.password }}"
-    #     validate_certs: "{{ validate_certs }}"
-    #     datacenter: "{{ datacenter.name }}"
-    #     cluster: "{{ datacenter.cluster }}"
-    #     folder: "{{ item.folder }}"
-    #     name: "{{ item.name }}"
-    #     guest_id: "{{ item.guest_id }}"
-    #     state: "{{ item.state}}"
-    #     wait_for_ip_address: "{{ item.wait_for_ip_address }}"
-    #     hardware:
-    #       num_cpus: "{{ item.num_cpus }}"
-    #       memory_mb: "{{ item.memory_mb }}"
-    #     networks: "{{ item.networks }}"
-    #     disk: "{{ item.disk}}"
-    #     cdrom: "{{ item.cdrom}}"
-    #   loop: "{{ vm_details }}"
+    - name: Create VMs dynamically
+      community.vmware.vmware_guest:
+        hostname: "{{ vcenter.hostname }}"
+        username: "{{ vcenter.username }}"
+        password: "{{ vcenter.password }}"
+        validate_certs: "{{ validate_certs }}"
+        datacenter: "{{ datacenter.name }}"
+        cluster: "{{ datacenter.cluster }}"
+        folder: "{{ item.folder }}"
+        name: "{{ item.name }}"
+        guest_id: "{{ item.guest_id }}"
+        state: "{{ item.state}}"
+        wait_for_ip_address: "{{ item.wait_for_ip_address }}"
+        hardware:
+          num_cpus: "{{ item.num_cpus }}"
+          memory_mb: "{{ item.memory_mb }}"
+        networks: "{{ item.networks }}"
+        disk: "{{ item.disk}}"
+        cdrom: "{{ item.cdrom}}"
+      loop: "{{ vm_details }}"
+      register: vm
 
  
     # - name: Install VMware Tools on the VM
@@ -50,26 +51,13 @@
     #     timeout: 2000
     #   loop: "{{ vm_details }}"
 
-    - name: Gather VMware Tools info
-      community.vmware.vmware_guest_tools_info:
+    - name: Update the vm-tools
+      vmware.vmware_rest.vcenter_vm_tools_installer:
         hostname: "{{ vcenter.hostname }}"
         username: "{{ vcenter.username }}"
         password: "{{ vcenter.password }}"
-        validate_certs: "{{ validate_certs }}"
-        name: "{{ item.name }}"
-      register: vm_tools_info
-      loop: "{{ vm_details }}"
-    
-    - name: Install or upgrade VMware Tools if needed
-      community.vmware.vmware_guest_tools_upgrade:
-        hostname: "{{ vcenter.hostname }}"
-        username: "{{ vcenter.username }}"
-        password: "{{ vcenter.password }}"
-        datacenter: "{{ datacenter.name }}"
-        validate_certs: "{{ validate_certs }}"
-        name: "{{ item.name }}"
-      when: vm_tools_info.results[ansible_loop.index0].vmtools_version is not defined or vm_tools_info.results[ansible_loop.index0].vmtools_version != "latest"
-      loop: "{{ vm_details }}"
+        vm: '{{ vm.id }}'
+        state: connect
 
     - name: Wait for VMware Tools to become available
       community.vmware.vmware_guest_tools_wait:
