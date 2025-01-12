@@ -53,9 +53,9 @@
 
     - name: Update the vm-tools
       vmware.vmware_rest.vcenter_vm_tools_installer:
-        hostname: "{{ vcenter.hostname }}"
-        username: "{{ vcenter.username }}"
-        password: "{{ vcenter.password }}"
+        vcenter_hostname: "{{ vcenter.hostname }}"
+        vcenter_username: "{{ vcenter.username }}"
+        vcenter_password: "{{ vcenter.password }}"
         vm: vm-49279
         state: connect
 
