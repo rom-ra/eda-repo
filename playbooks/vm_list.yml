@@ -1,5 +1,5 @@
 vm_details:
-  - name: "MadeByAnsible"
+  - name: "MadeByAnsible2"
     folder: "Romany"
     template: "rhel9_template"
     guest_id: "rhel9_64Guest"
@@ -10,12 +10,12 @@ vm_details:
     networks:
       - name: "VM Network"
         device_type: vmxnet3
-        ip: "192.168.1.115"
+        ip: "192.168.1.122"
         netmask: "255.255.255.0"
         gateway: "192.168.1.1"
         dns_servers:
-            - "192.168.1.20"
-            - "8.8.8.8"
+           - "192.168.1.20"
+           - "8.8.8.8"
     disk:
       - size_gb: 20
         type: thin
