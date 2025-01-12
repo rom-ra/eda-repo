@@ -48,4 +48,4 @@
           - "cd /mnt/cdrom && tar -xzvf VMwareTools*.tar.gz -C /tmp && cd /tmp/vmware-tools-distrib && ./vmware-install.pl -d"
         wait_for_process: true
         timeout: 2000
-      loop: "{{ vm_list }}
+      loop: "{{ vm_list }}"
