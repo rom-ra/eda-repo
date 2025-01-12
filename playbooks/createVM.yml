@@ -45,7 +45,7 @@
         vm_id: "{{ item.name }}"
         vm_username: root
         vm_password: root
-           vm_shell: "/bin/bash"
+        vm_shell: "/bin/bash"
         vm_shell_args:
           - "hostname"
         vm_shell_env:
