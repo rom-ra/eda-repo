@@ -60,7 +60,7 @@
         state: connect
         
 
-        - name: Gather VMware Tools info
+    - name: Gather VMware Tools info
       community.vmware.vmware_guest_tools_info:
           hostname: "{{ vcenter.hostname }}"
           username: "{{ vcenter.username }}"
