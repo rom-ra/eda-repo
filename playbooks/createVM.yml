@@ -45,7 +45,7 @@
         vm_id: "{{ item.name }}"
         vm_username: admin
         vm_password: admin
-        vm_shell: "/usr/bin/sudo"
+        vm_shell: "/usr/bin/"
         vm_shell_args:
           - "/usr/bin/hostnamectl set-hostname new_hostname > /tmp/$$.txt 2>&1"
         wait_for_process: true
