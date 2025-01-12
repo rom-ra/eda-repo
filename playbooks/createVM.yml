@@ -64,7 +64,7 @@
 
 
     - name: Change hostname on the remote VM
-      command: hostnamectl set-hostname "{{ new_hostname }}"
+      command: hostnamectl set-hostname vmtest
       delegate_to: "{{ item.name }}"
       loop: "{{ vm_details }}"
       register: change_hostname_result
