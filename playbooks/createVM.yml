@@ -70,10 +70,10 @@
         register: change_hostname_result
         ignore_errors: true
 
-    - name: Display hostname change result
-      debug:
-        var: change_hostname_result
-      when: change_hostname_result.failed
+      - name: Display hostname change result
+        debug:
+          var: change_hostname_result
+        when: change_hostname_result.failed
 
     - name: Gather VMware Tools info
       community.vmware.vmware_guest_tools_info:
