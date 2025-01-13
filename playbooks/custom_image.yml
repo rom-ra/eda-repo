@@ -4,7 +4,7 @@
   vars_files:
     - ks.cfg
   vars:
-    iso_url: "http://mirror.centos.org/centos/7/os/x86_64/images/centos7.iso"  # URL of the CentOS ISO
+    iso_url: "https://10.1.0.14/folder/ISO/rhel-9.3-x86_64-dvd.iso"  # URL of the CentOS ISO
     iso_file: "/tmp/centos7.iso"  # Temporary location for downloading the ISO
     mount_point: "/mnt/iso"
     custom_iso_dir: "/tmp/custom_iso"
