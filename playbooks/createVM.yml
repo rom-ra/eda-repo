@@ -38,7 +38,7 @@
         hostname: "{{ vcenter.hostname }}"
         username: "{{ vcenter.username }}"
         password: "{{ vcenter.password }}"
-        validate_certs: "{{ validate_certs }}"
+        vcenter_validate_certs: "{{ validate_certs }}"
         vm: "{{ vm.instance.moid }}"
         state: connect  # Use 'absent' to uninstall if needed
       loop: "{{ vm_details }}"
