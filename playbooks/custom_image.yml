@@ -1,0 +1,65 @@
+---
+- name: Create Custom Kickstart ISO for RHEL/CentOS
+  hosts: localhost
+  become: true
+  var_files:
+     - ks.cfg
+  vars:
+    iso_file: "/path/to/centos7.iso"  # Path to the RHEL/CentOS ISO
+    mount_point: "/mnt/iso"
+    custom_iso_dir: "/tmp/custom_iso"
+    kickstart_file: "ks.cfg"  # Path to your custom Kickstart file
+    new_iso_file: "/tmp/custom_cent_os.iso"  # Path for the new ISO
+
+  tasks:
+    - name: Install required packages for ISO creation
+      package:
+        name:
+          - genisoimage
+          - isolinux
+        state: present
+
+    - name: Create a directory for mounting ISO
+      file:
+        path: "{{ mount_point }}"
+        state: directory
+
+    - name: Mount the base ISO image
+      mount:
+        path: "{{ mount_point }}"
+        src: "{{ iso_file }}"
+        fstype: iso9660
+        state: mounted
+
+    - name: Create a directory for the custom ISO content
+      file:
+        path: "{{ custom_iso_dir }}"
+        state: directory
+
+    - name: Copy the contents of the ISO to the custom directory
+      command: cp -r {{ mount_point }}/* {{ custom_iso_dir }}
+
+    - name: Copy the custom Kickstart file
+      copy:
+        src: "{{ kickstart_file }}"
+        dest: "{{ custom_iso_dir }}/ks.cfg"
+
+    - name: Modify the boot configuration to point to Kickstart file
+      lineinfile:
+        path: "{{ custom_iso_dir }}/isolinux/isolinux.cfg"
+        regexp: '^append'
+        line: "append ks=file:/ks.cfg"
+
+    - name: Create the custom ISO image
+      command:
+        cmd: mkisofs -o {{ new_iso_file }} -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -R -J {{ custom_iso_dir }}
+
+    - name: Unmount the ISO
+      mount:
+        path: "{{ mount_point }}"
+        state: unmounted
+
+    - name: Clean up the temporary directory
+      file:
+        path: "{{ custom_iso_dir }}"
+        state: absent
