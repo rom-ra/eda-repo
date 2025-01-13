@@ -1,4 +1,3 @@
----
 - name: Create Custom Kickstart ISO for RHEL/CentOS
   hosts: localhost
   become: true
@@ -32,7 +31,7 @@
         state: directory
 
     - name: Mount the base ISO image
-      mount:
+      ansible.posix.mount:
         path: "{{ mount_point }}"
         src: "{{ iso_file }}"
         fstype: iso9660
@@ -62,7 +61,7 @@
         cmd: mkisofs -o {{ new_iso_file }} -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -R -J {{ custom_iso_dir }}
 
     - name: Unmount the ISO
-      mount:
+      ansible.posix.mount:
         path: "{{ mount_point }}"
         state: unmounted
 
