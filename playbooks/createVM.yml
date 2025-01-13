@@ -8,10 +8,10 @@
     - vm_list.yml
     - ks.cfg
   tasks:
-    - name: Upload Kickstart file to the VM
-      copy:
-        src: ks.cfg
-        dest: /tmp/ks.cfg
+    # - name: Upload Kickstart file to the VM
+    #   copy:
+    #     src: ks.cfg
+    #     dest: /tmp/ks.cfg
     - name: Debug vm_list
       debug:
         var: vm_list
