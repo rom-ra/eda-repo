@@ -1,7 +1,7 @@
 vm_details:
-  - name: "MadeByAnsible2"
+  - name: "MadeByAnsible3"
     folder: "Romany"
-    template: "rhel9_template"
+    # template: "rhel9_template"
     guest_id: "rhel9_64Guest"
     memory_mb: 4096
     num_cpus: 2
