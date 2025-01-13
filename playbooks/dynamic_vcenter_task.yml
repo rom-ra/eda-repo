@@ -9,18 +9,19 @@ dynamic_tasks:
       datacenter: "{{ datacenter.name }}"
       cluster: "{{ datacenter.cluster }}"
       folder: "{{ item.folder }}"
+      template: "{{ item.template }}"
       name: "{{ item.name }}"
       guest_id: "{{ item.guest_id }}"
-      state: "{{ item.state }}"
-      wait_for_ip_address: "{{ item.wait_ip_address }}"
+      state: "{{ item.state}}"
+      wait_for_ip_address: "{{ item.wait_for_ip_address }}"
       hardware:
-        num_cpus: "{{ item.num_cpus }}"
-        memory_mb: "{{ item.memory_mb }}"
+      num_cpus: "{{ item.num_cpus }}"
+      memory_mb: "{{ item.memory_mb }}"
       networks: "{{ item.networks }}"
-      disks: "{{ item.disks }}"
-      cdrom: "{{ item.cdrom }}"
+      disk: "{{ item.disk}}"
+      cdrom: "{{ item.cdrom}}"
     loop_var: item
-    loop: "{{ vm_list }}"
+    loop: "{{ vm_details }}"
 
   - name: Install VMware Tools on the VM
     module: community.vmware.vmware_vm_shell
@@ -41,4 +42,4 @@ dynamic_tasks:
       wait_for_process: true
       timeout: 2000
     loop_var: item
-    loop: "{{ vm_list }}"
+    loop: "{{ vm_details }}"
