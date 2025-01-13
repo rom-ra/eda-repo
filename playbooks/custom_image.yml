@@ -2,8 +2,8 @@
 - name: Create Custom Kickstart ISO for RHEL/CentOS
   hosts: localhost
   become: true
-    vars_files:
-     - ks.cfg
+  vars_files:
+    - ks.cfg
   vars:
     iso_url: "http://mirror.centos.org/centos/7/os/x86_64/images/centos7.iso"  # URL of the CentOS ISO
     iso_file: "/tmp/centos7.iso"  # Temporary location for downloading the ISO
