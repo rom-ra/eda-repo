@@ -34,14 +34,13 @@
       register: vm
 
     - name: Install VMware Tools using vmware.vmware_rest
-      vmware.vmware_rest.vmware_rest_vm_tools:
+      vmware.vmware_rest.vcenter_vm_tools_installer:
         hostname: "{{ vcenter.hostname }}"
         username: "{{ vcenter.username }}"
         password: "{{ vcenter.password }}"
         validate_certs: "{{ validate_certs }}"
-        cluster: "{{ datacenter.cluster }}"
-        vm_name: "{{ item.name }}"
-        state: present  # Use 'absent' to uninstall if needed
+        vm: "{{ vm.instance.moid }}"
+        state: connect  # Use 'absent' to uninstall if needed
       loop: "{{ vm_details }}"
       
     # - name: Run commands on VM
