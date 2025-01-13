@@ -6,7 +6,7 @@
   vars_files:
     - vcenter_vars.yml
     - vm_list.yml
-    - ks.cfg
+    # - ks.cfg
   tasks:
     # - name: Upload Kickstart file to the VM
     #   copy:
