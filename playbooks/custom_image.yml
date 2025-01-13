@@ -2,10 +2,11 @@
 - name: Create Custom Kickstart ISO for RHEL/CentOS
   hosts: localhost
   become: true
-  vars_files:
+    vars_files:
      - ks.cfg
   vars:
-    iso_file: "/path/to/centos7.iso"  # Path to the RHEL/CentOS ISO
+    iso_url: "http://mirror.centos.org/centos/7/os/x86_64/images/centos7.iso"  # URL of the CentOS ISO
+    iso_file: "/tmp/centos7.iso"  # Temporary location for downloading the ISO
     mount_point: "/mnt/iso"
     custom_iso_dir: "/tmp/custom_iso"
     kickstart_file: ks.cfg  # Path to your custom Kickstart file
@@ -18,6 +19,12 @@
           - genisoimage
           - isolinux
         state: present
+
+    - name: Download the CentOS ISO from the internet
+      get_url:
+        url: "{{ iso_url }}"
+        dest: "{{ iso_file }}"
+        mode: '0644'
 
     - name: Create a directory for mounting ISO
       file:
