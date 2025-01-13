@@ -1,5 +1,5 @@
 vm_details:
-  - name: "MadeByAnsible2"
+  - name: "MadeByAnsible"
     folder: "Romany"
     template: "rhel9_template"
     # template: "coreos_template"
