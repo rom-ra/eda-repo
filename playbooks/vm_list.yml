@@ -1,8 +1,8 @@
 vm_details:
-  - name: "MadeByAnsible"
+  - name: "MadeByAnsible2"
     folder: "Romany"
-    # template: "rhel9_template"
-    template: "coreos_template"
+    template: "rhel9_template"
+    # template: "coreos_template"
     guest_id: "rhel9_64Guest"
     memory_mb: 4096
     num_cpus: 4
@@ -25,7 +25,7 @@ vm_details:
       - controller_number: 0
         unit_number: 0
         controller_type: sata
-        iso_path: "[datastore1 (1)] ISO/rhel-9.3-x86_64-dvd.iso"
+        iso_path: "[datastore1 (1)] ISO/rhel-8.6-x86_64-dvd.iso"
         # iso_path: "[datastore-14] rhcos-4.16.3-x86_64-live.x86_64.iso"
         state: present
         type: iso    
