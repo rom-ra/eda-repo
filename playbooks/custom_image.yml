@@ -2,13 +2,13 @@
 - name: Create Custom Kickstart ISO for RHEL/CentOS
   hosts: localhost
   become: true
-  var_files:
+  vars_files:
      - ks.cfg
   vars:
     iso_file: "/path/to/centos7.iso"  # Path to the RHEL/CentOS ISO
     mount_point: "/mnt/iso"
     custom_iso_dir: "/tmp/custom_iso"
-    kickstart_file: "ks.cfg"  # Path to your custom Kickstart file
+    kickstart_file: ks.cfg  # Path to your custom Kickstart file
     new_iso_file: "/tmp/custom_cent_os.iso"  # Path for the new ISO
 
   tasks:
