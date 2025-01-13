@@ -24,6 +24,11 @@
         guest_id: "{{ item.guest_id }}"
         state: "{{ item.state}}"
         wait_for_ip_address: "{{ item.wait_for_ip_address }}"
+        customization:
+          run_once:
+            # Disable GUI and set default target to multi-user.target
+            - path: "/usr/bin/systemctl"
+              args: ["set-default", "multi-user.target"]
         hardware:
           num_cpus: "{{ item.num_cpus }}"
           memory_mb: "{{ item.memory_mb }}"
