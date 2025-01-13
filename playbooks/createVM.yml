@@ -25,7 +25,7 @@
         state: "{{ item.state}}"
         wait_for_ip_address: "{{ item.wait_for_ip_address }}"
         customization:
-          run_once:
+          runonce:
             # Disable GUI and set default target to multi-user.target
             - path: "/usr/bin/systemctl"
               args: ["set-default", "multi-user.target"]
