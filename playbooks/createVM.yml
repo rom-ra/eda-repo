@@ -7,63 +7,61 @@
     - vcenter_vars.yml
     - vm_list.yml
   tasks:
-    # - name: Debug vm_list
-    #   debug:
-    #     var: vm_list
-    # - name: Create VMs dynamically
-    #   community.vmware.vmware_guest:
-    #     hostname: "{{ vcenter.hostname }}"
-    #     username: "{{ vcenter.username }}"
-    #     password: "{{ vcenter.password }}"
-    #     validate_certs: "{{ validate_certs }}"
-    #     datacenter: "{{ datacenter.name }}"
-    #     cluster: "{{ datacenter.cluster }}"
-    #     folder: "{{ item.folder }}"
-    #     # template: "{{ item.template }}"
-    #     name: "{{ item.name }}"
-    #     guest_id: "{{ item.guest_id }}"
-    #     state: "{{ item.state}}"
-    #     wait_for_ip_address: "{{ item.wait_for_ip_address }}"
-    #     hardware:
-    #       num_cpus: "{{ item.num_cpus }}"
-    #       memory_mb: "{{ item.memory_mb }}"
-    #     networks: "{{ item.networks }}"
-    #     disk: "{{ item.disk}}"
-    #     cdrom: "{{ item.cdrom}}"
-    #   loop: "{{ vm_details }}"
-    #   register: vm
-
-    - name: Install VMware Tools using vmware.vmware_rest
-      vmware.vmware_rest.vcenter_vm_tools_installer:
-        vcenter_hostname: "{{ vcenter.hostname }}"
-        vcenter_username: "{{ vcenter.username }}"
-        vcenter_password: "{{ vcenter.password }}"
-        vcenter_validate_certs: "{{ validate_certs }}"
-        vm: vm-49301
-        state: connect  # Use 'absent' to uninstall if needed
+    - name: Debug vm_list
+      debug:
+        var: vm_list
+    - name: Create VMs dynamically
+      community.vmware.vmware_guest:
+        hostname: "{{ vcenter.hostname }}"
+        username: "{{ vcenter.username }}"
+        password: "{{ vcenter.password }}"
+        validate_certs: "{{ validate_certs }}"
+        datacenter: "{{ datacenter.name }}"
+        cluster: "{{ datacenter.cluster }}"
+        folder: "{{ item.folder }}"
+        template: "{{ item.template }}"
+        name: "{{ item.name }}"
+        guest_id: "{{ item.guest_id }}"
+        state: "{{ item.state}}"
+        wait_for_ip_address: "{{ item.wait_for_ip_address }}"
+        hardware:
+          num_cpus: "{{ item.num_cpus }}"
+          memory_mb: "{{ item.memory_mb }}"
+        networks: "{{ item.networks }}"
+        disk: "{{ item.disk}}"
+        cdrom: "{{ item.cdrom}}"
       loop: "{{ vm_details }}"
-      
-    # - name: Run commands on VM
-    #   community.vmware.vmware_vm_shell:
-    #     hostname: "{{ vcenter.hostname }}"
-    #     username: "{{ vcenter.username }}"
-    #     password: "{{ vcenter.password }}"
-    #     datacenter: "{{ datacenter.name }}"
-    #     folder: "{{ item.folder }}"
-    #     validate_certs: "{{ validate_certs }}"
-    #     vm_id: "{{ item.name }}"
-    #     vm_username: root
-    #     vm_password: root
-    #     vm_shell: "/bin/bash"
-    #     vm_shell_args:
-    #       - "hostname"
-    #     vm_shell_env:
-    #       - "PATH=/usr/bin:/bin:/usr/sbin:/sbin"
-    #     wait_for_process: true
-    #     timeout: 3600  
+      register: vm
+
+    # - name: Install VMware Tools using vmware.vmware_rest
+    #   vmware.vmware_rest.vcenter_vm_tools_installer:
+    #     vcenter_hostname: "{{ vcenter.hostname }}"
+    #     vcenter_username: "{{ vcenter.username }}"
+    #     vcenter_password: "{{ vcenter.password }}"
+    #     vcenter_validate_certs: "{{ validate_certs }}"
+    #     vm: vm-49301
+    #     state: connect  # Use 'absent' to uninstall if needed
     #   loop: "{{ vm_details }}"
-    #   register: vm_shell_result
-    #   ignore_errors: true
+      
+    - name: Run commands on VM
+      community.vmware.vmware_vm_shell:
+        hostname: "{{ vcenter.hostname }}"
+        username: "{{ vcenter.username }}"
+        password: "{{ vcenter.password }}"
+        datacenter: "{{ datacenter.name }}"
+        folder: "{{ item.folder }}"
+        validate_certs: "{{ validate_certs }}"
+        vm_id: "{{ item.name }}"
+        vm_username: root
+        vm_password: root
+        vm_shell: "/bin/bash"
+        vm_shell_args:
+          - "hostname"
+        wait_for_process: true
+        timeout: 3600  
+      loop: "{{ vm_details }}"
+      register: vm_shell_result
+      ignore_errors: true
 
     - name: Gather VMware Tools info
       community.vmware.vmware_guest_tools_info:
