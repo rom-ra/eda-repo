@@ -84,6 +84,6 @@
           username: "{{ vcenter.username }}"
           password: "{{ vcenter.password }}"
           validate_certs: "{{ validate_certs }}"
-          name: "MadeByAnsible3"
+          name: "MadeByAnsible2"
       register: vm_tools_info
       loop: "{{ vm_details }}"
