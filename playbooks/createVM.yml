@@ -6,10 +6,11 @@
   vars_files:
     - vcenter_vars.yml
     - vm_list.yml
+    - ks.cfg
   tasks:
     - name: Upload Kickstart file to the VM
       copy:
-        src: /path/to/ks.cfg
+        src: ks.cfg
         dest: /tmp/ks.cfg
     - name: Debug vm_list
       debug:
