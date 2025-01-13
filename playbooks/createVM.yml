@@ -52,7 +52,7 @@
     #   vmware.vmware_rest.vcenter_vm_tools_installer:
     #     vcenter_hostname: "{{ vcenter.hostname }}"
     #     vcenter_username: "{{ vcenter.username }}"
-    #     vcenter_password: "{{ vcenter.password }}"
+    #     vcenter_passwor: "{{ vcenter.password }}"
     #     vcenter_validate_certs: "{{ validate_certs }}"
     #     vm: vm-49310
     #     state: connect
@@ -84,6 +84,6 @@
           username: "{{ vcenter.username }}"
           password: "{{ vcenter.password }}"
           validate_certs: "{{ validate_certs }}"
-          name: "MadeByAnsible2"
+          name: "{{ item.name }}"
       register: vm_tools_info
       loop: "{{ vm_details }}"
