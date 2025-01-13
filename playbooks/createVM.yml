@@ -42,7 +42,7 @@
         cluster: "{{ datacenter.cluster }}"
         vm_name: "{{ item.name }}"
         state: present  # Use 'absent' to uninstall if needed
-      loop: "{{ vm_list }}"
+      loop: "{{ vm_details }}"
       
     # - name: Run commands on VM
     #   community.vmware.vmware_vm_shell:
