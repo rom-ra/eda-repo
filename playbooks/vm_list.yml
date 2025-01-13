@@ -3,7 +3,7 @@ vm_details:
     folder: "Romany"
     # template: "rhel9_template"
     template: "coreos_template"
-    guest_id: "rhel8_64Guest"
+    guest_id: "rhel9_64Guest"
     memory_mb: 4096
     num_cpus: 4
     state: poweredon
