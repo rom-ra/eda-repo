@@ -10,31 +10,31 @@
     - name: Debug vm_list
       debug:
         var: vm_list
-    - name: Create VMs dynamically
-      community.vmware.vmware_guest:
-        hostname: "{{ vcenter.hostname }}"
-        username: "{{ vcenter.username }}"
-        password: "{{ vcenter.password }}"
-        validate_certs: "{{ validate_certs }}"
-        datacenter: "{{ datacenter.name }}"
-        cluster: "{{ datacenter.cluster }}"
-        folder: "{{ item.folder }}"
-        # template: "{{ item.template }}"
-        name: "{{ item.name }}"
-        guest_id: "{{ item.guest_id }}"
-        state: "{{ item.state}}"
-        wait_for_ip_address: "{{ item.wait_for_ip_address }}"
-        customization_spec: "vm_custom"
-        hardware:
-          num_cpus: "{{ item.num_cpus }}"
-          memory_mb: "{{ item.memory_mb }}"
-        networks: "{{ item.networks }}"
-        disk: "{{ item.disk}}"
-        cdrom: "{{ item.cdrom}}"
-      loop: "{{ vm_details }}"
-      loop_control:
-        label: "{{ item.name }}"
-      register: vm
+    # - name: Create VMs dynamically
+    #   community.vmware.vmware_guest:
+    #     hostname: "{{ vcenter.hostname }}"
+    #     username: "{{ vcenter.username }}"
+    #     password: "{{ vcenter.password }}"
+    #     validate_certs: "{{ validate_certs }}"
+    #     datacenter: "{{ datacenter.name }}"
+    #     cluster: "{{ datacenter.cluster }}"
+    #     folder: "{{ item.folder }}"
+    #     # template: "{{ item.template }}"
+    #     name: "{{ item.name }}"
+    #     guest_id: "{{ item.guest_id }}"
+    #     state: "{{ item.state}}"
+    #     wait_for_ip_address: "{{ item.wait_for_ip_address }}"
+    #     customization_spec: "vm_custom"
+    #     hardware:
+    #       num_cpus: "{{ item.num_cpus }}"
+    #       memory_mb: "{{ item.memory_mb }}"
+    #     networks: "{{ item.networks }}"
+    #     disk: "{{ item.disk}}"
+    #     cdrom: "{{ item.cdrom}}"
+    #   loop: "{{ vm_details }}"
+    #   loop_control:
+    #     label: "{{ item.name }}"
+    #   register: vm
       
 
     - name: Install VMware Tools using vmware.vmware_rest
@@ -43,7 +43,7 @@
         vcenter_username: "{{ vcenter.username }}"
         vcenter_passwor: "{{ vcenter.password }}"
         vcenter_validate_certs: "{{ validate_certs }}"
-        vm: "{{ item.instance.moid }}"
+        vm: vm-49325
         state: connect
       loop: "{{ vm_details }}"
 
@@ -77,7 +77,7 @@
         datacenter: "{{ datacenter.name }}"
         folder: "{{ item.folder }}"
         validate_certs: "{{ validate_certs }}"
-        vm_id: "{{ item.name }}"
+        vm_id: "New Virtual Machine"
         vm_username: root
         vm_password: root
         vm_shell: "/bin/bash"
