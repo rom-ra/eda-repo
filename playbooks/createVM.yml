@@ -24,7 +24,7 @@
         guest_id: "{{ item.guest_id }}"
         state: "{{ item.state}}"
         wait_for_ip_address: "{{ item.wait_for_ip_address }}"
-        customization_spec: vm_custom
+        customization_spec: "vm_custom"
         hardware:
           num_cpus: "{{ item.num_cpus }}"
           memory_mb: "{{ item.memory_mb }}"
@@ -66,6 +66,15 @@
     #   loop: "{{ vm_details }}"
     #   register: vm_shell_result
     #   ignore_errors: true
+    
+    - name: Turn on the power of the VM
+      vmware.vmware_rest.vcenter_vm_power:
+        vcenter_hostname: "{{ vcenter.hostname }}"
+        vcenter_username: "{{ vcenter.username }}"
+        vcenter_passwor: "{{ vcenter.password }}"
+        vcenter_validate_certs: "{{ validate_certs }}"
+        state: start
+        vm: '{{ vm.instance.moid }}
 
     - name: Gather VMware Tools info
       community.vmware.vmware_guest_tools_info:
