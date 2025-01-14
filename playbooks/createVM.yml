@@ -6,6 +6,7 @@
   vars_files:
     - vcenter_vars.yml
     - vm_list.yml
+    - vm_sshs.yml
   tasks:
     - name: Debug vm_list
       debug:
@@ -35,7 +36,7 @@
     #     label: "{{ item.name }}"
     #   register: vm
 
-- import_playbook: vm_sshs.yaml
+- import_playbook: vm_sshs
 
     # - name: Install VMware Tools using vmware.vmware_rest
     #   vmware.vmware_rest.vcenter_vm_tools_installer:
