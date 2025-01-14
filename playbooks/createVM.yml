@@ -24,6 +24,7 @@
         guest_id: "{{ item.guest_id }}"
         state: "{{ item.state}}"
         wait_for_ip_address: "{{ item.wait_for_ip_address }}"
+        customization_spec: vm_custom
         hardware:
           boot_firmware: "bios"
           num_cpus: "{{ item.num_cpus }}"
