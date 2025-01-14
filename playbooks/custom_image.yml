@@ -40,7 +40,7 @@
         state: directory
 
     - name: Copy the contents of the ISO to the custom directory
-      command: cp -r {{ mount_point }}/* {{ custom_iso_dir }}
+      command: cp -r {{ mount_point }}/. {{ custom_iso_dir }}
 
     - name: Copy the custom Kickstart file
       copy:
