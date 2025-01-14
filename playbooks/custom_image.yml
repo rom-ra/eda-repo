@@ -16,7 +16,6 @@
       package:
         name:
           - genisoimage
-          - isolinux
         state: present
 
     - name: Download the CentOS ISO from the internet
