@@ -67,11 +67,13 @@
     #   register: vm_shell_result
     #   ignore_errors: true
     
-    - name: Turn on the power of the VM
+    - name: Turn on the power of the VMs
       vmware.vmware_rest.vcenter_vm_power:
-        vcenter_hostname: "{{ vcenter.hostname }}"
-        vcenter_username: "{{ vcenter.username }}"
-        vcenter_passwor: "{{ vcenter.password }}"
-        vcenter_validate_certs: "{{ validate_certs }}"
-        state: start
-        vm: '{{ vm.instance.moid }}'
+      vcenter_hostname: "{{ vcenter.hostname }}"
+      vcenter_username: "{{ vcenter.username }}"
+      vcenter_password: "{{ vcenter.password }}"
+      vcenter_validate_certs: "{{ validate_certs }}"
+      state: start
+      vm: "{{ item.instance.moid }}"
+    loop: "{{ vm.results }}"
+    when: item.instance is defined
