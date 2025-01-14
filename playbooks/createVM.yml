@@ -55,6 +55,7 @@
         username: "{{ vcenter.username }}"
         password: "{{ vcenter.password }}"
         datacenter: "{{ datacenter.name }}"
+        validate_certs: "{{ validate_certs }}"
         folder: "{{ item.folder }}"
         name: "{{ item.name }}"
       loop: "{{ vm_details }}"
