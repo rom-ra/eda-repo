@@ -32,6 +32,8 @@
         disk: "{{ item.disk}}"
         cdrom: "{{ item.cdrom}}"
       loop: "{{ vm_details }}"
+      loop_control:
+        label: "{{ item.name }}"
       register: vm
       
 
