@@ -4,7 +4,7 @@ vm_details:
     template: "rhel9_template"
     # template: "coreos_template"
     guest_id: "rhel9_64Guest"
-    memory_mb: 4096
+    memory_mb: 16096
     num_cpus: 4
     state: poweredoff
     wait_for_ip_address: true
