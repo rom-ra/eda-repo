@@ -6,7 +6,7 @@ vm_details:
     guest_id: "rhel9_64Guest"
     memory_mb: 4096
     num_cpus: 4
-    state: present
+    state: poweredoff
     wait_for_ip_address: true
     networks:
       - name: "VM Network"
