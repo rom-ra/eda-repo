@@ -26,7 +26,6 @@
         wait_for_ip_address: "{{ item.wait_for_ip_address }}"
         customization_spec: vm_custom
         hardware:
-          boot_firmware: "bios"
           num_cpus: "{{ item.num_cpus }}"
           memory_mb: "{{ item.memory_mb }}"
         networks: "{{ item.networks }}"
