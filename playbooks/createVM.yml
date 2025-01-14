@@ -35,7 +35,9 @@
     #   loop_control:
     #     label: "{{ item.name }}"
     #   register: vm
-      
+
+    - name: Include a play after another play
+      ansible.builtin.import_playbook: vm_sshs.yaml
 
     # - name: Install VMware Tools using vmware.vmware_rest
     #   vmware.vmware_rest.vcenter_vm_tools_installer:
@@ -61,25 +63,25 @@
     #   loop: "{{ vm_details }}"
 
       
-    - name: Run commands on VM
-      community.vmware.vmware_vm_shell:
-        hostname: "{{ vcenter.hostname }}"
-        username: "{{ vcenter.username }}"
-        password: "{{ vcenter.password }}"
-        datacenter: "{{ datacenter.name }}"
-        folder: "{{ item.folder }}"
-        validate_certs: "{{ validate_certs }}"
-        vm_id: "New Virtual Machine"
-        vm_username: root
-        vm_password: root
-        vm_shell: "/bin/bash"
-        vm_shell_args:
-          - "hostname"
-        wait_for_process: true
-        timeout: 3600  
-      loop: "{{ vm_details }}"
-      register: vm_shell_result
-      ignore_errors: true
+    # - name: Run commands on VM
+    #   community.vmware.vmware_vm_shell:
+    #     hostname: "{{ vcenter.hostname }}"
+    #     username: "{{ vcenter.username }}"
+    #     password: "{{ vcenter.password }}"
+    #     datacenter: "{{ datacenter.name }}"
+    #     folder: "{{ item.folder }}"
+    #     validate_certs: "{{ validate_certs }}"
+    #     vm_id: "New Virtual Machine"
+    #     vm_username: root
+    #     vm_password: root
+    #     vm_shell: "/bin/bash"
+    #     vm_shell_args:
+    #       - "hostname"
+    #     wait_for_process: true
+    #     timeout: 3600  
+    #   loop: "{{ vm_details }}"
+    #   register: vm_shell_result
+    #   ignore_errors: true
     
     # - name: Turn on the power of the VMs
     #   vmware.vmware_rest.vcenter_vm_power:
