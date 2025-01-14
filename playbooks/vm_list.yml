@@ -29,5 +29,11 @@ vm_details:
         iso_path: "[datastore1 (1)] ISO/rhel-9.3-x86_64-dvd.iso"
         # iso_path: "[datastore-14] rhcos-4.16.3-x86_64-live.x86_64.iso"
         state: present
+        type: iso
+      - controller_number: 0
+        unit_number: 1
+        controller_type: sata
+        iso_path: "[datastore1 (1)] ISO/cloud-init.iso"
+        state: present
         type: iso    
 
