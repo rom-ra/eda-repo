@@ -49,16 +49,16 @@
 
       
 
-    - name: Wait for VMware tools to become available by name
-      community.vmware.vmware_guest_tools_wait:
-        hostname: "{{ vcenter.hostname }}"
-        username: "{{ vcenter.username }}"
-        password: "{{ vcenter.password }}"
-        datacenter: "{{ datacenter.name }}"
-        validate_certs: "{{ validate_certs }}"
-        folder: "{{ item.folder }}"
-        name: "{{ item.name }}"
-      loop: "{{ vm_details }}"
+    # - name: Wait for VMware tools to become available by name
+    #   community.vmware.vmware_guest_tools_wait:
+    #     hostname: "{{ vcenter.hostname }}"
+    #     username: "{{ vcenter.username }}"
+    #     password: "{{ vcenter.password }}"
+    #     datacenter: "{{ datacenter.name }}"
+    #     validate_certs: "{{ validate_certs }}"
+    #     folder: "{{ item.folder }}"
+    #     name: "{{ item.name }}"
+    #   loop: "{{ vm_details }}"
 
       
     - name: Run commands on VM
