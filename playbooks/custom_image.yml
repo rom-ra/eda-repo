@@ -2,25 +2,22 @@
   hosts: localhost
   become: true
   vars:
-    iso_url: "https://10.1.0.14/folder/ISO/rhel-9.3-x86_64-dvd.iso"  # URL of the CentOS ISO
-    iso_file: "/tmp/centos7.iso"  # Temporary location for downloading the ISO
+    iso_file: rhel-9.5-x86_64-boot.iso 
     mount_point: "/mnt/iso"
-    custom_iso_dir: "/tmp/custom_iso"
-    kickstart_file: ks.cfg  # Path to your custom Kickstart file
-    new_iso_file: "/tmp/custom_cent_os.iso"  # Path for the new ISO
+    custom_iso_dir: "custom_iso"
+    kickstart_file: FINAL-KS.cfg  # Path to your custom Kickstart file
+    new_iso_file: "rhel9.iso"  # Path for the new ISO
 
   tasks:
+    - name: Delete the /mnt/iso directory if it exists
+      file:
+        path: "{{ mount_point }}"
+        state: absent
     - name: Install required packages for ISO creation
       package:
         name:
           - genisoimage
         state: present
-
-    - name: Download the CentOS ISO from the internet
-      get_url:
-        url: "{{ iso_url }}"
-        dest: "{{ iso_file }}"
-        mode: '0644'
 
     - name: Create a directory for mounting ISO
       file:
@@ -41,21 +38,24 @@
 
     - name: Copy the contents of the ISO to the custom directory
       command: cp -r {{ mount_point }}/. {{ custom_iso_dir }}
+      
+
 
     - name: Copy the custom Kickstart file
       copy:
         src: "{{ kickstart_file }}"
-        dest: "{{ custom_iso_dir }}/ks.cfg"
+        dest: "{{ custom_iso_dir }}/FINAL-KS.cfg"
 
     - name: Modify the boot configuration to point to Kickstart file
       lineinfile:
         path: "{{ custom_iso_dir }}/isolinux/isolinux.cfg"
-        regexp: '^append'
-        line: "append ks=file:/ks.cfg"
+        regexp: 'inst.stage2=hd:LABEL=RHEL-9-5-0-BaseOS-x86_64'
+        line: 'inst.stage2=cdrom:/ inst.ks=cdrom:/FINAL-KS.cfg'
 
     - name: Create the custom ISO image
       command:
-        cmd: mkisofs -o {{ new_iso_file }} -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -R -J {{ custom_iso_dir }}
+        cmd: genisoimage -o {{ new_iso_file }} -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -R -J -V "RHEL-9-5-0-BaseOS-x86_64" {{ custom_iso_dir }}
+
 
     - name: Unmount the ISO
       ansible.posix.mount:
