@@ -24,16 +24,10 @@
         enabled: no
 
     # Step 3: Generate SSH key
-    - name: Generate SSH key pair
-      community.crypto.openssh_keypair:
-        path: /root/.ssh/id_ed25519
-        type: ed25519
-        force: no
+   
+    - name: Generate SSH key if not exists
+      command: ssh-keygen -t ed25519 -f "{{ ssh_key_path }}" -N ""
       register: ssh_key
-
-    - name: Display generated SSH public key
-      debug:
-        msg: "Generated SSH public key: {{ ssh_key.public_key }}"
 
     # Step 4: Install HAProxy
     - name: Install HAProxy
