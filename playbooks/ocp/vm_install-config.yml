@@ -52,8 +52,8 @@
       debug:
         msg: "{{ scheduler_config.stdout }}"
     # Step 4: Run the `openshift-install create ignition-configs` command
-    # - name: Run openshift-install to create ignition-configs
-    #   command: >
-    #     openshift-install create ignition-configs
-    #   args:
-    #     chdir: "{{ OCP_INSTALL_DIR }}"
+    - name: Run openshift-install to create ignition-configs
+      command: >
+        openshift-install create ignition-configs
+      args:
+        chdir: "{{ OCP_INSTALL_DIR }}"
