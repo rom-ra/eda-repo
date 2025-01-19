@@ -12,7 +12,7 @@
     # Step 1: Create install-config.yml
     - name: Create the install-config.yml file
       copy:
-        dest: "{{ install_dir }}/install-config.yml"
+        dest: "{{ ocp_install_dir }}/install-config.yml"
         content: |
           apiVersion: v1
           baseDomain: "{{ base_domain }}"
@@ -37,14 +37,14 @@
       command: >
         openshift-install create install-config
       args:
-        chdir: "{{ install_dir }}"
+        chdir: "{{ ocp_install_dir }}"
 
     # Step 3: Run the `openshift-install create manifests` command
     - name: Run openshift-install to create manifests
       command: >
         openshift-install create manifests
       args:
-        chdir: "{{ install_dir }}"
+        chdir: "{{ ocp_install_dir }}"
 
     # Step 4: Check the mastersSchedulable parameter
     # - name: Check if mastersSchedulable is set to false
@@ -62,4 +62,4 @@
       command: >
         openshift-install create ignition-configs
       args:
-        chdir: "{{ install_dir }}"
+        chdir: "{{ ocp_install_dir }}"
