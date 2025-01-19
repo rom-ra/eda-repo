@@ -4,7 +4,6 @@
   become: yes
   vars_files:
     - configs.yml
-  
   tasks:
     - name: Ensure httpd is installed and started
       yum:
