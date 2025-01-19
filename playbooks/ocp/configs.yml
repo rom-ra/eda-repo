@@ -1,5 +1,5 @@
 ---
-OCP_BASE_DOMAIN: "example.com"
+OCP_BASE_DOMAIN: example.com
 OCP_COMPUTE_REPLICAS: 3
 OCP_CONTROL_REPLICAS: 3
 OCP_CLUSTER_NAME: "my-cluster"
