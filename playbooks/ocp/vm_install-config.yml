@@ -44,9 +44,9 @@
         backrefs: yes
     
      - name: Display the mastersSchedulable configuration
-      command: >
-        cat {{ OCP_INSTALL_DIR }}/manifests/cluster-scheduler-02-config.yml | grep mastersSchedulable
-      register: scheduler_config
+       command: >
+         cat {{ OCP_INSTALL_DIR }}/manifests/cluster-scheduler-02-config.yml | grep mastersSchedulable
+       register: scheduler_config
 
     - name: Print the content of the cluster-scheduler-02-config.yml file
       debug:
