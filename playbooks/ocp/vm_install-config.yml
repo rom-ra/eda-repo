@@ -50,7 +50,7 @@
 
     - name: Print the content of the cluster-scheduler-02-config.yml file
       debug:
-      msg: "{{ scheduler_config.stdout }}"
+        msg: "{{ scheduler_config.stdout }}"
     # Step 4: Run the `openshift-install create ignition-configs` command
     # - name: Run openshift-install to create ignition-configs
     #   command: >
