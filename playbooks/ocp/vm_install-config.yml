@@ -40,7 +40,7 @@
       args:
         chdir: "{{ OCP_INSTALL_DIR }}"
 
-    Step 4: Check the mastersSchedulable parameter
+    # Step 3: Check the mastersSchedulable parameter
     - name: Check if mastersSchedulable is set to false
       command: cat "{{ OCP_INSTALL_DIR }}"/manifests/cluster-scheduler-02-config.yml | grep "mastersSchedulable: false"
       register: masters_schedulable_check
@@ -51,7 +51,7 @@
       debug:
         msg: "mastersSchedulable is correctly set to false."
 
-    # Step 5: Run the `openshift-install create ignition-configs` command
+    # Step 4: Run the `openshift-install create ignition-configs` command
     - name: Run openshift-install to create ignition-configs
       command: >
         openshift-install create ignition-configs
