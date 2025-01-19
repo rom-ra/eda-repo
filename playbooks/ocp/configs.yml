@@ -9,3 +9,31 @@ ssh_key: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAQRL1CIMFRlCigTjAIAM8iY0ndnKkCEgc
 OCP_INSTALL_DIR: "/root/ocp-install"
 rhsm_username: "room24"  
 rhsm_password: "capvuw-gykhuD-6betsi" 
+
+
+nameserver: "8.8.8.8"  # Replace with your nameserver
+    httpd_root: "/var/www/html"
+    haproxy_config: "/etc/haproxy/haproxy.cfg"
+    files_to_add:
+      - "worker.ign"
+      - "bootstrap.ign"
+      - "master.ign"
+    ign_source_dir: "/path/to/ignition/files"  # Update with actual source path
+    ocp_env: "/ocp/"  # Update environment as needed
+    stats_desc: "Stats for /ocp/ cluster"
+    haproxy_stats_user: "admin"
+    haproxy_stats_pass: "ocp"
+    haproxy_servers:
+      api:
+        - { name: "bootstrap", host: "bootstrap.ocp.room.com", port: 6443, options: "check inter 1s backup" }
+        - { name: "master0", host: "master0.ocp.room.com", port: 6443, options: "check inter 1s" }
+        - { name: "master1", host: "master1.ocp.room.com", port: 6443, options: "check inter 1s" }
+        - { name: "master2", host: "master2.ocp.room.com", port: 6443, options: "check inter 1s" }
+      mcs:
+        - { name: "bootstrap", host: "bootstrap.ocp.room.com", port: 22623, options: "check inter 1s backup" }
+        - { name: "master0", host: "master0.ocp.room.com", port: 22623, options: "check inter 1s" }
+        - { name: "master1", host: "master1.ocp.room.com", port: 22623, options: "check inter 1s" }
+        - { name: "master2", host: "master2.ocp.room.com", port: 22623, options: "check inter 1s" }
+      ingress:
+        - { name: "worker0", host: "worker0.ocp.room.com", port: 443, options: "check inter 1s" }
+        - { name: "worker1", host: "worker1.ocp.room.com", port: 443, options: "check inter 1s" }
