@@ -1,5 +1,5 @@
 vm_details:
-  - name: "MadeByAnsible"
+  - name: "RHEL9-OCP"
     folder: "Romany"
     template: "rhel9_template"
     guest_id: "rhel9_64Guest"
