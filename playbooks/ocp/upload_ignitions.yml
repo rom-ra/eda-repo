@@ -57,5 +57,10 @@
         name: haproxy
         state: started
         enabled: yes
+        ignore_errors: yes
 
-# Add this in the same directory as the playbook or adjust `src` accordingly.
+    - name: Ensure DHCP is installed
+      yum:
+        name: dhcp
+        state: latest    
+
