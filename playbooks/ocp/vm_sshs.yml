@@ -2,25 +2,10 @@
   hosts: all
   become: true
   gather_facts: false
-  vars:
-    new_hostname: "VMwithAnsible"
-
   tasks:
     - name: Check current hostname
       command: hostname
       register: current_hostname
-
-    - name: Display current hostname
-      debug:
-        msg: "Current hostname is {{ current_hostname.stdout }}"
-
-    - name: Change the hostname
-      command: hostnamectl set-hostname "{{ new_hostname }}"
-      register: change_hostname_result
-
-    - name: Display hostname change result
-      debug:
-        var: change_hostname_result
 
     - name: Disable SELinux in configuration file
       lineinfile:
