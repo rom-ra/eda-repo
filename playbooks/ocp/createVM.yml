@@ -1,7 +1,6 @@
 ---
 - name: Create a VM with custom resources
   hosts: localhost
-  become: true
   gather_facts: false
   vars_files:
     - vcenter_vars.yml
@@ -29,31 +28,8 @@
           memory_mb: "{{ item.memory_mb }}"
         networks: "{{ item.networks }}"
         disk: "{{ item.disk}}"
-        # cdrom: "{{ item.cdrom}}"
       loop: "{{ vm_details }}"
       loop_control:
         label: "{{ item.name }}"
       register: vm
-      
-
-      
-    - name: Run commands on VM
-      community.vmware.vmware_vm_shell:
-        hostname: "{{ vcenter.hostname }}"
-        username: "{{ vcenter.username }}"
-        password: "{{ vcenter.password }}"
-        datacenter: "{{ datacenter.name }}"
-        folder: "{{ item.folder }}"
-        validate_certs: "{{ validate_certs }}"
-        vm_id: "{{ item.name}}"
-        vm_username: core
-        vm_password: core
-        vm_shell: "/bin/bash"
-        vm_shell_args:
-          - "hostname"
-        wait_for_process: true
-        timeout: 3600  
-      loop: "{{ vm_details }}"
-      register: vm_shell_result
-      ignore_errors: true
-      
+    
