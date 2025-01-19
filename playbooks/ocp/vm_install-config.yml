@@ -15,21 +15,21 @@
         dest: "{{ ocp_install_dir }}/install-config.yml"
         content: |
           apiVersion: v1
-          baseDomain: "{{ base_domain }}"
+          baseDomain: "{{ OCP_BASE_DOMAIN }}"
           compute:
           - hyperthreading: Enabled
             name: worker
-            replicas: "{{ compute_replicas }}"
+            replicas: "{{ OCP_COMPUTE_REPLICAS }}"
           controlPlane:
             hyperthreading: Enabled
             name: master
-            replicas: "{{ control_replicas }}"
+            replicas: "{{ OCP_CONTROL_REPLICAS }}"
           metadata:
-            name: "{{ cluster_name }}"
+            name: "{{ OCP_CLUSTER_NAME }}"
           platform:
             none: {}
           fips: false
-          pullSecret: "{{ pull_secret }}"
+          pullSecret: "{{ OCP_PULL_SECRET }}"
           sshKey: "{{ ssh_key.content }}"
 
     # Step 2: Run the `openshift-install create install-config` command
