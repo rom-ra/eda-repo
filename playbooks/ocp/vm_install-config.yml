@@ -7,7 +7,7 @@
   tasks:
     - name: Read SSH key content
       slurp:
-        src: /root/.ssh/id_ed25519.pub
+        src: "{{ssh_key_path}}"
       register: ssh_key
     # Step 1: Create install-config.yml
     - name: Create the install-config.yml file
