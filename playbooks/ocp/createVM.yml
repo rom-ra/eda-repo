@@ -23,11 +23,7 @@
         guest_id: "{{ item.guest_id }}"
         state: "{{ item.state}}"
         wait_for_ip_address: "{{ item.wait_for_ip_address }}"
-        customization:
-          autologon: true
-          dns_servers:
-          - 192.168.1.20
-          - 8.8.8.8
+        customization: "{{ item.customization}}"
         hardware:
           num_cpus: "{{ item.num_cpus }}"
           memory_mb: "{{ item.memory_mb }}"
