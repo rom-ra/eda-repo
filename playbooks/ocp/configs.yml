@@ -20,7 +20,7 @@ nameserver: "8.8.8.8"  # Replace with your nameserver
       - "master.ign"
     ign_source_dir: "/path/to/ignition/files"  # Update with actual source path
     ocp_env: "/ocp/"  # Update environment as needed
-    stats_desc: "Stats for /ocp/ cluster"
+    stats_desc: "Stats for ocp cluster"
     haproxy_stats_user: "admin"
     haproxy_stats_pass: "ocp"
     haproxy_servers:
