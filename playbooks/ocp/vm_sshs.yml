@@ -5,7 +5,25 @@
   vars:
     ssh_key_path: "/root/.ssh/id_ed25519"
     ocp_install_dir: "/root/ocp-install"
+    rhsm_username: "room24"  
+    rhsm_password: "capvuw-gykhuD-6betsi" 
   tasks:
+    # Step 0: Register with Red Hat Subscription Manager
+    - name: Register with Red Hat Subscription Manager
+      command: >
+        subscription-manager register
+        --username="{{ rhsm_username }}"
+        --password="{{ rhsm_password }}"
+      register: subscription_register
+
+    - name: Verify subscription registration
+      debug:
+        msg: "Subscription registration result: {{ subscription_register.stdout }}"
+
+    - name: Attach subscription if registration succeeded
+      command: subscription-manager attach --auto
+      when: subscription_register.rc == 0
+
     # Step 1: Disable SELinux
     - name: Disable SELinux in configuration file
       lineinfile:
