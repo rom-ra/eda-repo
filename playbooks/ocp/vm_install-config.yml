@@ -32,26 +32,20 @@
           pullSecret: "{{ OCP_PULL_SECRET }}"
           sshKey: "{{ ssh_key.content }}"
 
-    # Step 2: Run the `openshift-install create install-config` command
-    - name: Run openshift-install to create install-config
-      command: >
-        openshift-install create install-config
-      args:
-        chdir: "{{ OCP_INSTALL_DIR }}"
 
-    # Step 3: Run the `openshift-install create manifests` command
+    # Step 2: Run the `openshift-install create manifests` command
     - name: Run openshift-install to create manifests
       command: >
         openshift-install create manifests
       args:
         chdir: "{{ OCP_INSTALL_DIR }}"
 
-    # Step 4: Check the mastersSchedulable parameter
-    # - name: Check if mastersSchedulable is set to false
-    #   command: grep "mastersSchedulable: false" "{{ install_dir }}/manifests/cluster-scheduler-02-config.yml"
-    #   register: masters_schedulable_check
-    #   failed_when: masters_schedulable_check.rc == 0
-    #   changed_when: false
+    Step 4: Check the mastersSchedulable parameter
+    - name: Check if mastersSchedulable is set to false
+      command: cat "{{ OCP_INSTALL_DIR }}"/manifests/cluster-scheduler-02-config.yml | grep "mastersSchedulable: false"
+      register: masters_schedulable_check
+      failed_when: masters_schedulable_check.rc == 0
+      changed_when: false
 
     - name: Display the mastersSchedulable check result
       debug:
