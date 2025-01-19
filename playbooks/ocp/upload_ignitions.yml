@@ -17,7 +17,7 @@
         enabled: yes
 
     - name: Copy ignition files to httpd root
-      copy:
+      ansible.builtin.copy:
         src: "{{ OCP_INSTALL_DIR }}/{{ item }}"
         dest: "{{ httpd_root }}/"
         owner: apache
