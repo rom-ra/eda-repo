@@ -50,5 +50,27 @@ vm_details:
     disk:
       - size_gb: 80
         type: thin
-        datastore: "datastore-14"  
+        datastore: "datastore-14" 
+
+  - name: "Master1"
+    folder: "Romany"
+    template: "coreos_template"
+    guest_id: "rhel9_64Guest"
+    memory_mb: 16096
+    num_cpus: 4
+    state: poweredoff
+    wait_for_ip_address: false
+    networks:
+      - name: "VM Network"
+        device_type: vmxnet3
+        ip: "192.168.1.124"
+        netmask: "255.255.255.0"
+        gateway: "192.168.1.1"
+        dns_servers:
+        - "192.168.1.20"
+        - "8.8.8.8"
+    disk:
+      - size_gb: 80
+        type: thin
+        datastore: "datastore-14"      
 
