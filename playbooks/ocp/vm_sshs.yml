@@ -41,6 +41,10 @@
         name: haproxy
         state: present
 
+    - name: Install WebServer
+      package:
+        name: httpd
+        state: present
     # Step 5: Download and install OpenShift Installer
     - name: Download OpenShift Installer
       get_url:
