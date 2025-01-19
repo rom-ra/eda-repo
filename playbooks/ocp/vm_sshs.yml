@@ -87,13 +87,11 @@
 
     - name: Extract OpenShift Client binaries
       command: tar -xvf /tmp/openshift-client-linux.tar.gz
-      args:
-        creates: /tmp/oc
+     
 
     - name: Move oc and kubectl to /usr/local/bin
-      command: mv /tmp/{oc,kubectl} /usr/local/bin/
-      args:
-        removes: /tmp/oc
+      command: mv /tmp/oc /tmp/kubectl /usr/local/bin/
+     
 
     - name: Verify OpenShift Client installation
       command: oc version
