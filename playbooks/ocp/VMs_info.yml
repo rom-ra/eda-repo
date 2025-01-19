@@ -1,11 +1,41 @@
-- name: Configure VMs with details from first job template
+- name: Configure VMs and DHCP configuration
   hosts: 192.168.1.122
   become: true
 
   tasks:
-    - name: Configure VMs with details from first job template
+    - name: Create VMs or gather VM details
+      # Replace with the actual task that creates or retrieves VMs
+      # Here, we're assuming the VMs are being gathered, for example using `ansible_facts`
       debug:
-        msg: "Configuring VM: {{ item.name }} with IP address: {{ item.hw_eth0.macaddress }}"
-      loop: "{{ vm }}"
-      loop_control:
-        label: "{{ item.item.name }}"
+        msg: "VM creation completed."
+      register: vm_result
+
+    - name: Ensure DHCP is installed
+      yum:
+        name: dhcp
+        state: latest
+
+    - name: Extract VM details (example: name, mac, and IP address)
+      set_fact:
+        dhcp_hosts: >
+          {{
+            vm_result.results | map(attribute='ansible_facts') | map(attribute='ansible_default_ipv4') | map('combine', {'mac_address': ansible_facts['eth0']['macaddress']}) | list
+          }}
+
+    - name: Generate DHCP configuration
+      template:
+        src: dhcp_config.j2
+        dest: /etc/dhcp/dhcpd.conf
+      vars:
+        subnet: "192.168.1.0"
+        netmask: "255.255.255.0"
+        dhcp_range_start: "192.168.1.100"
+        dhcp_range_end: "192.168.1.200"
+        routers: "192.168.1.1"
+        subnet_mask: "255.255.255.0"
+        dns_servers: "8.8.8.8, 8.8.4.4"
+        broadcast_address: "192.168.1.255"
+        default_lease_time: "600"
+        max_lease_time: "7200"
+        dhcp_hosts: "{{ dhcp_hosts }}"
+
