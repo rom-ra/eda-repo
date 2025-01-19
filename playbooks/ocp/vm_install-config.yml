@@ -15,21 +15,21 @@
         dest: "{{ OCP_INSTALL_DIR }}/install-config.yaml"
         content: |
           apiVersion: v1
-          baseDomain: "{{ OCP_BASE_DOMAIN }}"
+          baseDomain: {{ OCP_BASE_DOMAIN }}
           compute:
           - hyperthreading: Enabled
             name: worker
-            replicas: "{{ OCP_COMPUTE_REPLICAS }}"
+            replicas: {{ OCP_COMPUTE_REPLICAS }}
           controlPlane:
             hyperthreading: Enabled
             name: master
-            replicas: "{{ OCP_CONTROL_REPLICAS }}"
+            replicas: {{ OCP_CONTROL_REPLICAS }}
           metadata:
-            name: "{{ OCP_CLUSTER_NAME }}"
+            name: {{ OCP_CLUSTER_NAME }}
           platform:
             none: {}
           fips: false
-          pullSecret: "{{ OCP_PULL_SECRET }}"
+          pullSecret: '{{ OCP_PULL_SECRET }}'
           sshKey: "{{ ssh_key.content }}"
 
 
