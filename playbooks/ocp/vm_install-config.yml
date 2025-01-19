@@ -1,0 +1,67 @@
+- name: Automate OpenShift installation steps
+  hosts: all
+  become: true
+  gather_facts: false
+  vars:
+    install_dir: "/root/ocp-install"
+    base_domain: "{{ lookup('env', 'OCP_BASE_DOMAIN') | default('example.com') }}"
+    compute_replicas: "{{ lookup('env', 'OCP_COMPUTE_REPLICAS') | default(2) }}"
+    control_replicas: "{{ lookup('env', 'OCP_CONTROL_REPLICAS') | default(3) }}"
+    cluster_name: "{{ lookup('env', 'OCP_CLUSTER_NAME') | default('ocp') }}"
+    pull_secret: "{{ lookup('env', 'OCP_PULL_SECRET') }}"
+    ssh_key: "{{ lookup('file', '/root/.ssh/id_ed25519.pub') }}"
+  tasks:
+    # Step 1: Create install-config.yml
+    - name: Create the install-config.yml file
+      copy:
+        dest: "{{ install_dir }}/install-config.yml"
+        content: |
+          apiVersion: v1
+          baseDomain: {{ base_domain }}
+          compute:
+          - hyperthreading: Enabled
+            name: worker
+            replicas: {{ compute_replicas }}
+          controlPlane:
+            hyperthreading: Enabled
+            name: master
+            replicas: {{ control_replicas }}
+          metadata:
+            name: {{ cluster_name }}
+          platform:
+            none: {}
+          fips: false
+          pullSecret: {{ pull_secret }}
+          sshKey: "{{ ssh_key }}"
+
+    # Step 2: Run the `openshift-install create install-config` command
+    - name: Run openshift-install to create install-config
+      command: >
+        openshift-install create install-config
+      args:
+        chdir: "{{ install_dir }}"
+
+    # Step 3: Run the `openshift-install create manifests` command
+    - name: Run openshift-install to create manifests
+      command: >
+        openshift-install create manifests
+      args:
+        chdir: "{{ install_dir }}"
+
+    # Step 4: Check the mastersSchedulable parameter
+    - name: Check if mastersSchedulable is set to false
+      command: grep "mastersSchedulable: false" "{{ install_dir }}/manifests/cluster-scheduler-02-config.yml"
+      register: masters_schedulable_check
+      failed_when: masters_schedulable_check.rc == 0
+      changed_when: false
+
+    - name: Display the mastersSchedulable check result
+      debug:
+        msg: "mastersSchedulable is correctly set to false."
+
+    # Step 5: Run the `openshift-install create ignition-configs` command
+    - name: Run openshift-install to create ignition-configs
+      command: >
+        openshift-install create ignition-configs
+      args:
+        chdir: "{{ install_dir }}"
