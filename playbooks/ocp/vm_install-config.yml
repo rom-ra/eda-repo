@@ -35,7 +35,14 @@
         openshift-install create manifests
       args:
         chdir: "{{ OCP_INSTALL_DIR }}"
-
+        
+    - name: Set mastersSchedulable to false in the scheduler config
+      lineinfile:
+      path: "{{ install_dir }}/manifests/cluster-scheduler-02-config.yml"
+      regexp: "^\\s*mastersSchedulable:.*"
+      line: "  mastersSchedulable: false"
+      backrefs: yes
+    
     - name: Display the mastersSchedulable check result
       debug:
         msg: "mastersSchedulable is correctly set to false."
