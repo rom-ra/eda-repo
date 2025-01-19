@@ -3,7 +3,7 @@
   become: true
   gather_facts: false
   vars_files:
-    - install-configs.yml
+    - configs.yml
   vars:
     install_dir: "/root/ocp-install"
   tasks:
