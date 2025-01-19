@@ -2,12 +2,12 @@ vm_details:
   - name: "MadeByAnsible"
     folder: "Romany"
     # template: "rhel9_template"
-    # template: "coreos_template"
+    template: "coreos_template"
     guest_id: "rhel9_64Guest"
     memory_mb: 16096
     num_cpus: 4
     state: poweredon
-    wait_for_ip_address: false
+    wait_for_ip_address: true
     networks:
       - name: "VM Network"
         device_type: vmxnet3
