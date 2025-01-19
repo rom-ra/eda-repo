@@ -2,6 +2,9 @@
   hosts: all
   become: true
   gather_facts: false
+  vars:
+    ssh_key_path: "/root/.ssh/id_ed25519"
+    ocp_install_dir: "/root/ocp-install"
   tasks:
     # Step 1: Disable SELinux
     - name: Disable SELinux in configuration file
@@ -24,10 +27,10 @@
         enabled: no
 
     # Step 3: Generate SSH key
-   
     - name: Generate SSH key if not exists
       command: ssh-keygen -t ed25519 -f "{{ ssh_key_path }}" -N ""
-      register: ssh_key
+      args:
+        creates: "{{ ssh_key_path }}"
 
     # Step 4: Install HAProxy
     - name: Install HAProxy
@@ -39,18 +42,17 @@
       package:
         name: httpd
         state: present
+
     # Step 5: Download and install OpenShift Installer
     - name: Download OpenShift Installer
       get_url:
         url: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-install-linux.tar.gz
         dest: /tmp/openshift-install-linux.tar.gz
 
-    - name: Extract OpenShift Installer to /usr/local/bin
-      unarchive:
-        src: /tmp/openshift-install-linux.tar.gz
-        dest: /usr/local/bin/
-        remote_src: yes
-      mode: '0755'
+    - name: Extract OpenShift Installer
+      command: tar -xvf /tmp/openshift-install-linux.tar.gz -C /usr/local/bin/
+      args:
+        creates: /usr/local/bin/openshift-install
 
     - name: Verify OpenShift Installer installation
       command: openshift-install version
@@ -67,17 +69,15 @@
         url: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz
         dest: /tmp/openshift-client-linux.tar.gz
 
-    - name: Extract OpenShift Client binaries to /usr/local/bin
-      unarchive:
-        src: /tmp/openshift-client-linux.tar.gz
-        dest: /tmp/openshift-client/
-        remote_src: yes
-      mode: '0755'
+    - name: Extract OpenShift Client binaries
+      command: tar -xvf /tmp/openshift-client-linux.tar.gz -C /tmp/
+      args:
+        creates: /tmp/oc
 
     - name: Move oc and kubectl to /usr/local/bin
-      command: mv /tmp/openshift-client/{oc,kubectl} /usr/local/bin/
+      command: mv /tmp/{oc,kubectl} /usr/local/bin/
       args:
-        removes: /tmp/openshift-client/
+        removes: /tmp/oc
 
     - name: Verify OpenShift Client installation
       command: oc version
@@ -91,6 +91,6 @@
     # Step 7: Create OCP install directory
     - name: Create OCP install directory
       file:
-        path: /root/ocp-install
+        path: "{{ ocp_install_dir }}"
         state: directory
         mode: '0755'
