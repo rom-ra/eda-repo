@@ -59,8 +59,5 @@
         enabled: yes
         ignore_errors: yes
 
-    - name: Ensure DHCP is installed
-      yum:
-        name: dhcp
-        state: latest    
+
 
