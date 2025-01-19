@@ -38,7 +38,7 @@
         
     - name: Set mastersSchedulable to false in the scheduler config
       lineinfile:
-        path: "{{ install_dir }}/manifests/cluster-scheduler-02-config.yml"
+        path: "{{ OCP_INSTALL_DIR }}/manifests/cluster-scheduler-02-config.yml"
         regexp: "^\\s*mastersSchedulable:.*"
         line: "  mastersSchedulable: false"
         backrefs: yes
