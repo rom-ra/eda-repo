@@ -45,7 +45,7 @@
     
     - name: Display the mastersSchedulable configuration
       command: >
-        cat {{ OCP_INSTALL_DIR }}/manifests/cluster-scheduler-02-config.yml | grep mastersSchedulable
+        grep mastersSchedulable "{{ OCP_INSTALL_DIR }}/manifests/cluster-scheduler-02-config.yml"
       register: scheduler_config
 
     - name: Print the content of the cluster-scheduler-02-config.yml file
