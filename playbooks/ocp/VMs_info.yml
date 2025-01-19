@@ -1,0 +1,11 @@
+- name: Configure VMs with details from first job template
+  hosts: 192.168.1.122
+  become: true
+
+  tasks:
+    - name: Configure VMs with details from first job template
+      debug:
+        msg: "Configuring VM: {{ item.name }} with IP address: {{ item.ip_address }}"
+      loop: "{{ vm.results }}"
+      loop_control:
+        label: "{{ item.item.name }}"
