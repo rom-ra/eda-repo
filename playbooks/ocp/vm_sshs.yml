@@ -89,22 +89,22 @@
       command: tar -xvf /tmp/openshift-client-linux.tar.gz
      
 
-    # - name: Move oc and kubectl to /usr/local/bin
-    #   command: mv /tmp/oc /tmp/kubectl /usr/local/bin/
+    - name: Move oc and kubectl to /usr/local/bin
+      command: mv oc kubectl /usr/local/bin/
      
 
-    # - name: Verify OpenShift Client installation
-    #   command: oc version
-    #   register: openshift_client_version
-    #   ignore_errors: yes
+    - name: Verify OpenShift Client installation
+      command: oc version
+      register: openshift_client_version
+      ignore_errors: yes
 
-    # - name: Show OpenShift Client version
-    #   debug:
-    #     msg: "OpenShift Client version: {{ openshift_client_version.stdout }}"
+    - name: Show OpenShift Client version
+      debug:
+        msg: "OpenShift Client version: {{ openshift_client_version.stdout }}"
 
-    # # Step 7: Create OCP install directory
-    # - name: Create OCP install directory
-    #   file:
-    #     path: "{{ ocp_install_dir }}"
-    #     state: directory
-    #     mode: '0755'
+    # Step 7: Create OCP install directory
+    - name: Create OCP install directory
+      file:
+        path: "{{ ocp_install_dir }}"
+        state: directory
+        mode: '0755'
