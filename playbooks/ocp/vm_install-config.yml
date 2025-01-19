@@ -26,7 +26,7 @@
             none: {}
           fips: false
           pullSecret: '{{ OCP_PULL_SECRET }}'
-          sshKey: "{{ ssh_key }}"
+          sshKey: '{{ ssh_key }}'
 
 
     # Step 2: Run the `openshift-install create manifests` command
