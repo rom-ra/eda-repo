@@ -18,7 +18,7 @@
 
     - name: Copy ignition files to httpd root
       copy:
-        src: "{{ ign_source_dir }}/{{ item }}"
+        src: "{{ OCP_INSTALL_DIR }}/{{ item }}"
         dest: "{{ httpd_root }}/"
         owner: apache
         group: apache
