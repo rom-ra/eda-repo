@@ -45,7 +45,7 @@
         datacenter: "{{ datacenter.name }}"
         folder: "{{ item.folder }}"
         validate_certs: "{{ validate_certs }}"
-        vm_id: "New Virtual Machine"
+        vm_id: "{{ item.name}}"
         vm_username: root
         vm_password: root
         vm_shell: "/bin/bash"
@@ -56,3 +56,4 @@
       loop: "{{ vm_details }}"
       register: vm_shell_result
       ignore_errors: true
+      
