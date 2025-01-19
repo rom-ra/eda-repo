@@ -4,3 +4,8 @@ OCP_COMPUTE_REPLICAS: 3
 OCP_CONTROL_REPLICAS: 3
 OCP_CLUSTER_NAME: "my-cluster"
 OCP_PULL_SECRET: "your-pull-secret-here"
+
+ssh_key_path: "/root/.ssh/id_ed25519"
+ocp_install_dir: "/root/ocp-install"
+rhsm_username: "room24"  
+rhsm_password: "capvuw-gykhuD-6betsi" 
