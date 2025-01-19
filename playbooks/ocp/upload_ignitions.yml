@@ -23,6 +23,7 @@
         owner: apache
         group: apache
         mode: "0777"
+        remote_src: true
       loop: "{{ files_to_add }}"
 
     - name: Check if nameserver is present in resolv.conf
