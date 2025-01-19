@@ -5,7 +5,7 @@
   tasks:
     - name: Configure VMs with details from first job template
       debug:
-        msg: "Configuring VM: {{ item.name }} with IP address: {{ item.ip_address }}"
-      loop: "{{ vm.results }}"
+        msg: "Configuring VM: {{ item.name }} with IP address: {{ item.hw_eth0.macaddress }}"
+      loop: "{{ vm }}"
       loop_control:
         label: "{{ item.item.name }}"
