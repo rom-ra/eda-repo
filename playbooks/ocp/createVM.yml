@@ -34,30 +34,7 @@
       loop_control:
         label: "{{ item.name }}"
       register: vm
-
-
-    # - name: Install VMware Tools using vmware.vmware_rest
-    #   vmware.vmware_rest.vcenter_vm_tools_installer:
-    #     vcenter_hostname: "{{ vcenter.hostname }}"
-    #     vcenter_username: "{{ vcenter.username }}"
-    #     vcenter_password: "{{ vcenter.password }}"
-    #     vcenter_validate_certs: "{{ validate_certs }}"
-    #     vm: vm-49325
-    #     state: connect
-    #   loop: "{{ vm_details }}"
-
       
-
-    - name: Wait for VMware tools to become available by name
-      community.vmware.vmware_guest_tools_wait:
-        hostname: "{{ vcenter.hostname }}"
-        username: "{{ vcenter.username }}"
-        password: "{{ vcenter.password }}"
-        datacenter: "{{ datacenter.name }}"
-        validate_certs: "{{ validate_certs }}"
-        folder: "{{ item.folder }}"
-        name: "{{ item.name }}"
-      loop: "{{ vm_details }}"
 
       
     - name: Run commands on VM
@@ -79,15 +56,3 @@
       loop: "{{ vm_details }}"
       register: vm_shell_result
       ignore_errors: true
-    
-    - name: Turn on the power of the VMs
-      vmware.vmware_rest.vcenter_vm_power:
-        vcenter_hostname: "{{ vcenter.hostname }}"
-        vcenter_username: "{{ vcenter.username }}"
-        vcenter_password: "{{ vcenter.password }}"
-        vcenter_validate_certs: "{{ validate_certs }}"
-        state: start
-        vm: "{{ item.instance.moid }}"
-    loop: "{{ vm.results }}"
-    when: item.instance is defined
-    ignore_errors: true
