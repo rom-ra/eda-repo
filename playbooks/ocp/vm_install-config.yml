@@ -5,10 +5,9 @@
   vars_files:
     - configs.yml
   tasks:
-    - name: Read SSH key content
-      slurp:
-        src: "{{ssh_key_path}}"
-      register: ssh_key
+   - name: Read SSH key content
+     set_fact:
+      ssh_key: "{{ lookup('file', ssh_key_path) }}"
     # Step 1: Create install-config.yml
     - name: Create the install-config.yml file
       copy:
@@ -30,7 +29,7 @@
             none: {}
           fips: false
           pullSecret: '{{ OCP_PULL_SECRET }}'
-          sshKey: "{{ ssh_key.content }}"
+          sshKey: "{{ ssh_key }}"
 
 
     # Step 2: Run the `openshift-install create manifests` command
