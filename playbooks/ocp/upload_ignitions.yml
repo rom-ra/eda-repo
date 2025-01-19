@@ -53,7 +53,7 @@
         mode: "0644"
 
     - name: Start and enable haproxy
-      ansible.builtin.systemd:
+      systemd:
         name: haproxy
         state: started
         enabled: yes
