@@ -12,7 +12,7 @@
     # Step 1: Create install-config.yml
     - name: Create the install-config.yml file
       copy:
-        dest: "{{ ocp_install_dir }}/install-config.yml"
+        dest: "{{ OCP_INSTALL_DIR }}/install-config.yml"
         content: |
           apiVersion: v1
           baseDomain: "{{ OCP_BASE_DOMAIN }}"
