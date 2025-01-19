@@ -41,7 +41,7 @@ vm_details:
     networks:
       - name: "VM Network"
         device_type: vmxnet3
-        ip: "192.168.1.122"
+        ip: "192.168.1.123"
         netmask: "255.255.255.0"
         gateway: "192.168.1.1"
         dns_servers:
