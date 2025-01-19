@@ -38,4 +38,15 @@
         default_lease_time: "600"
         max_lease_time: "7200"
         dhcp_hosts: "{{ dhcp_hosts }}"
+        
+    - name: Start and enable DHCP service
+      systemd:
+        name: dhcpd
+        state: started
+        enabled: yes
+
+    - name: Restart DHCP service to apply configuration
+      systemd:
+        name: dhcpd
+        state: restarted    
 
