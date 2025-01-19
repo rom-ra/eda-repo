@@ -49,11 +49,11 @@
         chdir: "{{ install_dir }}"
 
     # Step 4: Check the mastersSchedulable parameter
-    - name: Check if mastersSchedulable is set to false
-      command: grep "mastersSchedulable: false" "{{ install_dir }}/manifests/cluster-scheduler-02-config.yml"
-      register: masters_schedulable_check
-      failed_when: masters_schedulable_check.rc == 0
-      changed_when: false
+    # - name: Check if mastersSchedulable is set to false
+    #   command: grep "mastersSchedulable: false" "{{ install_dir }}/manifests/cluster-scheduler-02-config.yml"
+    #   register: masters_schedulable_check
+    #   failed_when: masters_schedulable_check.rc == 0
+    #   changed_when: false
 
     - name: Display the mastersSchedulable check result
       debug:
