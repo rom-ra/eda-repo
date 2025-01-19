@@ -43,10 +43,13 @@
         line: "  mastersSchedulable: false"
         backrefs: yes
     
-    - name: Display the mastersSchedulable check result
-      debug:
-        msg: "mastersSchedulable is correctly set to false."
+     - name: Display the mastersSchedulable configuration
+      command: cat {{ OCP_INSTALL_DIR }}/manifests/cluster-scheduler-02-config.yml | grep mastersSchedulable
+      register: scheduler_config
 
+    - name: Print the content of the cluster-scheduler-02-config.yml file
+      debug:
+      msg: "{{ scheduler_config.stdout }}"
     # Step 4: Run the `openshift-install create ignition-configs` command
     - name: Run openshift-install to create ignition-configs
       command: >
