@@ -37,14 +37,14 @@
       command: >
         openshift-install create install-config
       args:
-        chdir: "{{ ocp_install_dir }}"
+        chdir: "{{ OCP_INSTALL_DIR }}"
 
     # Step 3: Run the `openshift-install create manifests` command
     - name: Run openshift-install to create manifests
       command: >
         openshift-install create manifests
       args:
-        chdir: "{{ ocp_install_dir }}"
+        chdir: "{{ OCP_INSTALL_DIR }}"
 
     # Step 4: Check the mastersSchedulable parameter
     # - name: Check if mastersSchedulable is set to false
@@ -62,4 +62,4 @@
       command: >
         openshift-install create ignition-configs
       args:
-        chdir: "{{ ocp_install_dir }}"
+        chdir: "{{ OCP_INSTALL_DIR }}"
