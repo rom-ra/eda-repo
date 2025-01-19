@@ -83,10 +83,10 @@
     - name: Download OpenShift Client
       get_url:
         url: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz
-        dest: /tmp/openshift-client-linux.tar.gz
+        dest: /root/openshift-client-linux.tar.gz
 
     - name: Extract OpenShift Client binaries
-      command: tar -xvf /tmp/openshift-client-linux.tar.gz
+      command: tar -xvf /root/openshift-client-linux.tar.gz
      
 
     - name: Move oc and kubectl to /usr/local/bin
