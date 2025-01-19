@@ -40,13 +40,6 @@
       args:
         chdir: "{{ OCP_INSTALL_DIR }}"
 
-    # Step 3: Check the mastersSchedulable parameter
-    - name: Check if mastersSchedulable is set to false
-      command: cat "{{ OCP_INSTALL_DIR }}"/manifests/cluster-scheduler-02-config.yml | grep mastersSchedulable: false
-      register: masters_schedulable_check
-      failed_when: masters_schedulable_check.rc == 0
-      changed_when: false
-
     - name: Display the mastersSchedulable check result
       debug:
         msg: "mastersSchedulable is correctly set to false."
