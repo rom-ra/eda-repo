@@ -46,8 +46,8 @@
         folder: "{{ item.folder }}"
         validate_certs: "{{ validate_certs }}"
         vm_id: "{{ item.name}}"
-        vm_username: root
-        vm_password: root
+        vm_username: core
+        vm_password: core
         vm_shell: "/bin/bash"
         vm_shell_args:
           - "hostname"
