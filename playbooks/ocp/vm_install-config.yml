@@ -13,7 +13,7 @@
     - name: Read SSH key content
       slurp:
         src: /root/.ssh/id_ed25519.pub
-      register: ssh_key_slurp
+      register: ssh_key
     # Step 1: Create install-config.yml
     - name: Create the install-config.yml file
       copy:
@@ -35,7 +35,7 @@
             none: {}
           fips: false
           pullSecret: "{{ pull_secret }}"
-          sshKey: "{{ ssh_key }}"
+          sshKey: "{{ ssh_key.content }}"
 
     # Step 2: Run the `openshift-install create install-config` command
     - name: Run openshift-install to create install-config
