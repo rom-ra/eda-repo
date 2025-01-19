@@ -2,13 +2,10 @@
   hosts: 192.168.1.122
   become: true
   gather_facts: false
+  vars_files:
+    - install-configs.yml
   vars:
     install_dir: "/root/ocp-install"
-    base_domain: "{{ lookup('env', 'OCP_BASE_DOMAIN') }}"
-    compute_replicas: "{{ lookup('env', 'OCP_COMPUTE_REPLICAS')  }}"
-    control_replicas: "{{ lookup('env', 'OCP_CONTROL_REPLICAS')  }}"
-    cluster_name: "{{ lookup('env', 'OCP_CLUSTER_NAME') }}"
-    pull_secret: "{{ lookup('env', 'OCP_PULL_SECRET') }}"
   tasks:
     - name: Read SSH key content
       slurp:
