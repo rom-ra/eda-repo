@@ -9,8 +9,11 @@
     control_replicas: "{{ lookup('env', 'OCP_CONTROL_REPLICAS')  }}"
     cluster_name: "{{ lookup('env', 'OCP_CLUSTER_NAME') }}"
     pull_secret: "{{ lookup('env', 'OCP_PULL_SECRET') }}"
-    ssh_key: "{{ lookup('file', '/root/.ssh/id_ed25519.pub') }}"
   tasks:
+    - name: Read SSH key content
+      slurp:
+        src: /root/.ssh/id_ed25519.pub
+      register: ssh_key_slurp
     # Step 1: Create install-config.yml
     - name: Create the install-config.yml file
       copy:
