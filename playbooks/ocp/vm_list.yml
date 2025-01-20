@@ -46,12 +46,12 @@ vm_details:
     networks:
       - name: "VM Network"
         device_type: vmxnet3
-        ip: "192.168.1.123"
-        netmask: "255.255.255.0"
-        gateway: "192.168.1.1"
-        dns_servers:
-        - "192.168.1.20"
-        - "8.8.8.8"
+        type: dhcp
+    customization:
+      autologon: true
+      dns_servers:
+      - 192.168.1.20
+      - 8.8.8.8       
     disk:
       - size_gb: 80
         type: thin
