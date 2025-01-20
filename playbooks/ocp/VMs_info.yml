@@ -1,13 +1,16 @@
 - name: Second Playbook
   hosts: localhost
+  vars:
+    file: "{{ lookup('file', '/var/lib/ansible/variables.yml') | trim }}"
   tasks:
     - name: Load variables from file
       include_vars:
         file: "/var/lib/ansible/variables.yml"
+      ignore_erros: false  
 
     - name: Show shared_variable
       debug:
-        msg: "Shared variable is: {{ shared_variable }}"
+        msg: "Shared variable is: {{ file }}"
 
     - name: Show result_stdout
       debug:
