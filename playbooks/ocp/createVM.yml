@@ -1,15 +1,19 @@
 # ---
-# - name: Create a VM with custom resources
-#   hosts: localhost
-#   gather_facts: false
-#   vars_files:
-#     - vcenter_vars.yml
-#     - vm_list.yml
-#   tasks:
-#     - name: Debug vm_list
-#       debug:
-#         var: vm_details
-#       register: vm   
+- name: Create a VM with custom resources
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - vcenter_vars.yml
+    - vm_list.yml
+  tasks:
+    - name: Debug vm_list
+      debug:
+        var: vm_details
+      register: vm   
+    - name: set a var using set_stats
+      ansible.builtin.set_stats:
+        data:
+          my_variable: vm  
 #     # - name: Create VMs dynamically
 #     #   community.vmware.vmware_guest:
 #     #     hostname: "{{ vcenter.hostname }}"
@@ -39,24 +43,6 @@
 #       copy:
 #         dest: /tmp/vm_details.json
 #         content: "{{ vm | to_json }}" 
----
-- name: First Playbook
-  hosts: localhost
-  vars: 
-    my_variable: "ROOM"
-  tasks:
-    # - name: Set a shared variable
-    #   copy:
-    #     content: '{{ my_variable|to_json }}'
-    #     dest: foo.json
-    #   delegate_to: localhost
-      
-    - name: set a var using set_stats
-      ansible.builtin.set_stats:
-        data:
-          my_variable: "ROOM STATS"
-    - name: set a var using set_stats
-      ansible.builtin.set_fact:
-        test: "ROOM FACTS"      
+   
 
 
