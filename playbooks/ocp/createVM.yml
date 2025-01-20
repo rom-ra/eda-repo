@@ -8,7 +8,7 @@
   tasks:
     - name: Debug vm_list
       debug:
-        var: vm_list.instance.hw_name
+        var: vm_list.instance
     # - name: Create VMs dynamically
     #   community.vmware.vmware_guest:
     #     hostname: "{{ vcenter.hostname }}"
