@@ -1,10 +1,10 @@
----
 - name: Second Playbook
   hosts: localhost
-   vars_files:
-        - "/tmp/variables.yml"
   tasks:
-   
+    - name: Load variables from file
+      include_vars:
+        file: "/tmp/variables.yml"
+
     - name: Show shared_variable
       debug:
         msg: "Shared variable is: {{ shared_variable }}"
@@ -12,7 +12,6 @@
     - name: Show result_stdout
       debug:
         msg: "The result is: {{ result_stdout }}"
-
 
 
 
