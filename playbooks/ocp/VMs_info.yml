@@ -3,7 +3,7 @@
   tasks:
     - name: Load variables from file
       include_vars:
-        file: "/tmp/variables.yml"
+        file: "/var/lib/ansible/variables.yml"
 
     - name: Show shared_variable
       debug:
