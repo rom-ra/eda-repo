@@ -2,10 +2,12 @@
   hosts: localhost
   become: true
 
+  vars:
+    shared_variable: "{{ hostvars['variable_holder']['shared_variable'] }}"
   tasks:
-    - name: Access VM details from memory
-      debug:
-        var: vm
+    - debug:
+        msg: "{{ shared_variable }}"
+
 
     # - name: Ensure DHCP is installed
     #   yum:
