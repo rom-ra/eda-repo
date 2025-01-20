@@ -4,7 +4,8 @@
 
   tasks:
     - debug:
-        var: hostvars['localhost']
+        msg: "The shared variable is: {{ hostvars['localhost'].ansible_facts.shared_variable }}"
+
 
 
     # - name: Ensure DHCP is installed
