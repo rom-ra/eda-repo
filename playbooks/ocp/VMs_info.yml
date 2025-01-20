@@ -2,6 +2,16 @@
   hosts: localhost
   become: true
   tasks:
+    - name: Check if vm_details.json file exists
+      stat:
+        path: /tmp/vm_details.json
+      register: file_stat
+
+    - name: Fail if the file does not exist
+      fail:
+        msg: "The file /tmp/vm_details.json was not found."
+      when: not file_stat.stat.exists
+
     - name: Read the VM details JSON file
       slurp:
         src: /tmp/vm_details.json
