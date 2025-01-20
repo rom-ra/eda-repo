@@ -6,10 +6,8 @@
 
   tasks:
     - name: gather VM details
-      # Replace with the actual task that creates or retrieves VMs
-      # Here, we're assuming the VMs are being gathered, for example using `ansible_facts`
       debug:
-        msg: vm
+        msg: {{vm}}
       register: vm_result
 
     # - name: Ensure DHCP is installed
