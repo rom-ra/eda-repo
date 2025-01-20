@@ -12,7 +12,7 @@
     - name: Ensure DHCP is installed
       package:
         name: dhcp
-        state: persent
+        state: present
 
     - name: Extract VM details  name, mac, and IP address
       set_fact:
