@@ -40,15 +40,21 @@
 #         dest: /tmp/vm_details.json
 #         content: "{{ vm | to_json }}" 
 ---
-- name: Update
+- name: First Playbook
   hosts: localhost
   tasks:
-    - name: Show shared_variable
-      debug:
-        msg: "Shared variable is: {{ ansible_local.shared_variable }}"
+    - name: Set a shared variable
+      set_fact:
+        shared_variable: "Some value"
 
-    - name: Show result_stdout
-      debug:
-        msg: "The result is: {{ ansible_local.result_stdout }}"
+    - name: Register another variable
+      shell: "echo 'Another value'"
+      register: result
+      changed_when: false
+
+    - name: Save variables to cache
+      set_fact:
+        result_stdout: "{{ result.stdout }}"
+
 
 
