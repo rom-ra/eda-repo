@@ -55,14 +55,14 @@
 
     - name: Ensure the directory exists
       file:
-        path: "/tmp/variables.yml"
+        path: "/var/lib/ansible"
         state: directory
         mode: '0755' 
 
     - name: Use template to save variables to a file
       template:
         src: "variables.yml.j2"  # Path to the template file
-        dest: "/tmp/variables.yml"  # Destination path on the local machine
+        dest: "/var/lib/ansible/variables.yml"  # Destination path on the local machine
         mode: '0644'
     
 
