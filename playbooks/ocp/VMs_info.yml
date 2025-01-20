@@ -1,11 +1,10 @@
 ---
 - name: Second Playbook
   hosts: localhost
-  tasks:
-    - name: Load variables from file
-      vars_files:
+   vars_files:
         - "/tmp/variables.yml"
-
+  tasks:
+   
     - name: Show shared_variable
       debug:
         msg: "Shared variable is: {{ shared_variable }}"
