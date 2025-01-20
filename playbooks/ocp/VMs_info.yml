@@ -26,7 +26,8 @@
          }
          ) | list
          }}"
-
+      loop: "{{ vms.results }}"
+      
     - name: Generate DHCP configuration
       template:
         src: dhcp_config.j2
