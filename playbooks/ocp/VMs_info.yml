@@ -3,8 +3,8 @@
   hosts: localhost
   tasks:
     - name: Load variables from file
-      include_vars:
-        file: "/tmp/variables.yml"
+      vars_files:
+        - "/tmp/variables.yml"
 
     - name: Show shared_variable
       debug:
