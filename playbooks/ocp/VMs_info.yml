@@ -3,8 +3,12 @@
   become: true
 
   tasks:
-    - debug:
-        msg: "The shared variable is: {{ hostvars['localhost'].ansible_facts }}"
+    - name: Display shared variable
+      debug:
+        msg: "The shared variable is: {{ hostvars['localhost'].shared_variable }}"
+    - name: Display shared variablew
+      debug:
+        var: shared_variable 
 
 
 
