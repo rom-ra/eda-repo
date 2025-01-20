@@ -51,11 +51,6 @@
         var: vm_details
       register: vm   
 
-    - name: Save VM details to a JSON file
-      copy:
-        dest: /tmp/vm_details.json
-        content: "{{ vm | to_json }}"
-
-    - name: Debug if file is created
-      debug:
-        msg: "File created successfully"
+    - name: Set VM details as a fact for the next play
+      set_fact:
+        vm_details_in_memory: "{{ vm }}"
