@@ -1,3 +1,4 @@
+
 ---
 - name: Set Up DHCP & Haproxy
   hosts: 192.168.1.122
@@ -17,7 +18,7 @@
     - name: Extract VM details  name, mac, and IP address
       set_fact:
         dhcp_hosts: >
-          {{
+         {{
           vms_info.results | map(attribute='ansible_facts') | map(
           'combine', 
           {
@@ -53,4 +54,3 @@
     #   systemd:
     #     name: dhcpd
     #     state: restarted    
-
