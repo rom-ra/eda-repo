@@ -7,9 +7,13 @@
         src: /tmp/vm_details.json
       register: vm_data_raw
 
+    - name: Parse VM details from JSON
+      set_fact:
+        vm_details: "{{ vm_data_raw.content | b64decode | from_json }}"
+
     - name: Debug VM details
       debug:
-        msg: "{{ vm_data_raw }}"
+        msg: "{{ vm_details }}"
 
     # - name: Ensure DHCP is installed
     #   yum:
