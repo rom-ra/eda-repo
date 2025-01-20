@@ -3,12 +3,11 @@
 - name: Set Up DHCP & Haproxy
   hosts: 192.168.1.122
   gather_facts: true
-  vars:
-    vms_info: vms
+
   tasks:
     - name: content of set_stats
       debug:
-        var: vms_info
+        var: vms
         
     - name: Ensure DHCP is installed
       yum:
@@ -19,7 +18,7 @@
       set_fact:
         dhcp_hosts: >
          {{
-          vms_info.results | map(attribute='ansible_facts') | map(
+          vms.results | map(attribute='ansible_facts') | map(
           'combine', 
           {
             'hostname': item.ansible_facts['hostname'],
