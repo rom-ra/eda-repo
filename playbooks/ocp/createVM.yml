@@ -8,7 +8,7 @@
   tasks:
     - name: Debug vm_list
       debug:
-        var: vm_list
+        var: vm_list['instance']
     # - name: Create VMs dynamically
     #   community.vmware.vmware_guest:
     #     hostname: "{{ vcenter.hostname }}"
@@ -37,6 +37,6 @@
     - name: set a var using set_stats
       ansible.builtin.set_stats:
         data:
-          vms: "{{ vm_list }}"     
+          vms: "{{ vm_list['instance'] }}"     
 
 
