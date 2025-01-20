@@ -16,17 +16,14 @@
 
     - name: Extract VM details  name, mac, and IP address
       set_fact:
-        dhcp_hosts: >
-         {{
-          vms.results | map(attribute='ansible_facts') | map(
+        dhcp_hosts: "{{ vms.results | map(attribute='ansible_facts') | map(
           'combine', 
           {
             'hostname': item.ansible_facts['hostname'],
-            'mac_address': item.ansible_facts['eth0']['macaddress'] if 'eth0' in item.ansible_facts else 'unknown_mac',
-            'ipv4_address': item.ansible_facts['ansible_default_ipv4']['address'] if item.ansible_facts['ansible_default_ipv4'] is defined else 'unknown_ip'
+            'mac_address': item.ansible_facts['hw_eth0']['macaddress'] if 'hw_eth0' in item.ansible_facts else 'unknown_mac',
+            'ipv4_address': item.ansible_facts['ansible_default_ipv4']['address'] if 'ansible_default_ipv4' in item.ansible_facts else 'unknown_ip'
           }
-         ) | list
-         }}
+         ) | list }}"
 
     - name: Generate DHCP configuration
       template:
