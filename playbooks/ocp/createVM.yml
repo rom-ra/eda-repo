@@ -40,7 +40,8 @@
 #         dest: /tmp/vm_details.json
 #         content: "{{ vm | to_json }}" 
 ---
- hosts: localhost
+- name: Update
+  hosts: localhost
   tasks:
     - name: Show shared_variable
       debug:
