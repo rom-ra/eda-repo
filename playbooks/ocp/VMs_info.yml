@@ -7,7 +7,7 @@
   tasks:
     - name: content of set_stats
       debug:
-        msg: "{{ my_variable }}" 
+        msg: "{{ my_variable.my_variable }}" 
 
     # - name: Ensure DHCP is installed
     #   yum:
