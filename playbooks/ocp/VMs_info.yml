@@ -10,9 +10,9 @@
         var: vms
         
     - name: Ensure DHCP is installed
-      yum:
+      package:
         name: dhcp
-        state: latest
+        state: persent
 
     - name: Extract VM details  name, mac, and IP address
       set_fact:
