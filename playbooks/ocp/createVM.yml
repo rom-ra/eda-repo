@@ -4,11 +4,15 @@
   gather_facts: false
   vars_files:
     - vcenter_vars.yml
-    - vm_list.yml
+    # - vm_list.yml
   tasks:
+    - name: Read the vm_list.yml file containing JSON data
+      ansible.builtin.slurp:
+        src: vm_list.yml
+      register: vm_list_raw
     - name: Debug vm_list
       debug:
-        var: vm_list.instance
+        var: vm_list_raw
     # - name: Create VMs dynamically
     #   community.vmware.vmware_guest:
     #     hostname: "{{ vcenter.hostname }}"
@@ -37,10 +41,7 @@
     - name: set a var using set_stats
       ansible.builtin.set_stats:
         data:
-          vms: "{{ vm_list['instance'] | to_nice_yaml(indent=2) }}"   
+          vms: "{{ vm_list_raw }}"   
 
-    - name: Debug the YAML-converted vm_list
-      debug:
-        msg: "{{ vms }}"      
-
+    
 
