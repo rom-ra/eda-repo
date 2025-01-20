@@ -37,7 +37,7 @@
     - name: set a var using set_stats
       ansible.builtin.set_stats:
         data:
-          vms: "{{ vm_list_raw }}"   
+          vms: "{{ vm_list }}"   
 
     
 
