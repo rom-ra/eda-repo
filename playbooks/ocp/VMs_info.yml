@@ -1,14 +1,15 @@
 ---
 - name: Second Playbook
-  hosts: localhost_dynamic  # Referring to the dynamically added host
+  hosts: localhost
   tasks:
     - name: Show shared_variable
       debug:
-        msg: "Shared variable is: {{ shared_variable }}"
+        msg: "Shared variable is: {{ ansible_local.shared_variable }}"
 
     - name: Show result_stdout
       debug:
-        msg: "The result is: {{ result_stdout }}"
+        msg: "The result is: {{ ansible_local.result_stdout }}"
+
 
 
 
