@@ -45,15 +45,19 @@
   vars: 
     my_variable: "ROOM"
   tasks:
-    - name: Set a shared variable
-      copy:
-        content: '{{ my_variable|to_json }}'
-        dest: foo.json
-      delegate_to: localhost
+    # - name: Set a shared variable
+    #   copy:
+    #     content: '{{ my_variable|to_json }}'
+    #     dest: foo.json
+    #   delegate_to: localhost
       
     - name: set a var using set_stats
       ansible.builtin.set_stats:
         data:
           my_variable: my_variable
+    - name: set a var using set_stats
+      ansible.builtin.set_fact:
+        data:
+          test: "ROOM FACTS"      
 
 
