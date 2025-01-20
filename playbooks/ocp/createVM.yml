@@ -48,15 +48,14 @@
   tasks:
     - name: Set a variable on localhost
       set_fact:
-        shared_variable: "Some value"
+        ansible_facts:
+          shared_variable: "Some value"
+          other_variable: "Another value"
 
     - name: Debug shared_variable for localhost
       debug:
-        var: hostvars['localhost'].shared_variable
+        var: hostvars['localhost'].ansible_facts
 
-    - name: Set the same variable for a specific host (192.168.1.122)
-      set_fact:
-        shared_variable: "Some value"
-      when: inventory_hostname == 'localhost'
+    
 
 
