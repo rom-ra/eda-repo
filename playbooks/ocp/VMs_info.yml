@@ -1,12 +1,11 @@
 - name: Configure VMs and DHCP configuration
   hosts: localhost
   become: true
-  vars:
-    vm_details_from_previous_play: "{{ vm_details_in_memory }}"
+
   tasks:
-    - name: Debug vm details from previous play
+    - name: Access VM details from memory
       debug:
-        var: vm_details_from_previous_play
+        var: vm_details_in_memory
 
     # - name: Ensure DHCP is installed
     #   yum:
