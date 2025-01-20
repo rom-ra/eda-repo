@@ -57,7 +57,6 @@
           my_variable: my_variable
     - name: set a var using set_stats
       ansible.builtin.set_fact:
-        data:
-          test: "ROOM FACTS"      
+        test: "ROOM FACTS"      
 
 
