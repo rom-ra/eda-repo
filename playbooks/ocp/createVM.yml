@@ -46,25 +46,19 @@
     - name: Set a shared variable
       set_fact:
         shared_variable: "Some value"
-      delegate_to: localhost
+
     - name: Register another variable
       shell: "echo 'Another value'"
       register: result
       changed_when: false
-      delegate_to: localhost
+    
+    - name: Add dynamic host with registered variables
+      add_host:
+        name: localhost_dynamic  # You can use any name here
+        shared_variable: "{{ shared_variable }}"
+        result_stdout: "{{ result.stdout }}"
 
-    - name: Ensure the directory exists
-      file:
-        path: "/var/lib/ansible"
-        state: directory
-        mode: '0755' 
 
-    - name: Use template to save variables to a file
-      local_action:
-        template:
-          src: "variables.yml.j2"  # Path to the template file
-          dest: "/var/lib/ansible/variables.yml"  # Destination path on the local machine
-          mode: '0644'
 
     
 
