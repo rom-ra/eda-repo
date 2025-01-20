@@ -1,14 +1,19 @@
-- name: Configure VMs and DHCP configuration
+---
+- name: Second Playbook
   hosts: localhost
-  become: true
-
   tasks:
-    - name: Display shared variable
+    - name: Load variables from file
+      include_vars:
+        file: "/tmp/variables.yml"
+
+    - name: Show shared_variable
       debug:
-        msg: "The shared variable is: {{ hostvars['localhost'] }}"
-    - name: Display shared variablew
+        msg: "Shared variable is: {{ shared_variable }}"
+
+    - name: Show result_stdout
       debug:
-        var: shared_variable 
+        msg: "The result is: {{ result_stdout }}"
+
 
 
 
