@@ -48,7 +48,7 @@
   tasks:
     - name: set a variable
       set_fact:
-        shared_variable: "Some value"   
+        ansible_facts: "Some value"   
         
     - name: Debug the fact vm_details_in_memory
       debug:
