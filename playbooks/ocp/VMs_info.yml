@@ -20,7 +20,7 @@
           vms.results | map(attribute='instance') | map(
           'combine', 
          {
-          'hostname': item.hw_name if 'hw_name' in item else 'unknown_hostname',,
+          'hostname': item.hw_name if 'hw_name' in item else 'unknown_hostname',
           'mac_address': item.hw_eth0.macaddress if 'hw_eth0' in item and 'macaddress' in item.hw_eth0 else 'unknown_mac',
           'ipv4_address': item.hw_eth0.ipaddresses[0] if 'hw_eth0' in item and item.hw_eth0.ipaddresses else 'unknown_ip'
          }
