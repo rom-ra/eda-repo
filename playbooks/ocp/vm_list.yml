@@ -1,30 +1,292 @@
-vm_details:
-  - name: "RHEL9-OCP"
-    folder: "Romany"
-    template: "rhel9_template"
-    guest_id: "rhel9_64Guest"
-    memory_mb: 16096
-    num_cpus: 4
-    state: poweredon
-    wait_for_ip_address: true
-    networks:
-      - name: "VM Network"
-        device_type: vmxnet3
-        ip: "192.168.1.122"
-        netmask: "255.255.255.0"
-        gateway: "192.168.1.1"
-        dns_servers:
-        - 192.168.1.20
-        - 8.8.8.8
-    customization:
-      autologon: true
-      dns_servers:
-      - 192.168.1.20
-      - 8.8.8.8    
-    disk:
-      - size_gb: 80
-        type: thin
-        datastore: "datastore-14"
+{
+  "changed": true,
+  "instance": {
+    "module_hw": true,
+    "hw_name": "MadeByAnsible",
+    "hw_power_status": "poweredOff",
+    "hw_guest_full_name": null,
+    "hw_guest_id": null,
+    "hw_product_uuid": "42113f62-01ca-072d-ecfa-bf90e9b8e6bc",
+    "hw_processor_count": 4,
+    "hw_cores_per_socket": 1,
+    "hw_memtotal_mb": 16096,
+    "hw_interfaces": [
+      "eth0"
+    ],
+    "hw_datastores": [
+      "datastore-14"
+    ],
+    "hw_files": [
+      "[datastore-14] MadeByAnsible/MadeByAnsible.vmx",
+      "[datastore-14] MadeByAnsible/MadeByAnsible.vmsd",
+      "[datastore-14] MadeByAnsible/MadeByAnsible.vmdk"
+    ],
+    "hw_esxi_host": "10.1.0.14",
+    "hw_guest_ha_state": null,
+    "hw_is_template": false,
+    "hw_folder": "/Datacenter/vm/Romany",
+    "hw_version": "vmx-19",
+    "instance_uuid": "50110bb3-1347-660a-94ea-cf603bd890a8",
+    "guest_tools_status": "guestToolsNotRunning",
+    "guest_tools_version": "0",
+    "guest_question": null,
+    "guest_consolidation_needed": false,
+    "ipv4": null,
+    "ipv6": null,
+    "annotation": "",
+    "customvalues": {},
+    "snapshots": [],
+    "current_snapshot": null,
+    "vnc": {},
+    "moid": "vm-49381",
+    "vimref": "vim.VirtualMachine:vm-49381",
+    "advanced_settings": {
+      "nvram": "MadeByAnsible.nvram",
+      "svga.present": "TRUE",
+      "pciBridge0.present": "TRUE",
+      "pciBridge4.present": "TRUE",
+      "pciBridge4.virtualDev": "pcieRootPort",
+      "pciBridge4.functions": "8",
+      "pciBridge5.present": "TRUE",
+      "pciBridge5.virtualDev": "pcieRootPort",
+      "pciBridge5.functions": "8",
+      "pciBridge6.present": "TRUE",
+      "pciBridge6.virtualDev": "pcieRootPort",
+      "pciBridge6.functions": "8",
+      "pciBridge7.present": "TRUE",
+      "pciBridge7.virtualDev": "pcieRootPort",
+      "pciBridge7.functions": "8",
+      "hpet0.present": "TRUE",
+      "vmware.tools.internalversion": "0",
+      "vmware.tools.requiredversion": "12389",
+      "migrate.hostLogState": "none",
+      "migrate.migrationId": "0",
+      "migrate.hostLog": "MadeByAnsible-17895840.hlog",
+      "viv.moid": "2c0b9f23-c77f-4155-97de-8c26a00cf763:vm-49381:BYsvZMnedewgvhgWKHvms4Ud8zGHwR1RoK/Hvc5Cn1I="
+    },
+    "hw_cluster": "Non-Prod",
+    "hw_eth0": {
+      "addresstype": "assigned",
+      "label": "Network adapter 1",
+      "macaddress": "00:50:56:91:92:cd",
+      "ipaddresses": null,
+      "macaddress_dash": "00-50-56-91-92-cd",
+      "summary": "VM Network",
+      "portgroup_portkey": null,
+      "portgroup_key": null
+    },
+    "tpm_info": {
+      "tpm_present": false,
+      "provider_id": null
+    }
+  },
+  "invocation": {
+    "module_args": {
+      "hostname": "10.1.0.5",
+      "username": "r.raafat@vsphere.local",
+      "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+      "validate_certs": false,
+      "datacenter": "Datacenter",
+      "cluster": "Non-Prod",
+      "folder": "Romany",
+      "name": "MadeByAnsible",
+      "guest_id": "rhel9_64Guest",
+      "state": "poweredoff",
+      "wait_for_ip_address": false,
+      "hardware": {
+        "num_cpus": 4,
+        "memory_mb": 16096,
+        "boot_firmware": null,
+        "cpu_limit": null,
+        "cpu_reservation": null,
+        "hotadd_cpu": null,
+        "hotadd_memory": null,
+        "hotremove_cpu": null,
+        "vpmc_enabled": null,
+        "max_connections": null,
+        "mem_limit": null,
+        "cpu_shares_level": null,
+        "mem_shares_level": null,
+        "cpu_shares": null,
+        "mem_shares": null,
+        "mem_reservation": null,
+        "memory_reservation_lock": null,
+        "nested_virt": null,
+        "num_cpu_cores_per_socket": null,
+        "scsi": null,
+        "secure_boot": null,
+        "version": null,
+        "virt_based_security": null,
+        "iommu": null
+      },
+      "networks": [
+        {
+          "name": "VM Network",
+          "device_type": "vmxnet3",
+          "ip": "192.168.1.122",
+          "netmask": "255.255.255.0",
+          "gateway": "192.168.1.1",
+          "dns_servers": [
+            "192.168.1.20",
+            "8.8.8.8"
+          ],
+          "type": "static",
+          "typev6": "dhcp"
+        }
+      ],
+      "disk": [
+        {
+          "size_gb": 80,
+          "type": "thin",
+          "datastore": "datastore-14",
+          "autoselect_datastore": null,
+          "controller_number": null,
+          "controller_type": null,
+          "disk_mode": null,
+          "filename": null,
+          "size": null,
+          "size_kb": null,
+          "size_mb": null,
+          "size_tb": null,
+          "unit_number": null
+        }
+      ],
+      "cdrom": [
+        {
+          "controller_number": 0,
+          "unit_number": 0,
+          "controller_type": "sata",
+          "iso_path": "[datastore-14] rhcos-4.16.3-x86_64-live.x86_64.iso",
+          "state": "present",
+          "type": "iso"
+        }
+      ],
+      "port": 443,
+      "is_template": false,
+      "customvalues": [],
+      "advanced_settings": [],
+      "name_match": "first",
+      "use_instance_uuid": false,
+      "nvdimm": {
+        "size_mb": 1024,
+        "state": null,
+        "label": null
+      },
+      "encryption": {
+        "encrypted_vmotion": null,
+        "encrypted_ft": null
+      },
+      "force": false,
+      "wait_for_ip_address_timeout": 300,
+      "state_change_timeout": 0,
+      "linked_clone": false,
+      "customization": {
+        "autologon": null,
+        "autologoncount": null,
+        "dns_servers": null,
+        "dns_suffix": null,
+        "domain": null,
+        "domainadmin": null,
+        "domainadminpassword": null,
+        "existing_vm": null,
+        "fullname": null,
+        "hostname": null,
+        "hwclockUTC": null,
+        "joindomain": null,
+        "joinworkgroup": null,
+        "orgname": null,
+        "password": null,
+        "productid": null,
+        "runonce": null,
+        "script_text": null,
+        "timezone": null
+      },
+      "wait_for_customization": false,
+      "wait_for_customization_timeout": 3600,
+      "vapp_properties": [],
+      "delete_from_inventory": false,
+      "proxy_host": null,
+      "proxy_port": null,
+      "template": null,
+      "annotation": null,
+      "uuid": null,
+      "esxi_hostname": null,
+      "snapshot_src": null,
+      "resource_pool": null,
+      "customization_spec": null,
+      "datastore": null,
+      "convert": null
+    }
+  },
+  "_ansible_no_log": false,
+  "item": {
+    "name": "MadeByAnsible",
+    "folder": "Romany",
+    "guest_id": "rhel9_64Guest",
+    "memory_mb": 16096,
+    "num_cpus": 4,
+    "state": "poweredoff",
+    "wait_for_ip_address": false,
+    "networks": [
+      {
+        "name": "VM Network",
+        "device_type": "vmxnet3",
+        "ip": "192.168.1.122",
+        "netmask": "255.255.255.0",
+        "gateway": "192.168.1.1",
+        "dns_servers": [
+          "192.168.1.20",
+          "8.8.8.8"
+        ]
+      }
+    ],
+    "disk": [
+      {
+        "size_gb": 80,
+        "type": "thin",
+        "datastore": "datastore-14"
+      }
+    ],
+    "cdrom": [
+      {
+        "controller_number": 0,
+        "unit_number": 0,
+        "controller_type": "sata",
+        "iso_path": "[datastore-14] rhcos-4.16.3-x86_64-live.x86_64.iso",
+        "state": "present",
+        "type": "iso"
+      }
+    ]
+  },
+  "ansible_loop_var": "item",
+  "_ansible_item_label": "MadeByAnsible"
+}
+  # - name: "RHEL9-OCP"
+  #   folder: "Romany"
+  #   template: "rhel9_template"
+  #   guest_id: "rhel9_64Guest"
+  #   memory_mb: 16096
+  #   num_cpus: 4
+  #   state: poweredon
+  #   wait_for_ip_address: true
+  #   networks:
+  #     - name: "VM Network"
+  #       device_type: vmxnet3
+  #       ip: "192.168.1.122"
+  #       netmask: "255.255.255.0"
+  #       gateway: "192.168.1.1"
+  #       dns_servers:
+  #       - 192.168.1.20
+  #       - 8.8.8.8
+  #   customization:
+  #     autologon: true
+  #     dns_servers:
+  #     - 192.168.1.20
+  #     - 8.8.8.8    
+  #   disk:
+  #     - size_gb: 80
+  #       type: thin
+  #       datastore: "datastore-14"
     # cdrom:
     #   - controller_number: 0
     #     unit_number: 0
