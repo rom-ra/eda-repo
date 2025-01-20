@@ -1,20 +1,15 @@
+---
 - name: Second Playbook
-  hosts: localhost
-  vars:
-    file: "{{ lookup('file', '/var/lib/ansible/variables.yml') | trim }}"
+  hosts: localhost_dynamic  # Referring to the dynamically added host
   tasks:
-    - name: Load variables from file
-      include_vars:
-        file: "/var/lib/ansible/variables.yml"
-      ignore_erros: false  
-
     - name: Show shared_variable
       debug:
-        msg: "Shared variable is: {{ file }}"
+        msg: "Shared variable is: {{ shared_variable }}"
 
     - name: Show result_stdout
       debug:
         msg: "The result is: {{ result_stdout }}"
+
 
 
 
