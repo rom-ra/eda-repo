@@ -4,7 +4,7 @@
 
   tasks:
     - debug:
-        var: hostvars['localhost'].shared_variable
+        var: hostvars['localhost']
 
 
     # - name: Ensure DHCP is installed
