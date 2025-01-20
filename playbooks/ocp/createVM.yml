@@ -38,4 +38,4 @@
     - name: Save VM details to a JSON file
       copy:
         dest: /tmp/vm_details.json
-        content: "{{ vm | to_json }}" 
+        content: "{{ vm_details | to_json }}" 
