@@ -4,7 +4,7 @@
 
   tasks:
     - debug:
-        msg: shared_variable
+        var: shared_variable
 
 
     # - name: Ensure DHCP is installed
