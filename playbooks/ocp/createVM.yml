@@ -59,6 +59,4 @@
         shared_variable: "Some value"
       when: inventory_hostname == 'localhost'
 
-    - name: Debug shared_variable for 192.168.1.122
-      debug:
-        var: hostvars['192.168.1.122'].shared_variable
+
