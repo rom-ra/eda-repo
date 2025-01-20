@@ -9,33 +9,33 @@
       debug:
         var: vms_info
         
-    # - name: Ensure DHCP is installed
-    #   yum:
-    #     name: dhcp
-    #     state: latest
+    - name: Ensure DHCP is installed
+      yum:
+        name: dhcp
+        state: latest
 
-    # - name: Extract VM details (example: name, mac, and IP address)
-    #   set_fact:
-    #     dhcp_hosts: >
-    #       {{
-    #         vms_info.results | map(attribute='ansible_facts') | map(attribute='ansible_default_ipv4') | map('combine', {'mac_address': ansible_facts['eth0']['macaddress']}) | list
-    #       }}
+    - name: Extract VM details (example: name, mac, and IP address)
+      set_fact:
+        dhcp_hosts: >
+          {{
+            vms_info.results | map(attribute='ansible_facts') | map(attribute='ansible_default_ipv4') | map('combine', {'mac_address': ansible_facts['eth0']['macaddress']}) | list
+          }}
 
-    # - name: Generate DHCP configuration
-    #   template:
-    #     src: dhcp_config.j2
-    #     dest: /etc/dhcp/dhcpd.conf
-    #   vars:
-    #     dhcp_hosts: "{{ dhcp_hosts }}"
+    - name: Generate DHCP configuration
+      template:
+        src: dhcp_config.j2
+        dest: /etc/dhcp/dhcpd.conf
+      vars:
+        dhcp_hosts: "{{ dhcp_hosts }}"
         
-    # - name: Start and enable DHCP service
-    #   systemd:
-    #     name: dhcpd
-    #     state: started
-    #     enabled: yes
+    - name: Start and enable DHCP service
+      systemd:
+        name: dhcpd
+        state: started
+        enabled: yes
 
-    # - name: Restart DHCP service to apply configuration
-    #   systemd:
-    #     name: dhcpd
-    #     state: restarted    
+    - name: Restart DHCP service to apply configuration
+      systemd:
+        name: dhcpd
+        state: restarted    
 
