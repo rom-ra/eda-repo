@@ -50,11 +50,7 @@
       debug:
         var: vm_details
       register: vm   
-
-    - name: Set VM details as a fact for the next play
-      set_fact:
-        vm_details_in_memory: "{{ vm }}"
         
     - name: Debug the fact vm_details_in_memory
       debug:
-        msg: "{{ vm_details_in_memory }}"    
+        var: vm
