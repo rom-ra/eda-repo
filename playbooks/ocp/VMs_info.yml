@@ -4,7 +4,7 @@
 
   tasks:
     - debug:
-        var: {{hostvars}}
+        var: hostvars
 
 
     # - name: Ensure DHCP is installed
