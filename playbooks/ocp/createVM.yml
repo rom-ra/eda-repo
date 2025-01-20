@@ -47,10 +47,9 @@
     - vm_list.yml
   tasks:
     - name: Set a variable on localhost
-      set_fact:
-        ansible_facts:
-          shared_variable: "Some value"
-          other_variable: "Another value"
+      ansible.builtin.set_fact:
+        shared_variable: "Some value"
+        other_variable: "Another value"
 
     - name: Debug shared_variable for localhost
       debug:
