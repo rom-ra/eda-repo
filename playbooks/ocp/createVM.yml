@@ -46,9 +46,18 @@
     - vcenter_vars.yml
     - vm_list.yml
   tasks:
-    - name: Set a variable for 192.168.1.122
+    - name: Set a variable on localhost
       set_fact:
         shared_variable: "Some value"
+
+    - name: Debug shared_variable for localhost
+      debug:
+        var: hostvars['localhost'].shared_variable
+
+    - name: Set the same variable for a specific host (192.168.1.122)
+      set_fact:
+        shared_variable: "Some value"
+      when: inventory_hostname == 'localhost'
 
     - name: Debug shared_variable for 192.168.1.122
       debug:
