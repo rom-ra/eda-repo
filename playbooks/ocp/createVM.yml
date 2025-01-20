@@ -1,4 +1,44 @@
----
+# ---
+# - name: Create a VM with custom resources
+#   hosts: localhost
+#   gather_facts: false
+#   vars_files:
+#     - vcenter_vars.yml
+#     - vm_list.yml
+#   tasks:
+#     - name: Debug vm_list
+#       debug:
+#         var: vm_details
+#       register: vm   
+#     # - name: Create VMs dynamically
+#     #   community.vmware.vmware_guest:
+#     #     hostname: "{{ vcenter.hostname }}"
+#     #     username: "{{ vcenter.username }}"
+#     #     password: "{{ vcenter.password }}"
+#     #     validate_certs: "{{ validate_certs }}"
+#     #     datacenter: "{{ datacenter.name }}"
+#     #     cluster: "{{ datacenter.cluster }}"
+#     #     folder: "{{ item.folder }}"
+#     #     template: "{{ item.template }}"
+#     #     name: "{{ item.name }}"
+#     #     guest_id: "{{ item.guest_id }}"
+#     #     state: "{{ item.state}}"
+#     #     wait_for_ip_address: "{{ item.wait_for_ip_address }}"
+#     #     customization: "{{ item.customization}}"
+#     #     hardware:
+#     #       num_cpus: "{{ item.num_cpus }}"
+#     #       memory_mb: "{{ item.memory_mb }}"
+#     #     networks: "{{ item.networks }}"
+#     #     disk: "{{ item.disk}}"
+#     #   loop: "{{ vm_details }}"
+#     #   loop_control:
+#     #     label: "{{ item.name }}"
+#     #   register: vm
+      
+#     - name: Save VM details to a JSON file
+#       copy:
+#         dest: /tmp/vm_details.json
+#         content: "{{ vm | to_json }}" 
 - name: Create a VM with custom resources
   hosts: localhost
   gather_facts: false
@@ -10,32 +50,12 @@
       debug:
         var: vm_details
       register: vm   
-    # - name: Create VMs dynamically
-    #   community.vmware.vmware_guest:
-    #     hostname: "{{ vcenter.hostname }}"
-    #     username: "{{ vcenter.username }}"
-    #     password: "{{ vcenter.password }}"
-    #     validate_certs: "{{ validate_certs }}"
-    #     datacenter: "{{ datacenter.name }}"
-    #     cluster: "{{ datacenter.cluster }}"
-    #     folder: "{{ item.folder }}"
-    #     template: "{{ item.template }}"
-    #     name: "{{ item.name }}"
-    #     guest_id: "{{ item.guest_id }}"
-    #     state: "{{ item.state}}"
-    #     wait_for_ip_address: "{{ item.wait_for_ip_address }}"
-    #     customization: "{{ item.customization}}"
-    #     hardware:
-    #       num_cpus: "{{ item.num_cpus }}"
-    #       memory_mb: "{{ item.memory_mb }}"
-    #     networks: "{{ item.networks }}"
-    #     disk: "{{ item.disk}}"
-    #   loop: "{{ vm_details }}"
-    #   loop_control:
-    #     label: "{{ item.name }}"
-    #   register: vm
-      
+
     - name: Save VM details to a JSON file
       copy:
         dest: /tmp/vm_details.json
-        content: "{{ vm | to_json }}" 
+        content: "{{ vm | to_json }}"
+
+    - name: Debug if file is created
+      debug:
+        msg: "File created successfully"
