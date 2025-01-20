@@ -2,8 +2,8 @@
 - name: Second Playbook
   hosts: localhost
   gather_facts: true
-  # include_vars:
-  #   file: foo.json
+  include_vars:
+    file: foo.json
   tasks:
     - name: content of set_stats
       debug:
