@@ -46,10 +46,10 @@
     - vcenter_vars.yml
     - vm_list.yml
   tasks:
-    - name: set a variable
+    - name: Set a variable for 192.168.1.122
       set_fact:
-        hostvars_localhost_shared_variable: "Room"
-        
-    - name: Debug the fact vm_details_in_memory
+        shared_variable: "Some value"
+
+    - name: Debug shared_variable for 192.168.1.122
       debug:
         var: hostvars['192.168.1.122'].shared_variable
