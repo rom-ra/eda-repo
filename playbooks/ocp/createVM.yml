@@ -37,6 +37,10 @@
     - name: set a var using set_stats
       ansible.builtin.set_stats:
         data:
-          vms: "{{ vm_list['instance'] }}"     
+          vms: "{{ vm_list['instance'] | to_nice_yaml(indent=2) }}"   
+
+    - name: Debug the YAML-converted vm_list
+      debug:
+        msg: "{{ vms }}"      
 
 
