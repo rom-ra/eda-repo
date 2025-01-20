@@ -48,7 +48,7 @@
   tasks:
     - name: set a variable
       set_fact:
-        hostvars_localhost_shared_variable: "{{ shared_variable }}"
+        hostvars_localhost_shared_variable: "Room"
         
     - name: Debug the fact vm_details_in_memory
       debug:
