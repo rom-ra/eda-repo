@@ -2,11 +2,9 @@
   hosts: localhost
   become: true
 
-  vars:
-    shared_variable:  shared_variable
   tasks:
     - debug:
-        msg: "{{ shared_variable }}"
+        msg: shared_variable
 
 
     # - name: Ensure DHCP is installed
