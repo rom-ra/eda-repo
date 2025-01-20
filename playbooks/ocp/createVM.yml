@@ -13,7 +13,7 @@
     - name: set a var using set_stats
       ansible.builtin.set_stats:
         data:
-          my_variable: "{{ vm_details }}"  
+          my_variable: "{{ vm }}"  
 #     # - name: Create VMs dynamically
 #     #   community.vmware.vmware_guest:
 #     #     hostname: "{{ vcenter.hostname }}"
