@@ -48,8 +48,8 @@
   tasks:
     - name: set a variable
       set_fact:
-        ansible_facts: "Some value"   
+        hostvars['192.168.1.122'].shared_variable: "Some value"
         
     - name: Debug the fact vm_details_in_memory
       debug:
-        var: shared_variable
+        var: hostvars['192.168.1.122'].shared_variable
