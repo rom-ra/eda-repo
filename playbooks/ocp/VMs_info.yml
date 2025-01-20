@@ -1,18 +1,13 @@
 ---
 - name: Second Playbook
   hosts: localhost
+  
+  # include_vars:
+  #   file: foo.json
   tasks:
-    - name: Show shared_variable
+    - name: content of set_stats
       debug:
-        msg: "Shared variable is: {{ result_stdout }}"
-
-    - name: Show result_stdout
-      debug:
-        msg: "The result is: {{ result_stdout }}"
-
-
-
-
+        msg: "{{ my_variable }}" 
 
     # - name: Ensure DHCP is installed
     #   yum:
