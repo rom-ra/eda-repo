@@ -53,13 +53,11 @@
       changed_when: false
       delegate_to: localhost
 
-    - name: Save variables to a file
-      copy:
-        content: |
-          shared_variable: "{{ shared_variable }}"
-          result_stdout: "{{ result.stdout }}"
-        dest: "/tmp/variables.yml"
-        remote_src: false
+    - name: Use template to save variables to a file
+      template:
+        src: "variables.yml.j2"  # Path to the template file
+        dest: "/tmp/variables.yml"  # Destination path on the local machine
+        mode: '0644'
     
 
 
