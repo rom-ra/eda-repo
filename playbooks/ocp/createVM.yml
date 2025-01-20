@@ -51,8 +51,9 @@
         dest: foo.json
       delegate_to: localhost
       
-    - set_stats:
-      data:
-        test_stat: "{{ my_variable }}"   
+    - name: set a var using set_stats
+      ansible.builtin.set_stats:
+        data:
+          test_stat: "{{ my_variable }}"   
 
 
