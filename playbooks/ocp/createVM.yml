@@ -46,7 +46,7 @@
     - name: Set a shared variable
       set_fact:
         shared_variable: "Some value"
-
+      delegate_to: localhost
     - name: Register another variable
       shell: "echo 'Another value'"
       register: result
@@ -59,8 +59,7 @@
           shared_variable: "{{ shared_variable }}"
           result_stdout: "{{ result.stdout }}"
         dest: "/tmp/variables.yml"
-        delegate_to: localhost
-
+        remote_src: false
     
 
 
