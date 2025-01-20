@@ -1,9 +1,6 @@
 - name: Configure VMs and DHCP configuration
   hosts: localhost
   become: true
-  vars_files:
-    - /tmp/vm_details.json
-
   tasks:
     - name: Read the VM details JSON file
       slurp:
