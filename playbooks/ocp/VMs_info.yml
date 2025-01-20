@@ -5,10 +5,14 @@
     - /tmp/vm_details.json
 
   tasks:
-    - name: gather VM details
+    - name: Read the VM details JSON file
+      slurp:
+        src: /tmp/vm_details.json
+      register: vm_data_raw
+
+    - name: Debug VM details
       debug:
-        msg: {{vm}}
-      register: vm_result
+        msg: "{{ vm_data_raw }}"
 
     # - name: Ensure DHCP is installed
     #   yum:
