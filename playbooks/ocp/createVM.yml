@@ -42,19 +42,17 @@
 ---
 - name: First Playbook
   hosts: localhost
+  vars: 
+    - my_variable: "ROOM"
   tasks:
     - name: Set a shared variable
-      set_fact:
-        shared_variable: "Some value"
-
-    - name: Register another variable
-      shell: "echo 'Another value'"
-      register: result
-      changed_when: false
-
-    - name: Save variables to cache
-      set_fact:
-        result_stdout: "{{ result.stdout }}"
-
+      copy:
+        content: '{{ my_variable|to_json }}'
+        dest: foo.json
+      delegate_to: localhost
+      
+    - set_stats:
+      data:
+        test_stat: "{{ my_variable }}"   
 
 
