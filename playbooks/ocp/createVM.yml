@@ -46,11 +46,10 @@
     - vcenter_vars.yml
     - vm_list.yml
   tasks:
-    - name: Debug vm_list
-      debug:
-        var: vm_details
-      register: vm   
+    - name: set a variable
+      set_fact:
+        shared_variable: "Some value"   
         
     - name: Debug the fact vm_details_in_memory
       debug:
-        var: vm
+        var: shared_variable
