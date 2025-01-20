@@ -2,53 +2,50 @@
 - name: Second Playbook
   hosts: localhost
   gather_facts: true
-  # include_vars:
-  #   file: foo.json
+  vars:
+    vms_info: vms
   tasks:
     - name: content of set_stats
       debug:
-        var: my_variable 
-    - name: content of set_facts
-      debug:
-        var: test     
-
-    # - name: Ensure DHCP is installed
-    #   yum:
-    #     name: dhcp
-    #     state: latest
-
-    # - name: Extract VM details (example: name, mac, and IP address)
-    #   set_fact:
-    #     dhcp_hosts: >
-    #       {{
-    #         vm_result.results | map(attribute='ansible_facts') | map(attribute='ansible_default_ipv4') | map('combine', {'mac_address': ansible_facts['eth0']['macaddress']}) | list
-    #       }}
-
-    # - name: Generate DHCP configuration
-    #   template:
-    #     src: dhcp_config.j2
-    #     dest: /etc/dhcp/dhcpd.conf
-    #   vars:
-    #     subnet: "192.168.1.0"
-    #     netmask: "255.255.255.0"
-    #     dhcp_range_start: "192.168.1.100"
-    #     dhcp_range_end: "192.168.1.200"
-    #     routers: "192.168.1.1"
-    #     subnet_mask: "255.255.255.0"
-    #     dns_servers: "8.8.8.8, 8.8.4.4"
-    #     broadcast_address: "192.168.1.255"
-    #     default_lease_time: "600"
-    #     max_lease_time: "7200"
-    #     dhcp_hosts: "{{ dhcp_hosts }}"
+        var: vms_info
         
-    # - name: Start and enable DHCP service
-    #   systemd:
-    #     name: dhcpd
-    #     state: started
-    #     enabled: yes
+    - name: Ensure DHCP is installed
+      yum:
+        name: dhcp
+        state: latest
 
-    # - name: Restart DHCP service to apply configuration
-    #   systemd:
-    #     name: dhcpd
-    #     state: restarted    
+    - name: Extract VM details (example: name, mac, and IP address)
+      set_fact:
+        dhcp_hosts: >
+          {{
+            vms_info.results | map(attribute='ansible_facts') | map(attribute='ansible_default_ipv4') | map('combine', {'mac_address': ansible_facts['eth0']['macaddress']}) | list
+          }}
+
+    - name: Generate DHCP configuration
+      template:
+        src: dhcp_config.j2
+        dest: /etc/dhcp/dhcpd.conf
+      vars:
+        subnet: "192.168.1.0"
+        netmask: "255.255.255.0"
+        dhcp_range_start: "192.168.1.100"
+        dhcp_range_end: "192.168.1.200"
+        routers: "192.168.1.1"
+        subnet_mask: "255.255.255.0"
+        dns_servers: "8.8.8.8, 8.8.4.4"
+        broadcast_address: "192.168.1.255"
+        default_lease_time: "600"
+        max_lease_time: "7200"
+        dhcp_hosts: "{{ dhcp_hosts }}"
+        
+    - name: Start and enable DHCP service
+      systemd:
+        name: dhcpd
+        state: started
+        enabled: yes
+
+    - name: Restart DHCP service to apply configuration
+      systemd:
+        name: dhcpd
+        state: restarted    
 
