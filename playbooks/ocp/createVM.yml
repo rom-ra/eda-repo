@@ -4,18 +4,11 @@
   gather_facts: false
   vars_files:
     - vcenter_vars.yml
-    # - vm_list.yml
-  tasks:
-    - name: Read the vm_list.yml file containing JSON data
-      ansible.builtin.slurp:
-        src: vm_list.yml
-      register: vm_list_raw
-    - name: Decode the base64 content and parse JSON
-      set_fact:
-        vm_list_json: "{{ vm_list_raw['content'] | b64decode | from_json }}"  
+    - vm_list.json
+  tasks:    
     - name: Debug vm_list
       debug:
-        var: vm_list_json
+        var: vm_list
     # - name: Create VMs dynamically
     #   community.vmware.vmware_guest:
     #     hostname: "{{ vcenter.hostname }}"
