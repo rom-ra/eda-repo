@@ -4,11 +4,11 @@
   tasks:
     - name: Show shared_variable
       debug:
-        msg: "Shared variable is: {{ ansible_local }}"
+        msg: "Shared variable is: {{ result_stdout }}"
 
     - name: Show result_stdout
       debug:
-        msg: "The result is: {{ ansible_local }}"
+        msg: "The result is: {{ result_stdout }}"
 
 
 
