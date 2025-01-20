@@ -3,7 +3,7 @@
   become: true
 
   vars:
-    shared_variable: {{ shared_variable }}
+    shared_variable:  shared_variable
   tasks:
     - debug:
         msg: "{{ shared_variable }}"
