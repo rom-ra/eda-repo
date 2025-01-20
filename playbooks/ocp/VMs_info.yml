@@ -14,7 +14,7 @@
         name: dhcp
         state: latest
 
-    - name: Extract VM details (example: name, mac, and IP address)
+    - name: Extract VM details  name, mac, and IP address
       set_fact:
         dhcp_hosts: >
           {{
