@@ -52,4 +52,8 @@
       register: result
       changed_when: false
 
+    - name: Save variables to cache
+      set_fact:
+        result_stdout: "{{ result.stdout }}"
+
 
