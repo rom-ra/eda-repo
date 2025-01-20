@@ -11,7 +11,7 @@
         
     - name: Ensure DHCP is installed
       package:
-        name: dhcp
+        name: dhcp-server
         state: present
 
     - name: Extract VM details  name, mac, and IP address
