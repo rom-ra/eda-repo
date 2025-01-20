@@ -39,21 +39,26 @@
 #       copy:
 #         dest: /tmp/vm_details.json
 #         content: "{{ vm | to_json }}" 
-- name: Create a VM with custom resources
+---
+- name: First Playbook
   hosts: localhost
-  gather_facts: false
-  vars_files:
-    - vcenter_vars.yml
-    - vm_list.yml
   tasks:
-    - name: Set a variable on localhost
-      ansible.builtin.set_fact:
+    - name: Set a shared variable
+      set_fact:
         shared_variable: "Some value"
-        other_variable: "Another value"
 
-    - name: Debug shared_variable for localhost
-      debug:
-        var: hostvars['localhost'].ansible_facts
+    - name: Register another variable
+      shell: "echo 'Another value'"
+      register: result
+      changed_when: false
+
+    - name: Save variables to a file
+      copy:
+        content: |
+          shared_variable: "{{ shared_variable }}"
+          result_stdout: "{{ result.stdout }}"
+        dest: "/tmp/variables.yml"
+
 
     
 
