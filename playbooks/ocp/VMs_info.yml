@@ -5,7 +5,7 @@
   tasks:
     - name: Display shared variable
       debug:
-        msg: "The shared variable is: {{ hostvars['localhost'].shared_variable }}"
+        msg: "The shared variable is: {{ hostvars['localhost'] }}"
     - name: Display shared variablew
       debug:
         var: shared_variable 
