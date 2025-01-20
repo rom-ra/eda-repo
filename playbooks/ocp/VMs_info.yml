@@ -35,14 +35,22 @@
       vars:
         dhcp_hosts: "{{ dhcp_hosts }}"
         
-    - name: Start and enable DHCP service
-      systemd:
-        name: dhcpd
-        state: started
-        enabled: yes
+    - name: Display the complete DHCP configuration
+      command: cat /etc/dhcp/dhcpd.conf
+      register: dhcp_config_content
 
-    - name: Restart DHCP service to apply configuration
-      systemd:
-        name: dhcpd
-        state: restarted    
+    - name: Output the DHCP configuration
+      debug:
+        msg: "{{ dhcp_config_content.stdout }}"    
+        
+    # - name: Start and enable DHCP service
+    #   systemd:
+    #     name: dhcpd
+    #     state: started
+    #     enabled: yes
+
+    # - name: Restart DHCP service to apply configuration
+    #   systemd:
+    #     name: dhcpd
+    #     state: restarted    
 
