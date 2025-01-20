@@ -5,7 +5,7 @@
   tasks:
     - name: Access VM details from memory
       debug:
-        msg: "{{ vm_details_in_memory }}"
+        var: vm_details_in_memory
 
     # - name: Ensure DHCP is installed
     #   yum:
