@@ -5,7 +5,6 @@
     - name: Load variables from file
       include_vars:
         file: "/tmp/variables.yml"
-        remote_src: yes
 
     - name: Show shared_variable
       debug:
