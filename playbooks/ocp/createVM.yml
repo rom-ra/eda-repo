@@ -43,7 +43,7 @@
 - name: First Playbook
   hosts: localhost
   vars: 
-    - my_variable: "ROOM"
+    my_variable: "ROOM"
   tasks:
     - name: Set a shared variable
       copy:
