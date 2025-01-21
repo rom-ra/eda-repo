@@ -41,7 +41,7 @@
           
     - name: debug
       debug:
-        msg: "{{ item}}"
+        msg: "{{ item.instance.hw_name}}"
       loop: "{{ vm.results}}"  
     - name: Add Helper host to Inventory
       add_host:
