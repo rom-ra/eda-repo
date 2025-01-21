@@ -36,11 +36,12 @@ frontend stats
 listen api-server-6443
   bind *:6443
   mode tcp
-  {% for server in haproxy_servers.api %}
+  haproxy_servers.api
+{#   {% for server in haproxy_servers.api %}
   server {{ server.name }} {{ server.host }}:{{ server.port }} {{ server.options }}
-  {% endfor %}
+  {% endfor %} #}
 
-listen machine-config-server-22623
+{# listen machine-config-server-22623
   bind *:22623
   mode tcp
   {% for server in haproxy_servers.mcs %}
@@ -53,4 +54,4 @@ listen ingress-router-443
   balance source
   {% for server in haproxy_servers.ingress %}
   server {{ server.name }} {{ server.host }}:{{ server.port }} {{ server.options }}
-  {% endfor %}
+  {% endfor %} #}
