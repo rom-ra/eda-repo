@@ -11,7 +11,7 @@
       register: ssh_public_key
     - name: read ssh
       debug:
-        msg: "{{ ssh_public_key | b64decode}}"
+        msg: "{{ ssh_public_key.content | b64decode}}"
     # Step 1: Create install-config.yml
     # - name: Create the install-config.yml file
     #   copy:
