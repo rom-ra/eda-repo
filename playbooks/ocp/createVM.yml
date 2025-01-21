@@ -46,7 +46,7 @@
     - name: Add Helper host to Inventory
       add_host:
         name: "helper"
-        ansible_host: "{{ (vm.results | selectattr('instance.hw_name', 'equalto', 'RHEL9-OCP') | map(attribute='instance.hw_name') | first) }}"
+        ansible_host: "{{ (vm.results | selectattr('instance.hw_power_status', 'equalto', 'poweredOn') | selectattr('instance.ipv4', 'defined') | map(attribute='instance.ipv4') | first) }}"
       loop: "{{ vm.results | selectattr('instance', 'defined') }}"
       ignore_errors: true
 
