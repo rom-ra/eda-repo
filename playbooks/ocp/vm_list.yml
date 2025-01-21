@@ -43,7 +43,7 @@ vm_details:
     memory_mb: 16096
     num_cpus: 4
     state: poweredoff
-    wait_for_ip_address: false
+    wait_for_ip_address: true
     networks:
       - name: "VM Network"
         device_type: vmxnet3
