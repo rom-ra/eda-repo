@@ -25,7 +25,7 @@
         dhcp_hosts: >
           {{
             dhcp_hosts + [{
-              'name': item.instance.hw_name if item.instance.hw_name is defined else 'unknown_hostname',
+              'name': "{{item.instance.hw_name}}" if item.instance.hw_name is defined else 'unknown_hostname',
               'hostname': (vms_info | selectattr('hw_name', 'equalto', item.instance.hw_name) | map(attribute='hostname') | first) + '.' + ocp_fqdn if item.instance.hw_name is defined else 'unknown_hostname',
               'mac_address': item.instance.hw_eth0.macaddress if item.instance.hw_eth0.macaddress is defined else 'unknown_mac',
               'ipv4_address': (vms_info | selectattr('hw_name', 'equalto', item.instance.hw_name) | map(attribute='ip') | first) if item.instance.hw_name is defined else 'unknown_ip'
