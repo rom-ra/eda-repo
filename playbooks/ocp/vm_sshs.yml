@@ -1,5 +1,5 @@
 - name: Configure remote host
-  hosts: 192.168.1.122
+  hosts: helper
   become: true
   gather_facts: false
   vars_files:
