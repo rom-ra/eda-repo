@@ -43,7 +43,7 @@
       add_host:
         name: "helper"
         ansible_host: "{{ (item.instance  | selectattr('hw_power_status', 'equalto', 'poweredOn') | selectattr('ipv4', 'defined')  | map(attribute='ipv4') | first) }}"
-      loop: "{{ vm.resutls }}"
+      loop: "{{ vm.results }}"
 
     
 
