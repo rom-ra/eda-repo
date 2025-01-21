@@ -5,6 +5,7 @@
     - vcenter_vars.yml
   vars:
     bootstrap_name: "{{ (vms_info | selectattr('hostname', 'match', 'bootstrap') | first).hw_name }}"
+    bootstrap_ip: "{{ (vms_info | selectattr('hostname', 'match', 'bootstrap') | first).ip }}"
     
   tasks:
     - name: Set the state of a Bootstrap to powerOn
@@ -58,5 +59,9 @@
         datacenter: "{{ datacenter.name }}"
         name: "{{bootstrap_name}}"
         state: reboot-host
-  
+        
+    - name: Add bootstrap host to inventory
+      add_host:
+        name: bootstrap
+        ansible_host: "{{ bootstrap_ip }}"  
 
