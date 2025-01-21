@@ -19,7 +19,6 @@
       vars:
         ocp_fqdn: "{{ OCP_CLUSTER_NAME }}.{{ OCP_BASE_DOMAIN }}"
       loop: "{{ vms.results }}"
-      loop_control:
       loop_var: vm
       set_fact:
         dhcp_hosts: >
