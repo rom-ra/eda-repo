@@ -20,13 +20,17 @@
         ocp_fqdn: "{{ OCP_CLUSTER_NAME }}.{{ OCP_BASE_DOMAIN }}"
         dhcp_hosts: []
       loop: "{{ vms.results }}"
+      when: item.instance.hw_power_status != 'poweredOn'
       set_fact:
         dhcp_hosts: >
           {{
             dhcp_hosts + [{
-              'name': item.instance.hw_name if (item.instance.hw_name is defined) else 'unknown_hostname',
-              'hostname': (item.instance.hw_name ~ '.' ~ ocp_fqdn) if (item.instance.hw_name is defined) else 'unknown_hostname',
+              'name': item.instance.hw_name if item.instance.hw_name is defined else 'unknown_hostname',
+              'hostname': (item.instance.hw_name ~ '.' ~ ocp_fqdn) if item.instance.hw_name is defined else 'unknown_hostname',
+              'mac_address': item.instance.hw_eth0.macaddress if item.instance.hw_eth0.macaddress is defined else 'unknown_mac',
+              'ipv4_address': configs[item.instance.hw_name]['ipv4_address'] if item.instance.hw_name in configs else 'unknown_ip'
             }]
+            if item.instance.hw_power_status != 'poweredOn' else dhcp_hosts
           }}
       
     - name: Generate DHCP configuration
