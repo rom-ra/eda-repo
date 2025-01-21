@@ -38,6 +38,11 @@
       ansible.builtin.set_stats:
         data:
           vms: "{{ vm }}"   
+
+    - name: Debug VM instances
+      debug:
+        msg: "{{ item.instance }}"
+      loop: "{{ vms.results }}      
     - name: Add Helper host to Inventory
       add_host:
         name: "helper"
