@@ -41,7 +41,7 @@
         vm_password: root
         vm_shell: "/usr/bin/coreos-installer"
         wait_for_process: true
-        vm_shell_args: "install /dev/sda --ignition-url http://192.168.1.122/bootstrap.ign --insecure-ignition true > /tmp/$$.txt 2>&1"
+        vm_shell_args: "install /dev/sda --ignition-url=http://192.168.1.122/bootstrap.ign --insecure-ignition=true > /tmp/$$.txt 2>&1"
       delegate_to: localhost
       register: result
       until: result.changed == true  # or a specific condition that indicates success
