@@ -33,7 +33,7 @@
           sshKey: '{{ ssh_public_key.content | b64decode}}'
 
 
-    Step 2: Run the `openshift-install create manifests` command
+    # Step 2: Run the `openshift-install create manifests` command
     - name: Run openshift-install to create manifests
       command: >
         openshift-install create manifests
