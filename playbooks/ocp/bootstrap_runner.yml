@@ -14,7 +14,7 @@
         password: "{{ vcenter.password }}"
         validate_certs: "{{ validate_certs }}"
         datacenter: "{{ datacenter.name }}"
-        name: {{bootstrap_name}}
+        name: "{{bootstrap_name}}"
         state: powered-on
       
     - name: Wait for VMware tools to become available by name
@@ -25,7 +25,7 @@
         validate_certs: "{{ validate_certs }}"
         datacenter: "{{ datacenter.name }}"
         folder: "{{ vm.instance.hw_folder }}"
-        name: {{bootstrap_name}}
+        name: "{{bootstrap_name}}"
         
     - name: Change user password in the guest machine
       community.vmware.vmware_vm_shell:
@@ -35,7 +35,7 @@
         validate_certs: "{{ validate_certs }}"
         datacenter: "{{ datacenter.name }}"
         folder: "/Datacenter/vm/Romany"
-        vm_id: {{bootstrap_name}}
+        vm_id: "{{bootstrap_name}}"
         vm_username: root
         vm_password: root
         vm_shell: "/usr/bin/coreos-installer"
@@ -55,7 +55,7 @@
         password: "{{ vcenter.password }}"
         validate_certs: "{{ validate_certs }}"
         datacenter: "{{ datacenter.name }}"
-        name: {{bootstrap_name}}
+        name: "{{bootstrap_name}}"
         state: reboot-host
   
 
