@@ -5,7 +5,7 @@
   vars_files:
     - configs.yml
   tasks:
-    Step 1: Disable SELinux
+    # Step 1: Disable SELinux
     - name: Disable SELinux in configuration file
       lineinfile:
         path: /etc/selinux/config
