@@ -38,7 +38,7 @@ haproxy_stats_user: "admin"
 haproxy_stats_pass: "ocp"
 
 # Create haproxy_servers dynamically
-haproxy_servers:
+haproxy_servers: |
   api: 
     {% for vm in vms_info %}
       - { name: "{{ vm.hostname }}", host: "{{ vm.hostname }}.{{ OCP_CLUSTER_NAME }}.{{ OCP_BASE_DOMAIN }}", port: 6443, options: "{% if vm.hostname == 'bootstrap' %}check inter 1s backup{% else %}check inter 1s{% endif %}" }
