@@ -40,7 +40,7 @@
         vm_shell_args: "install /dev/sda --ignition-url http://192.168.1.122/bootstrap.ign --insecure-igntion true > /tmp/$$.txt 2>&1"
       delegate_to: localhost
       register: result
-      until: result.rc == 0  # or a specific condition that indicates success
+      until: result.changed == true  # or a specific condition that indicates success
       retries: 20  # number of retries
       delay: 50  # time in seconds (4 minutes) to wait before retrying
       ignore_errors: yes  # to prevent failure if the condition isn't met after all retries
