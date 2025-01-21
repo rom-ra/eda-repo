@@ -41,7 +41,7 @@
         folder: "/Datacenter/vm/Romany"
         vm_id: "Bootstrap-Romany"
         vm_username: root
-        vm_password: ""
+        vm_password: root
         vm_shell: "/usr/bin/hostnamectl"
         vm_shell_args: "set-hostname new_hostname > /tmp/$$.txt 2>&1"
       delegate_to: localhost
