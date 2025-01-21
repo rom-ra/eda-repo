@@ -57,7 +57,7 @@
         name: haproxy
         state: started
         enabled: yes
-        ignore_errors: yes
+      ignore_errors: yes
 
 
 
