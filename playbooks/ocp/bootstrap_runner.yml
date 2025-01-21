@@ -6,23 +6,23 @@
   tasks:
     - name: Set the state of a Bootstrap to powerOn
       community.vmware.vmware_guest_powerstate:
-      hostname: "{{ vcenter.hostname }}"
-      username: "{{ vcenter.username }}"
-      password: "{{ vcenter.password }}"
-      validate_certs: "{{ validate_certs }}"
-      datacenter: "{{ datacenter.name }}"
-      name: "{{ (vms_info | selectattr('hostname', 'match', 'bootstrap') | first).hw_name }}"
-      state: powered-on
+        hostname: "{{ vcenter.hostname }}"
+        username: "{{ vcenter.username }}"
+        password: "{{ vcenter.password }}"
+        validate_certs: "{{ validate_certs }}"
+        datacenter: "{{ datacenter.name }}"
+        name: "{{ (vms_info | selectattr('hostname', 'match', 'bootstrap') | first).hw_name }}"
+        state: powered-on
       register: vm
       
     - name: Wait for VMware tools to become available by name
       community.vmware.vmware_guest_tools_wait:
-      hostname: "{{ vcenter.hostname }}"
-      username: "{{ vcenter.username }}"
-      password: "{{ vcenter.password }}"
-      validate_certs: "{{ validate_certs }}"
-      datacenter: "{{ datacenter.name }}"
-      folder: "{{ vm.results.instance.hw_folder }}
-      name: "{{ vm.results.instance.hw_name }}"
+        hostname: "{{ vcenter.hostname }}"
+        username: "{{ vcenter.username }}"
+        password: "{{ vcenter.password }}"
+        validate_certs: "{{ validate_certs }}"
+        datacenter: "{{ datacenter.name }}"
+        folder: "{{ vm.results.instance.hw_folder }}
+        name: "{{ vm.results.instance.hw_name }}"
   
 
