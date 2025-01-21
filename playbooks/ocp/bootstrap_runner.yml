@@ -22,7 +22,7 @@
         password: "{{ vcenter.password }}"
         validate_certs: "{{ validate_certs }}"
         datacenter: "{{ datacenter.name }}"
-        folder: "{{ vm.results.instance.hw_folder }}
+        folder: "{{ vm.results.instance.hw_folder }}"
         name: "{{ vm.results.instance.hw_name }}"
   
 
