@@ -58,7 +58,7 @@
         validate_certs: "{{ validate_certs }}"
         datacenter: "{{ datacenter.name }}"
         name: "{{bootstrap_name}}"
-        state: reboot-host
+        state: reboot-guest
         
     - name: Add bootstrap host to inventory
       add_host:
