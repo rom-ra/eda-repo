@@ -46,7 +46,7 @@
       register: result
       until: result.changed == true  # or a specific condition that indicates success
       retries: 10  # number of retries
-      delay: 30  # time in seconds (4 minutes) to wait before retrying
+      delay: 10  # time in seconds (4 minutes) to wait before retrying
       ignore_errors: yes  # to prevent failure if the condition isn't met after all retries
 
     - name: Set the state of a Bootstrap to reboot
