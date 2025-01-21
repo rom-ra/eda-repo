@@ -36,7 +36,7 @@ frontend stats
 listen api-server-6443
   bind *:6443
   mode tcp
-  haproxy_servers.api
+  "{{haproxy_servers}}"
 {#   {% for server in haproxy_servers.api %}
   server {{ server.name }} {{ server.host }}:{{ server.port }} {{ server.options }}
   {% endfor %} #}
