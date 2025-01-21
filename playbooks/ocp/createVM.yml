@@ -42,7 +42,7 @@
     - name: Add Helper host to Inventory
       add_host:
         name: "helper"
-        ansible_host: "{{ (item.instance  | selectattr('hw_name', 'equalto', 'RHEL9-OCP')   | map(attribute='hw_name') | first)}}"
+        ansible_host: "{{ (item  | selectattr('hw_name', 'equalto', 'RHEL9-OCP')   | map(attribute='hw_name') | first)}}"
       loop: "{{ vm.results }}"
 
     
