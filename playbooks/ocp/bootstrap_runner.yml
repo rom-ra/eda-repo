@@ -24,10 +24,6 @@
         datacenter: "{{ datacenter.name }}"
         folder: "{{ vm.instance.hw_folder }}"
         name: "{{ vm.instance.hw_name }}"
-
-    - name: Pause for 4 minutes and 30 seconds
-      pause:
-        seconds: 270
         
     - name: Change user password in the guest machine
       community.vmware.vmware_vm_shell:
