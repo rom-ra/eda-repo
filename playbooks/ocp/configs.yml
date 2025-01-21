@@ -38,22 +38,26 @@ haproxy_stats_user: "admin"
 haproxy_stats_pass: "ocp"
 
 # Create haproxy_servers dynamically
-haproxy_servers: 
+haproxy_servers:
   api: |
     {% for vm in vms_info %}
-      - { name: "{{ vm.hostname }}", host: "{{ vm.hostname }}.{{ OCP_CLUSTER_NAME }}.{{ OCP_BASE_DOMAIN }}", port: 6443, options: "{% if vm.hostname == 'bootstrap' %}check inter 1s backup{% else %}check inter 1s{% endif %}" }
+    - name: "{{ vm.hostname }}"
+      host: "{{ vm.hostname }}.{{ OCP_CLUSTER_NAME }}.{{ OCP_BASE_DOMAIN }}"
+      port: 6443
+      options: "{% if vm.hostname == 'bootstrap' %}check inter 1s backup{% else %}check inter 1s{% endif %}"
     {% endfor %}
-
   mcs: |
     {% for vm in vms_info %}
-      - { name: "{{ vm.hostname }}", host: "{{ vm.hostname }}.{{ OCP_CLUSTER_NAME }}.{{ OCP_BASE_DOMAIN }}", port: 22623, options: "{% if vm.hostname == 'bootstrap' %}check inter 1s backup{% else %}check inter 1s{% endif %}" }
+    - name: "{{ vm.hostname }}"
+      host: "{{ vm.hostname }}.{{ OCP_CLUSTER_NAME }}.{{ OCP_BASE_DOMAIN }}"
+      port: 22623
+      options: "{% if vm.hostname == 'bootstrap' %}check inter 1s backup{% else %}check inter 1s{% endif %}"
     {% endfor %}
-
   ingress: |
-    {% for vm in vms_info %}
-      {% if vm.hostname != "bootstrap" %}
-        - { name: "{{ vm.hostname }}", host: "{{ vm.hostname }}.{{ OCP_CLUSTER_NAME }}.{{ OCP_BASE_DOMAIN }}", port: 443, options: "check inter 1s" }
-      {% endif %}
+    {% for vm in vms_info if vm.hostname != 'bootstrap' %}
+    - name: "{{ vm.hostname }}"
+      host: "{{ vm.hostname }}.{{ OCP_CLUSTER_NAME }}.{{ OCP_BASE_DOMAIN }}"
+      port: 443
+      options: "check inter 1s"
     {% endfor %}
 
-    
