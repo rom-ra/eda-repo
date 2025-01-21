@@ -25,8 +25,6 @@
             dhcp_hosts + [{
               'name': item.instance.hw_name if (item.instance.hw_name is defined) else 'unknown_hostname',
               'hostname': (item.instance.hw_name ~ '.' ~ ocp_fqdn) if (item.instance.hw_name is defined) else 'unknown_hostname',
-              # 'mac_address': item.instance.mac_address if (item.instance.mac_address is defined) else 'unknown_mac',
-              # 'ipv4_address': item.instance.ipv4_address if (item.instance.ipv4_address is defined) else 'unknown_ip'
             }]
           }}
       
