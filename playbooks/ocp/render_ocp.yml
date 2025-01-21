@@ -1,5 +1,5 @@
 - name: Manage bootstrap configuration and monitor services
-  hosts: 192.168.1.121
+  hosts: 192.168.1.221
   become: true
   tasks:
     - name: Disable SELinux temporarily
