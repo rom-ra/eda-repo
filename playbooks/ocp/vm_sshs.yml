@@ -41,67 +41,67 @@
 
     # Step 3: Generate SSH key
     - name: Generate SSH key if not exists
-      command: ssh-keygen -t ed25519 -f "{{ ssh_key_path }}" -N ""
+      command: ssh-keygen -f "{{ ssh_key_path }}" -N ""
       args:
         creates: "{{ ssh_key_path }}"
 
-    # Step 4: Install HAProxy
-    - name: Install HAProxy
-      package:
-        name: haproxy
-        state: present
+    # # Step 4: Install HAProxy
+    # - name: Install HAProxy
+    #   package:
+    #     name: haproxy
+    #     state: present
 
-    - name: Install WebServer
-      package:
-        name: httpd
-        state: present
+    # - name: Install WebServer
+    #   package:
+    #     name: httpd
+    #     state: present
 
-    # Step 5: Download and install OpenShift Installer
-    - name: Download OpenShift Installer
-      get_url:
-        url: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-install-linux.tar.gz
-        dest: /tmp/openshift-install-linux.tar.gz
+    # # Step 5: Download and install OpenShift Installer
+    # - name: Download OpenShift Installer
+    #   get_url:
+    #     url: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-install-linux.tar.gz
+    #     dest: /tmp/openshift-install-linux.tar.gz
 
-    - name: Extract OpenShift Installer
-      command: tar -xvf /tmp/openshift-install-linux.tar.gz -C /usr/local/bin/
-      args:
-        creates: /usr/local/bin/openshift-install
+    # - name: Extract OpenShift Installer
+    #   command: tar -xvf /tmp/openshift-install-linux.tar.gz -C /usr/local/bin/
+    #   args:
+    #     creates: /usr/local/bin/openshift-install
 
-    - name: Verify OpenShift Installer installation
-      command: openshift-install version
-      register: openshift_installer_version
-      ignore_errors: yes
+    # - name: Verify OpenShift Installer installation
+    #   command: openshift-install version
+    #   register: openshift_installer_version
+    #   ignore_errors: yes
 
-    - name: Show OpenShift Installer version
-      debug:
-        msg: "OpenShift Installer version: {{ openshift_installer_version.stdout }}"
+    # - name: Show OpenShift Installer version
+    #   debug:
+    #     msg: "OpenShift Installer version: {{ openshift_installer_version.stdout }}"
 
-    # Step 6: Download and install OpenShift Client (oc and kubectl)
-    - name: Download OpenShift Client
-      get_url:
-        url: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz
-        dest: /root/openshift-client-linux.tar.gz
+    # # Step 6: Download and install OpenShift Client (oc and kubectl)
+    # - name: Download OpenShift Client
+    #   get_url:
+    #     url: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz
+    #     dest: /root/openshift-client-linux.tar.gz
 
-    - name: Extract OpenShift Client binaries
-      command: tar -xvf /root/openshift-client-linux.tar.gz
+    # - name: Extract OpenShift Client binaries
+    #   command: tar -xvf /root/openshift-client-linux.tar.gz
      
 
-    - name: Move oc and kubectl to /usr/local/bin
-      command: mv oc kubectl /usr/local/bin/
+    # - name: Move oc and kubectl to /usr/local/bin
+    #   command: mv oc kubectl /usr/local/bin/
      
 
-    - name: Verify OpenShift Client installation
-      command: oc version
-      register: openshift_client_version
-      ignore_errors: yes
+    # - name: Verify OpenShift Client installation
+    #   command: oc version
+    #   register: openshift_client_version
+    #   ignore_errors: yes
 
-    - name: Show OpenShift Client version
-      debug:
-        msg: "OpenShift Client version: {{ openshift_client_version.stdout }}"
+    # - name: Show OpenShift Client version
+    #   debug:
+    #     msg: "OpenShift Client version: {{ openshift_client_version.stdout }}"
 
-    # Step 7: Create OCP install directory
-    - name: Create OCP install directory
-      file:
-        path: "{{ ocp_install_dir }}"
-        state: directory
-        mode: '0755'
+    # # Step 7: Create OCP install directory
+    # - name: Create OCP install directory
+    #   file:
+    #     path: "{{ ocp_install_dir }}"
+    #     state: directory
+    #     mode: '0755'
