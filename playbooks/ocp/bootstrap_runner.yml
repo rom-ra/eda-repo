@@ -1,6 +1,6 @@
 - name: Power On Bootstrap and Ensure VM-Tools Running
   hosts: localhost
-  var_files:
+  vars_files:
     - configs.yml
     - vcenter_vars.yml
   tasks:
