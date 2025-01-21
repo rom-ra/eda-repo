@@ -15,20 +15,21 @@
         name: dhcp-server
         state: present
 
-    - name: Extract VM details  name, mac, and IP address
-      set_fact:
-        dhcp_hosts: "{{
-          vms.results | map(attribute='instance') | map(
-          'combine', 
-         {
-          'name':  item.hw_name if 'hw_name' in item else 'unknown_hostname',
-          'hostname': (item.hw_name ~ '.' ~ OCP_CLUSTER_NAME ~ '.' ~ OCP_BASE_DOMAIN) if 'hw_name' in item else 'unknown_hostname',
-          'mac_address': item.hw_eth0.macaddress if 'hw_eth0' in item and 'macaddress' in item.hw_eth0 else 'unknown_mac',
-          'ipv4_address': item.hw_eth0.ipaddresses[0] if 'hw_eth0' in item and item.hw_eth0.ipaddresses else 'unknown_ip'
-         }
-         ) | list
-         }}"
+    - name: Extract VM details using a loop
+      vars:
+        ocp_fqdn: "{{ OCP_CLUSTER_NAME }}.{{ OCP_BASE_DOMAIN }}"
       loop: "{{ vms.results }}"
+      loop_control:
+      loop_var: vm
+      set_fact:
+        dhcp_hosts: >
+          {{
+            dhcp_hosts + [{
+              'hostname': (vm.instance.hw_name ~ '.' ~ ocp_fqdn) if (vm.instance.hw_name is defined) else 'unknown_hostname',
+              'mac_address': vm.instance.mac_address if (vm.instance.mac_address is defined) else 'unknown_mac',
+              'ipv4_address': vm.instance.ipv4_address if (vm.instance.ipv4_address is defined) else 'unknown_ip'
+            }]
+          }}
       
     - name: Generate DHCP configuration
       template:
