@@ -18,6 +18,7 @@
     - name: Extract VM details using a loop
       vars:
         ocp_fqdn: "{{ OCP_CLUSTER_NAME }}.{{ OCP_BASE_DOMAIN }}"
+        dhcp_hosts: []
       loop: "{{ vms.results }}"
       set_fact:
         dhcp_hosts: >
