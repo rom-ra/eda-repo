@@ -3,12 +3,15 @@ vms_info:
   - hw_name: "Bootstrap-Romany"
     ip: "192.168.1.124"
     hostname: "bootstrap"
+    role: "bootstrap"
   - hw_name: "Worker1-Romany"
     ip: "192.168.1.115"
     hostname: "worker1"
+    role: "worker"
   - hw_name: "Master1-Romany"
     ip: "192.168.1.116"
     hostname: "master1"  
+    role: "master"
 
 
 OCP_BASE_DOMAIN: example.com
