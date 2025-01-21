@@ -4,33 +4,31 @@
     - configs.yml
     - vcenter_vars.yml
   tasks:
-    # - name: Set the state of a Bootstrap to powerOn
-    #   community.vmware.vmware_guest_powerstate:
-    #     hostname: "{{ vcenter.hostname }}"
-    #     username: "{{ vcenter.username }}"
-    #     password: "{{ vcenter.password }}"
-    #     validate_certs: "{{ validate_certs }}"
-    #     datacenter: "{{ datacenter.name }}"
-    #     name: "{{ (vms_info | selectattr('hostname', 'match', 'bootstrap') | first).hw_name }}"
-    #     state: powered-on
-    #   register: vm
+    - name: Set the state of a Bootstrap to powerOn
+      community.vmware.vmware_guest_powerstate:
+        hostname: "{{ vcenter.hostname }}"
+        username: "{{ vcenter.username }}"
+        password: "{{ vcenter.password }}"
+        validate_certs: "{{ validate_certs }}"
+        datacenter: "{{ datacenter.name }}"
+        name: "{{ (vms_info | selectattr('hostname', 'match', 'bootstrap') | first).hw_name }}"
+        state: powered-on
+      register: vm
       
-    # - name: Wait for VMware tools to become available by name
-    #   community.vmware.vmware_guest_tools_wait:
-    #     hostname: "{{ vcenter.hostname }}"
-    #     username: "{{ vcenter.username }}"
-    #     password: "{{ vcenter.password }}"
-    #     validate_certs: "{{ validate_certs }}"
-    #     datacenter: "{{ datacenter.name }}"
-    #     folder: "{{ vm.instance.hw_folder }}"
-    #     name: "{{ vm.instance.hw_name }}"
+    - name: Wait for VMware tools to become available by name
+      community.vmware.vmware_guest_tools_wait:
+        hostname: "{{ vcenter.hostname }}"
+        username: "{{ vcenter.username }}"
+        password: "{{ vcenter.password }}"
+        validate_certs: "{{ validate_certs }}"
+        datacenter: "{{ datacenter.name }}"
+        folder: "{{ vm.instance.hw_folder }}"
+        name: "{{ vm.instance.hw_name }}"
 
-    - name: Check if the Shell is enabled
-      vmware.vmware_rest.appliance_access_shell_info:
-        vcenter_hostname: "{{ vcenter.hostname }}"
-        vcenter_username: "{{ vcenter.username }}"
-        vcenter_password: "{{ vcenter.password }}"
-        vcenter_validate_certs : false
+    - name: Pause for 4 minutes and 30 seconds
+      pause:
+        seconds: 270
+        
     - name: Change user password in the guest machine
       community.vmware.vmware_vm_shell:
         hostname: "{{ vcenter.hostname }}"
@@ -42,8 +40,8 @@
         vm_id: "Bootstrap-Romany"
         vm_username: root
         vm_password: root
-        vm_shell: "/usr/bin/hostnamectl"
-        vm_shell_args: "set-hostname new_hostname > /tmp/$$.txt 2>&1"
+        vm_shell: "/usr/bin/coreos-installer"
+        vm_shell_args: "install /dev/sda --ignition-url http://192.168.1.122/bootstrap.ign --insecure-igntion true > /tmp/$$.txt 2>&1"
       delegate_to: localhost
   
 
