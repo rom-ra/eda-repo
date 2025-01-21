@@ -41,7 +41,7 @@
 
     # Step 3: Generate SSH key
     - name: Generate SSH key if not exists
-      command: ssh-keygen -f  -N ""
+      command: ssh-keygen
 
     # # Step 4: Install HAProxy
     # - name: Install HAProxy
