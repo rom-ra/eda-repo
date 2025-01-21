@@ -105,6 +105,6 @@
     # Step 7: Create OCP install directory
     - name: Create OCP install directory
       file:
-        path: "{{ ocp_install_dir }}"
+        path: "{{ OCP_INSTALL_DIR }}"
         state: directory
         mode: '0755'
