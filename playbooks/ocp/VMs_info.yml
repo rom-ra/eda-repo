@@ -27,8 +27,7 @@
             dhcp_hosts + [{
               'name': item.instance.hw_name if item.instance.hw_name is defined else 'unknown_hostname',
               'hostname': (vms_info[item.instance.hw_name].hostname ~ '.' ~ ocp_fqdn) if item.instance.hw_name is defined else 'unknown_hostname',
-              'mac_address': item.instance.hw_eth0.macaddress if item.instance.hw_eth0.macaddress is defined else 'unknown_mac',
-              'ipv4_address': vms_info[item.instance.hw_name].ip if item.instance.hw_name is defined else 'unknown_ip'
+             
             }]
             if item.instance.hw_power_status != 'poweredOn' else dhcp_hosts
           }}
