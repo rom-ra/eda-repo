@@ -3,6 +3,9 @@
   vars_files:
     - configs.yml
     - vcenter_vars.yml
+ vars:
+   bootstrap_name: "{{ (vms_info | selectattr('hostname', 'match', 'bootstrap') | first).hw_name }}"
+    
   tasks:
     - name: Set the state of a Bootstrap to powerOn
       community.vmware.vmware_guest_powerstate:
@@ -11,9 +14,8 @@
         password: "{{ vcenter.password }}"
         validate_certs: "{{ validate_certs }}"
         datacenter: "{{ datacenter.name }}"
-        name: "{{ (vms_info | selectattr('hostname', 'match', 'bootstrap') | first).hw_name }}"
+        name: bootstrap_name
         state: powered-on
-      register: vm
       
     - name: Wait for VMware tools to become available by name
       community.vmware.vmware_guest_tools_wait:
@@ -23,7 +25,7 @@
         validate_certs: "{{ validate_certs }}"
         datacenter: "{{ datacenter.name }}"
         folder: "{{ vm.instance.hw_folder }}"
-        name: "{{ vm.instance.hw_name }}"
+        name: bootstrap_name
         
     - name: Change user password in the guest machine
       community.vmware.vmware_vm_shell:
@@ -33,16 +35,27 @@
         validate_certs: "{{ validate_certs }}"
         datacenter: "{{ datacenter.name }}"
         folder: "/Datacenter/vm/Romany"
-        vm_id: "Bootstrap-Romany"
+        vm_id: bootstrap_name
         vm_username: root
         vm_password: root
         vm_shell: "/usr/bin/coreos-installer"
-        vm_shell_args: "install /dev/sda --ignition-url http://192.168.1.122/bootstrap.ign --insecure-igntion true > /tmp/$$.txt 2>&1"
+        wait_for_process: true
+        vm_shell_args: "install /dev/sda --ignition-url http://192.168.1.122/bootstrap.ign --insecure-ignition true > /tmp/$$.txt 2>&1"
       delegate_to: localhost
       register: result
       until: result.changed == true  # or a specific condition that indicates success
-      retries: 20  # number of retries
-      delay: 50  # time in seconds (4 minutes) to wait before retrying
+      retries: 10  # number of retries
+      delay: 30  # time in seconds (4 minutes) to wait before retrying
       ignore_errors: yes  # to prevent failure if the condition isn't met after all retries
+
+   - name: Set the state of a Bootstrap to reboot
+     community.vmware.vmware_guest_powerstate:
+       hostname: "{{ vcenter.hostname }}"
+       username: "{{ vcenter.username }}"
+       password: "{{ vcenter.password }}"
+       validate_certs: "{{ validate_certs }}"
+       datacenter: "{{ datacenter.name }}"
+       name: bootstrap_name
+       state: reboot-host
   
 
