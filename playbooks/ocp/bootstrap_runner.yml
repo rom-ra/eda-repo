@@ -3,8 +3,8 @@
   vars_files:
     - configs.yml
     - vcenter_vars.yml
- vars:
-   bootstrap_name: "{{ (vms_info | selectattr('hostname', 'match', 'bootstrap') | first).hw_name }}"
+  vars:
+    bootstrap_name: "{{ (vms_info | selectattr('hostname', 'match', 'bootstrap') | first).hw_name }}"
     
   tasks:
     - name: Set the state of a Bootstrap to powerOn
