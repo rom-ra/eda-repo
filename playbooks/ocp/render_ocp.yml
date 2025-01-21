@@ -1,0 +1,40 @@
+- name: Manage bootstrap configuration and monitor services
+  hosts: bootstrap
+  become: true
+  tasks:
+    - name: Disable SELinux temporarily
+      command: setenforce 0
+      register: selinux_status
+      ignore_errors: yes
+
+    - name: Ensure SELinux is disabled permanently
+      lineinfile:
+        path: /etc/selinux/config
+        regexp: '^SELINUX='
+        line: 'SELINUX=disabled'
+
+    - name: Stop and disable firewalld
+      systemd:
+        name: firewalld
+        state: stopped
+        enabled: no
+
+    - name: Check /etc/resolv.conf content
+      command: cat /etc/resolv.conf
+      register: resolv_conf_content
+
+    - name: Print /etc/resolv.conf content
+      debug:
+        msg: "{{ resolv_conf_content.stdout_lines }}"
+
+    - name: Monitor journalctl for release-image and bootkube services
+      command: journalctl -b -f -u release-image.service -u bootkube.service
+      register: journal_output
+      async: 3600
+      poll: 10
+      ignore_errors: yes
+
+    - name: Search for "API is up" in journalctl output
+      debug:
+        msg: "Found 'API is up' in journalctl output!"
+      when: '"API is up" in journal_output.stdout'
