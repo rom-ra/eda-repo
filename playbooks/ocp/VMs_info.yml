@@ -54,6 +54,7 @@
         name: dhcpd
         state: started
         enabled: yes
+      ignore_errors: true  
 
     - name: Restart DHCP service to apply configuration
       systemd:
