@@ -34,7 +34,7 @@
         folder: "/Datacenter/vm/Romany"
         vm_id: "Bootstrap-Romany"
         vm_username: core
-        vm_password: ""
+        vm_password: core
         vm_shell: "/bin/echo"
         vm_shell_args: "-e 'old_password\nnew_password\nnew_password' | passwd sample > /tmp/$$.txt 2>&1"
       delegate_to: localhost
