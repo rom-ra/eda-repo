@@ -3,7 +3,7 @@ vms_info:
   - hw_name: "Bootstrap-Romany"
     ip: "192.168.1.122"
     hostname: "bootstrap"
-  - hw_name: "Worker-Romany"
+  - hw_name: "Worker1"
     ip: "192.168.1.224"
     hostname: "worker1"
 
