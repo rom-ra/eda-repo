@@ -41,8 +41,7 @@
 
     - name: Debug VM instances
       debug:
-        msg: "{{ item.item.instance }}"
-      loop: "{{ vm.results }}"   
+        msg: "{{ vm }}"
     - name: Add Helper host to Inventory
       add_host:
         name: "helper"
