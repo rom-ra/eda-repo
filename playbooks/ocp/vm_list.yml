@@ -35,7 +35,30 @@ vm_details:
         # iso_path: "[datastore1 (1)] ISO/rhel9.iso"
         state: present
         type: iso
-  - name: "Worker1"
+        
+  - name: "Bootstrap-Romany"
+    folder: "Romany"
+    template: "coreos_template"
+    guest_id: "rhel9_64Guest"
+    memory_mb: 16096
+    num_cpus: 4
+    state: poweredoff
+    wait_for_ip_address: false
+    networks:
+      - name: "VM Network"
+        device_type: vmxnet3
+        type: dhcp
+    customization:
+      autologon: true
+      dns_servers:
+      - 192.168.1.20
+      - 8.8.8.8       
+    disk:
+      - size_gb: 80
+        type: thin
+        datastore: "datastore-14"   
+        
+  - name: "Worker1-Romany"
     folder: "Romany"
     template: "coreos_template"
     guest_id: "rhel9_64Guest"
@@ -57,25 +80,25 @@ vm_details:
         type: thin
         datastore: "datastore-14" 
 
-  # - name: "Master1"
-  #   folder: "Romany"
-  #   template: "coreos_template"
-  #   guest_id: "rhel9_64Guest"
-  #   memory_mb: 16096
-  #   num_cpus: 4
-  #   state: poweredoff
-  #   wait_for_ip_address: false
-  #   networks:
-  #     - name: "VM Network"
-  #       device_type: vmxnet3
-  #       ip: "192.168.1.124"
-  #       netmask: "255.255.255.0"
-  #       gateway: "192.168.1.1"
-  #       dns_servers:
-  #       - "192.168.1.20"
-  #       - "8.8.8.8"
-  #   disk:
-  #     - size_gb: 80
-  #       type: thin
-  #       datastore: "datastore-14"      
+  - name: "Master1-Romany"
+    folder: "Romany"
+    template: "coreos_template"
+    guest_id: "rhel9_64Guest"
+    memory_mb: 16096
+    num_cpus: 4
+    state: poweredoff
+    wait_for_ip_address: false
+    networks:
+      - name: "VM Network"
+        device_type: vmxnet3
+        type: dhcp
+    customization:
+      autologon: true
+      dns_servers:
+      - 192.168.1.20
+      - 8.8.8.8   
+    disk:
+      - size_gb: 80
+        type: thin
+        datastore: "datastore-14"      
 
