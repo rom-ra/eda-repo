@@ -26,9 +26,9 @@
 
     - name: Register with Red Hat Subscription Manager
       command: >
-        subscription-manager register
+        subscription-manager register --force
         --username="{{ rhsm_username }}"
-        --password="{{ rhsm_password }}"
+        --password="{{ rhsm_password }}" 
       register: subscription_register
 
     - name: Verify subscription registration
