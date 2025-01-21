@@ -25,9 +25,10 @@
         dhcp_hosts: >
           {{
             dhcp_hosts + [{
+              'name': vm.instance.hw_name if (vm.instance.hw_name is defined) else 'unknown_hostname',
               'hostname': (vm.instance.hw_name ~ '.' ~ ocp_fqdn) if (vm.instance.hw_name is defined) else 'unknown_hostname',
-              'mac_address': vm.instance.mac_address if (vm.instance.mac_address is defined) else 'unknown_mac',
-              'ipv4_address': vm.instance.ipv4_address if (vm.instance.ipv4_address is defined) else 'unknown_ip'
+              # 'mac_address': vm.instance.mac_address if (vm.instance.mac_address is defined) else 'unknown_mac',
+              # 'ipv4_address': vm.instance.ipv4_address if (vm.instance.ipv4_address is defined) else 'unknown_ip'
             }]
           }}
       
