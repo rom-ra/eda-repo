@@ -48,6 +48,7 @@ vm_details:
       - name: "VM Network"
         device_type: vmxnet3
         type: dhcp
+        start_connected: true
     customization:
       autologon: true
       dns_servers:
@@ -70,6 +71,7 @@ vm_details:
       - name: "VM Network"
         device_type: vmxnet3
         type: dhcp
+        start_connected: true
     customization:
       autologon: true
       dns_servers:
@@ -92,6 +94,7 @@ vm_details:
       - name: "VM Network"
         device_type: vmxnet3
         type: dhcp
+        start_connected: true
     customization:
       autologon: true
       dns_servers:
