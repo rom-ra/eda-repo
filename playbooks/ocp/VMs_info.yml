@@ -19,15 +19,14 @@
       vars:
         ocp_fqdn: "{{ OCP_CLUSTER_NAME }}.{{ OCP_BASE_DOMAIN }}"
       loop: "{{ vms.results }}"
-      loop_var: vm
       set_fact:
         dhcp_hosts: >
           {{
             dhcp_hosts + [{
-              'name': vm.instance.hw_name if (vm.instance.hw_name is defined) else 'unknown_hostname',
-              'hostname': (vm.instance.hw_name ~ '.' ~ ocp_fqdn) if (vm.instance.hw_name is defined) else 'unknown_hostname',
-              # 'mac_address': vm.instance.mac_address if (vm.instance.mac_address is defined) else 'unknown_mac',
-              # 'ipv4_address': vm.instance.ipv4_address if (vm.instance.ipv4_address is defined) else 'unknown_ip'
+              'name': item.instance.hw_name if (item.instance.hw_name is defined) else 'unknown_hostname',
+              'hostname': (item.instance.hw_name ~ '.' ~ ocp_fqdn) if (item.instance.hw_name is defined) else 'unknown_hostname',
+              # 'mac_address': item.instance.mac_address if (item.instance.mac_address is defined) else 'unknown_mac',
+              # 'ipv4_address': item.instance.ipv4_address if (item.instance.ipv4_address is defined) else 'unknown_ip'
             }]
           }}
       
