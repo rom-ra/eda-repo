@@ -1,9 +1,11 @@
 ---
 vms_info:
-  - hw_name: "bootstrap"
+  - hw_name: "Bootstrap-Romany"
     ipv4_address: "192.168.1.122"
-  - hw_name: "worker1"
+    hostname: "bootstrap"
+  - hw_name: "Worker-Romany"
     ipv4_address: "192.168.1.224"
+    hostname: "worker1"
 
 
 OCP_BASE_DOMAIN: example.com
