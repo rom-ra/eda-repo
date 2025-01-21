@@ -1,10 +1,10 @@
 ---
 vms_info:
   - hw_name: "Bootstrap-Romany"
-    ipv4_address: "192.168.1.122"
+    ip: "192.168.1.122"
     hostname: "bootstrap"
   - hw_name: "Worker-Romany"
-    ipv4_address: "192.168.1.224"
+    ip: "192.168.1.224"
     hostname: "worker1"
 
 
