@@ -49,13 +49,13 @@
       debug:
         msg: "{{ dhcp_config_content.stdout }}"    
         
-    # - name: Start and enable DHCP service
-    #   systemd:
-    #     name: dhcpd
-    #     state: started
-    #     enabled: yes
+    - name: Start and enable DHCP service
+      systemd:
+        name: dhcpd
+        state: started
+        enabled: yes
 
-    # - name: Restart DHCP service to apply configuration
-    #   systemd:
-    #     name: dhcpd
-    #     state: restarted    
+    - name: Restart DHCP service to apply configuration
+      systemd:
+        name: dhcpd
+        state: restarted    
