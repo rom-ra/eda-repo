@@ -38,6 +38,8 @@
       ansible.builtin.set_stats:
         data:
           vms: "{{ vm }}"   
-
+    - name: Add Helper host to Inventory
+      add_host:
+        ansible_host: "{{ 
     
 
