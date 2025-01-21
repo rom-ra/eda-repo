@@ -1,4 +1,11 @@
 ---
+vms_info:
+  - hw_name: "bootstrap"
+    ipv4_address: "192.168.1.122"
+  - hw_name: "worker1"
+    ipv4_address: "192.168.1.224"
+
+
 OCP_BASE_DOMAIN: example.com
 OCP_COMPUTE_REPLICAS: 3
 OCP_CONTROL_REPLICAS: 3
