@@ -5,55 +5,62 @@
   vars_files:
     - configs.yml
   tasks:
-    # Step 1: Create install-config.yml
-    - name: Create the install-config.yml file
-      copy:
-        dest: "{{ OCP_INSTALL_DIR }}/install-config.yaml"
-        content: |
-          apiVersion: v1
-          baseDomain: {{ OCP_BASE_DOMAIN }}
-          compute:
-          - hyperthreading: Enabled
-            name: worker
-            replicas: {{ OCP_COMPUTE_REPLICAS }}
-          controlPlane:
-            hyperthreading: Enabled
-            name: master
-            replicas: {{ OCP_CONTROL_REPLICAS }}
-          metadata:
-            name: {{ OCP_CLUSTER_NAME }}
-          platform:
-            none: {}
-          fips: false
-          pullSecret: '{{ OCP_PULL_SECRET }}'
-          sshKey: '{{ ssh_key }}'
-
-
-    # Step 2: Run the `openshift-install create manifests` command
-    - name: Run openshift-install to create manifests
-      command: >
-        openshift-install create manifests
-      args:
-        chdir: "{{ OCP_INSTALL_DIR }}"
-        
-    - name: Set mastersSchedulable to false in the scheduler config
-      lineinfile:
-        path: "{{ OCP_INSTALL_DIR }}/manifests/cluster-scheduler-02-config.yml"
-        regexp: "^\\s*mastersSchedulable:.*"
-        line: "  mastersSchedulable: false"
-        backrefs: yes
-    
-    - name: Display the mastersSchedulable configuration
-      command: >
-        grep mastersSchedulable "{{ OCP_INSTALL_DIR }}/manifests/cluster-scheduler-02-config.yml"
-      register: scheduler_config
-
-    - name: Print the content of the cluster-scheduler-02-config.yml file
+    - name: Read SSH public key using slurp
+      slurp:
+        src: "{{ ssh_key_path}}.pub"
+      register: ssh_public_key
+    - name: read ssh
       debug:
-        msg: "{{ scheduler_config.stdout }}"
-    # Step 4: Run the `openshift-install create ignition-configs` command
-    - name: Run openshift-install to create ignition-configs
-      command: >
-        openshift-install create ignition-configs
-      args:
-        chdir: "{{ OCP_INSTALL_DIR }}"
+        msg: "{{ ssh_public_key}}"
+    # Step 1: Create install-config.yml
+    # - name: Create the install-config.yml file
+    #   copy:
+    #     dest: "{{ OCP_INSTALL_DIR }}/install-config.yaml"
+    #     content: |
+    #       apiVersion: v1
+    #       baseDomain: {{ OCP_BASE_DOMAIN }}
+    #       compute:
+    #       - hyperthreading: Enabled
+    #         name: worker
+    #         replicas: {{ OCP_COMPUTE_REPLICAS }}
+    #       controlPlane:
+    #         hyperthreading: Enabled
+    #         name: master
+    #         replicas: {{ OCP_CONTROL_REPLICAS }}
+    #       metadata:
+    #         name: {{ OCP_CLUSTER_NAME }}
+    #       platform:
+    #         none: {}
+    #       fips: false
+    #       pullSecret: '{{ OCP_PULL_SECRET }}'
+    #       sshKey: '{{ ssh_key }}'
+
+
+    # # Step 2: Run the `openshift-install create manifests` command
+    # - name: Run openshift-install to create manifests
+    #   command: >
+    #     openshift-install create manifests
+    #   args:
+    #     chdir: "{{ OCP_INSTALL_DIR }}"
+        
+    # - name: Set mastersSchedulable to false in the scheduler config
+    #   lineinfile:
+    #     path: "{{ OCP_INSTALL_DIR }}/manifests/cluster-scheduler-02-config.yml"
+    #     regexp: "^\\s*mastersSchedulable:.*"
+    #     line: "  mastersSchedulable: false"
+    #     backrefs: yes
+    
+    # - name: Display the mastersSchedulable configuration
+    #   command: >
+    #     grep mastersSchedulable "{{ OCP_INSTALL_DIR }}/manifests/cluster-scheduler-02-config.yml"
+    #   register: scheduler_config
+
+    # - name: Print the content of the cluster-scheduler-02-config.yml file
+    #   debug:
+    #     msg: "{{ scheduler_config.stdout }}"
+    # # Step 4: Run the `openshift-install create ignition-configs` command
+    # - name: Run openshift-install to create ignition-configs
+    #   command: >
+    #     openshift-install create ignition-configs
+    #   args:
+    #     chdir: "{{ OCP_INSTALL_DIR }}"
