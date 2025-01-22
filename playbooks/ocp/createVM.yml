@@ -47,7 +47,7 @@
         state: powered-off
       loop: "{{ vm_details }}"
       loop_control:
-        label: "{{ item.name }}
+        label: "{{ item.name }}"
       when: "{{ vm.results.instance.ipv4 == null }}"  
 
     - name: Add Helper host to Inventory
