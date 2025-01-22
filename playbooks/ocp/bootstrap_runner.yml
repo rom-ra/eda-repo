@@ -10,10 +10,12 @@
   tasks:
     - name: add Network Adapter and conneted Bootstrap
       community.vmware.vmware_guest_network:
-        hostname: "{{ vcenter_hostname }}"
-        username: "{{ vcenter_username }}"
-        password: "{{ vcenter_password }}"
-        datacenter: "{{ datacenter_name }}"
+        hostname: "{{ vcenter.hostname }}"
+        username: "{{ vcenter.username }}"
+        password: "{{ vcenter.password }}"
+        validate_certs: "{{ validate_certs }}"
+        datacenter: "{{ datacenter.name }}"
+        folder: "{{ vm.instance.hw_folder }}"
         name: "{{bootstrap_name}}"
         state: present
         network_name: "VM Network"
