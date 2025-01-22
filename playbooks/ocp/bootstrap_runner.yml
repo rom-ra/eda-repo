@@ -8,6 +8,19 @@
     bootstrap_ip: "{{ (vms_info | selectattr('hostname', 'match', 'bootstrap') | first).ip }}"
     
   tasks:
+    - name: add multiple nics to vm01.domain.fake
+      community.vmware.vmware_guest_network:
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        datacenter: "{{ datacenter_name }}"
+        name: "{{bootstrap_name}}"
+        state: present
+        network_name: "VM Network"
+        device_type: "vmxnet3"
+        connected: true
+
+        
     - name: Set the state of a Bootstrap to powerOn
       community.vmware.vmware_guest_powerstate:
         hostname: "{{ vcenter.hostname }}"
