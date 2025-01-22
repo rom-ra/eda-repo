@@ -1,5 +1,5 @@
 - name: Configure remote host
-  hosts: all
+  hosts: helper
   become: true
   gather_facts: false
   vars_files:
