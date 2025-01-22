@@ -33,12 +33,8 @@
       loop_control:
         label: "{{ item.name }}"
       register: vm
-      
-    - name: set a var using set_stats
-      ansible.builtin.set_stats:
-        data:
-          vms: "{{ vm }}"   
-          
+
+
     - name: Add Helper host to Inventory
       add_host:
         name: "{{ host_name }}"
@@ -51,6 +47,15 @@
           ansible_ssh_pass: "root"
       vars:
         host_name: "helper"
+      regiter: helper  
+        
+    - name: set a var using set_stats
+      ansible.builtin.set_stats:
+        data:
+          vms: "{{ vm }}" 
+          helper: "helper"
+          
+
       
     # - name: Add Helper host to Inventory
     #   add_host:
