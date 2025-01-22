@@ -30,7 +30,7 @@
         password: "{{ vcenter.password }}"
         validate_certs: "{{ validate_certs }}"
         datacenter: "{{ datacenter.name }}"
-        folder: "{{ vm.instance.hw_folder }}"
+        folder: "Romany"
         name: "{{bootstrap_name}}"
         state: powered-on
       register: vm
