@@ -8,7 +8,7 @@
     bootstrap_ip: "{{ (vms_info | selectattr('hostname', 'match', 'bootstrap') | first).ip }}"
     
   tasks:
-    - name: add multiple nics to vm01.domain.fake
+    - name: add Network Adapter and conneted Bootstrap
       community.vmware.vmware_guest_network:
         hostname: "{{ vcenter_hostname }}"
         username: "{{ vcenter_username }}"
@@ -28,6 +28,7 @@
         password: "{{ vcenter.password }}"
         validate_certs: "{{ validate_certs }}"
         datacenter: "{{ datacenter.name }}"
+        folder: "{{ vm.instance.hw_folder }}"
         name: "{{bootstrap_name}}"
         state: powered-on
       register: vm
