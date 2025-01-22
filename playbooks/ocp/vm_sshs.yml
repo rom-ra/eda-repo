@@ -1,7 +1,8 @@
 - name: Configure remote host
-  hosts: all:helper
+  hosts: helper
   become: true
   gather_facts: false
+  connection: local
   vars_files:
     - configs.yml
   tasks:
