@@ -8,6 +8,19 @@
     bootstrap_ip: "{{ (vms_info | selectattr('hostname', 'match', 'bootstrap') | first).ip }}"
     
   tasks:
+  
+    - name: Set the state of a Bootstrap to powerOn
+      community.vmware.vmware_guest_powerstate:
+        hostname: "{{ vcenter.hostname }}"
+        username: "{{ vcenter.username }}"
+        password: "{{ vcenter.password }}"
+        validate_certs: "{{ validate_certs }}"
+        datacenter: "{{ datacenter.name }}"
+        folder: "Romany"
+        name: "{{bootstrap_name}}"
+        state: powered-on
+      register: vm
+
     - name: add Network Adapter and conneted Bootstrap
       community.vmware.vmware_guest_network:
         hostname: "{{ vcenter.hostname }}"
@@ -20,20 +33,7 @@
         state: present
         network_name: "VM Network"
         device_type: "vmxnet3"
-        connected: true
-
-        
-    - name: Set the state of a Bootstrap to powerOn
-      community.vmware.vmware_guest_powerstate:
-        hostname: "{{ vcenter.hostname }}"
-        username: "{{ vcenter.username }}"
-        password: "{{ vcenter.password }}"
-        validate_certs: "{{ validate_certs }}"
-        datacenter: "{{ datacenter.name }}"
-        folder: "Romany"
-        name: "{{bootstrap_name}}"
-        state: powered-on
-      register: vm
+        connected: true  
       
     - name: Wait for VMware tools to become available by name
       community.vmware.vmware_guest_tools_wait:
