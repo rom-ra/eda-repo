@@ -39,16 +39,27 @@
         data:
           vms: "{{ vm }}"   
           
-   
-      
     - name: Add Helper host to Inventory
       add_host:
-        name: "{{ (vm.results | selectattr('instance.hw_power_status', 'equalto', 'poweredOn') | selectattr('instance.ipv4', 'defined') | map(attribute='instance.ipv4') | first) }}"
-        groups: helper
-        ansible_host: "{{ (vm.results | selectattr('instance.hw_power_status', 'equalto', 'poweredOn') | selectattr('instance.ipv4', 'defined') | map(attribute='instance.ipv4') | first) }}"
-        ansible_user: root
-        ansible_password: root
-        ansible_ssh_pass: root
-      loop: "{{ vm.results | selectattr('instance', 'defined') }}"
-      ignore_errors: true
+        name: "{{ host_name }}"
+        groups:
+        - helper
+      host_vars:
+        ansible_host: "192.168.1.122"
+        ansible_user: "root"
+        ansible_password: "root"
+        ansible_ssh_pass: "root"
+      vars:
+        host_name: "helper"
+      
+    # - name: Add Helper host to Inventory
+    #   add_host:
+    #     name: "{{ (vm.results | selectattr('instance.hw_power_status', 'equalto', 'poweredOn') | selectattr('instance.ipv4', 'defined') | map(attribute='instance.ipv4') | first) }}"
+    #     groups: helper
+    #     ansible_host: "{{ (vm.results | selectattr('instance.hw_power_status', 'equalto', 'poweredOn') | selectattr('instance.ipv4', 'defined') | map(attribute='instance.ipv4') | first) }}"
+    #     ansible_user: root
+    #     ansible_password: root
+    #     ansible_ssh_pass: root
+    #   loop: "{{ vm.results | selectattr('instance', 'defined') }}"
+    #   ignore_errors: true
 
