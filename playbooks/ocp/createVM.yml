@@ -47,8 +47,7 @@
     - name: Add Helper host to Inventory
       add_host:
         name: "{{ (vm.results | selectattr('instance.hw_power_status', 'equalto', 'poweredOn') | selectattr('instance.ipv4', 'defined') | map(attribute='instance.ipv4') | first) }}"
-        groups:
-        - helper
+        groups: helper
         ansible_host: "{{ (vm.results | selectattr('instance.hw_power_status', 'equalto', 'poweredOn') | selectattr('instance.ipv4', 'defined') | map(attribute='instance.ipv4') | first) }}"
         ansible_user: root
         ansible_password: root
