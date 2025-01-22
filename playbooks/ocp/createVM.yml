@@ -44,11 +44,11 @@
         name: "{{ host_name }}"
         groups:
         - helper
-      host_vars:
-        ansible_host: "192.168.1.122"
-        ansible_user: "root"
-        ansible_password: "root"
-        ansible_ssh_pass: "root"
+        host_vars:
+          ansible_host: "192.168.1.122"
+          ansible_user: "root"
+          ansible_password: "root"
+          ansible_ssh_pass: "root"
       vars:
         host_name: "helper"
       
