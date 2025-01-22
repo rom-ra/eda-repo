@@ -47,7 +47,6 @@
           ansible_ssh_pass: "root"
       vars:
         host_name: "helper"
-      regiter: helper  
         
     - name: set a var using set_stats
       ansible.builtin.set_stats:
