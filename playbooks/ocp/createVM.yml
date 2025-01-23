@@ -32,23 +32,7 @@
       loop: "{{ vm_details }}"
       loop_control:
         label: "{{ item.name }}"
-      register: vm
-      
- 
-    - name: Set the state of a Bootstrap to powerOn
-      community.vmware.vmware_guest_powerstate:
-        hostname: "{{ vcenter.hostname }}"
-        username: "{{ vcenter.username }}"
-        password: "{{ vcenter.password }}"
-        validate_certs: "{{ validate_certs }}"
-        datacenter: "{{ datacenter.name }}"
-        folder: "{{ item.folder }}"
-        name: "{{ item.name }}"
-        state: powered-off
-      loop: "{{ vm_details }}"
-      loop_control:
-        label: "{{ item.name }}"
-      when: "{{ vm.results.instance.ipv4 == null }}"  
+      register: vm 
 
     - name: Add Helper host to Inventory
       add_host:
