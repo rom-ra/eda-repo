@@ -8,18 +8,27 @@
     bootstrap_ip: "{{ (vms_info | selectattr('hostname', 'match', 'bootstrap') | first).ip }}"
     
   tasks:
-  
-    - name: Set the state of a Bootstrap to powerOn
-      community.vmware.vmware_guest_powerstate:
+
+    - name: Turn the power of the VM on
+      vmware.vmware_rest.vcenter_vm_power:
+        state: start
         hostname: "{{ vcenter.hostname }}"
         username: "{{ vcenter.username }}"
         password: "{{ vcenter.password }}"
-        validate_certs: "{{ validate_certs }}"
-        datacenter: "{{ datacenter.name }}"
-        folder: "Romany"
-        name: "{{bootstrap_name}}"
-        state: powered-on
-      register: vm
+        vcenter_validate_certs: "{{ validate_certs }}"
+        vm: vm-49428
+  
+    # - name: Set the state of a Bootstrap to powerOn
+    #   community.vmware.vmware_guest_powerstate:
+    #     hostname: "{{ vcenter.hostname }}"
+    #     username: "{{ vcenter.username }}"
+    #     password: "{{ vcenter.password }}"
+    #     validate_certs: "{{ validate_certs }}"
+    #     datacenter: "{{ datacenter.name }}"
+    #     folder: "Romany"
+    #     name: "{{bootstrap_name}}"
+    #     state: powered-on
+    #   register: vm
 
     - name: add Network Adapter and conneted Bootstrap
       community.vmware.vmware_guest_network:
@@ -35,50 +44,60 @@
         device_type: "vmxnet3"
         connected: true  
         force: true
+        
+    - name: Get guest networking information
+      vmware.vmware_rest.vcenter_vm_guest_networking_info:
+        hostname: "{{ vcenter.hostname }}"
+        username: "{{ vcenter.username }}"
+        password: "{{ vcenter.password }}"
+        vcenter_validate_certs: "{{ validate_certs }}"
+        vm: vm-49428
       
-    - name: Wait for VMware tools to become available by name
-      community.vmware.vmware_guest_tools_wait:
-        hostname: "{{ vcenter.hostname }}"
-        username: "{{ vcenter.username }}"
-        password: "{{ vcenter.password }}"
-        validate_certs: "{{ validate_certs }}"
-        datacenter: "{{ datacenter.name }}"
-        folder: "{{ vm.instance.hw_folder }}"
-        name: "{{bootstrap_name}}"
-        
-    - name: Change user password in the guest machine
-      community.vmware.vmware_vm_shell:
-        hostname: "{{ vcenter.hostname }}"
-        username: "{{ vcenter.username }}"
-        password: "{{ vcenter.password }}"
-        validate_certs: "{{ validate_certs }}"
-        datacenter: "{{ datacenter.name }}"
-        folder: "{{ vm.instance.hw_folder }}"
-        vm_id: "{{bootstrap_name}}"
-        vm_username: root
-        vm_password: root
-        vm_shell: "/usr/bin/coreos-installer"
-        wait_for_process: true
-        vm_shell_args: "install /dev/sda --ignition-url=http://192.168.1.122/bootstrap.ign --insecure-ignition > /tmp/$$.txt 2>&1"
-      delegate_to: localhost
-      register: result
-      until: result.changed == true  # or a specific condition that indicates success
-      retries: 10  # number of retries
-      delay: 10  # time in seconds (4 minutes) to wait before retrying
-      ignore_errors: yes  # to prevent failure if the condition isn't met after all retries
+    # - name: Wait for VMware tools to become available by name
+    #   community.vmware.vmware_guest_tools_wait:
+    #     hostname: "{{ vcenter.hostname }}"
+    #     username: "{{ vcenter.username }}"
+    #     password: "{{ vcenter.password }}"
+    #     validate_certs: "{{ validate_certs }}"
+    #     datacenter: "{{ datacenter.name }}"
+    #     folder: "{{ vm.instance.hw_folder }}"
+    #     name: "{{bootstrap_name}}"
 
-    - name: Set the state of a Bootstrap to reboot
-      community.vmware.vmware_guest_powerstate:
-        hostname: "{{ vcenter.hostname }}"
-        username: "{{ vcenter.username }}"
-        password: "{{ vcenter.password }}"
-        validate_certs: "{{ validate_certs }}"
-        datacenter: "{{ datacenter.name }}"
-        name: "{{bootstrap_name}}"
-        state: reboot-guest
+    
         
-    - name: Add bootstrap host to inventory
-      add_host:
-        name: bootstrap
-        ansible_host: "{{ bootstrap_ip }}"  
+    # - name: Change user password in the guest machine
+    #   community.vmware.vmware_vm_shell:
+    #     hostname: "{{ vcenter.hostname }}"
+    #     username: "{{ vcenter.username }}"
+    #     password: "{{ vcenter.password }}"
+    #     validate_certs: "{{ validate_certs }}"
+    #     datacenter: "{{ datacenter.name }}"
+    #     folder: "{{ vm.instance.hw_folder }}"
+    #     vm_id: "{{bootstrap_name}}"
+    #     vm_username: root
+    #     vm_password: root
+    #     vm_shell: "/usr/bin/coreos-installer"
+    #     wait_for_process: true
+    #     vm_shell_args: "install /dev/sda --ignition-url=http://192.168.1.122/bootstrap.ign --insecure-ignition > /tmp/$$.txt 2>&1"
+    #   delegate_to: localhost
+    #   register: result
+    #   until: result.changed == true  # or a specific condition that indicates success
+    #   retries: 10  # number of retries
+    #   delay: 10  # time in seconds (4 minutes) to wait before retrying
+    #   ignore_errors: yes  # to prevent failure if the condition isn't met after all retries
+
+    # - name: Set the state of a Bootstrap to reboot
+    #   community.vmware.vmware_guest_powerstate:
+    #     hostname: "{{ vcenter.hostname }}"
+    #     username: "{{ vcenter.username }}"
+    #     password: "{{ vcenter.password }}"
+    #     validate_certs: "{{ validate_certs }}"
+    #     datacenter: "{{ datacenter.name }}"
+    #     name: "{{bootstrap_name}}"
+    #     state: reboot-guest
+        
+    # - name: Add bootstrap host to inventory
+    #   add_host:
+    #     name: bootstrap
+    #     ansible_host: "{{ bootstrap_ip }}"  
 
