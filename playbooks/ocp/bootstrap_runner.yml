@@ -16,7 +16,7 @@
         vcenter_username: "{{ vcenter.username }}"
         vcenter_password: "{{ vcenter.password }}"
         vcenter_validate_certs: "{{ validate_certs }}"
-        vm: vm-49431
+        vm: vm-49439
   
     # - name: Set the state of a Bootstrap to powerOn
     #   community.vmware.vmware_guest_powerstate:
@@ -51,7 +51,7 @@
         vcenter_username: "{{ vcenter.username }}"
         vcenter_password: "{{ vcenter.password }}"
         vcenter_validate_certs: "{{ validate_certs }}"
-        vm: vm-49431
+        vm: vm-49439
       
     # - name: Wait for VMware tools to become available by name
     #   community.vmware.vmware_guest_tools_wait:
