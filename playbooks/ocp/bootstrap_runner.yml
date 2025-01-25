@@ -53,15 +53,15 @@
         vcenter_validate_certs: "{{ validate_certs }}"
         vm: vm-49428
       
-    # - name: Wait for VMware tools to become available by name
-    #   community.vmware.vmware_guest_tools_wait:
-    #     hostname: "{{ vcenter.hostname }}"
-    #     username: "{{ vcenter.username }}"
-    #     password: "{{ vcenter.password }}"
-    #     validate_certs: "{{ validate_certs }}"
-    #     datacenter: "{{ datacenter.name }}"
-    #     folder: "{{ vm.instance.hw_folder }}"
-    #     name: "{{bootstrap_name}}"
+    - name: Wait for VMware tools to become available by name
+      community.vmware.vmware_guest_tools_wait:
+        hostname: "{{ vcenter.hostname }}"
+        username: "{{ vcenter.username }}"
+        password: "{{ vcenter.password }}"
+        validate_certs: "{{ validate_certs }}"
+        datacenter: "{{ datacenter.name }}"
+        folder: "{{ vm.instance.hw_folder }}"
+        name: "{{bootstrap_name}}"
 
     
         
@@ -86,15 +86,15 @@
     #   delay: 10  # time in seconds (4 minutes) to wait before retrying
     #   ignore_errors: yes  # to prevent failure if the condition isn't met after all retries
 
-    # - name: Set the state of a Bootstrap to reboot
-    #   community.vmware.vmware_guest_powerstate:
-    #     hostname: "{{ vcenter.hostname }}"
-    #     username: "{{ vcenter.username }}"
-    #     password: "{{ vcenter.password }}"
-    #     validate_certs: "{{ validate_certs }}"
-    #     datacenter: "{{ datacenter.name }}"
-    #     name: "{{bootstrap_name}}"
-    #     state: reboot-guest
+    - name: Set the state of a Bootstrap to reboot
+      community.vmware.vmware_guest_powerstate:
+        hostname: "{{ vcenter.hostname }}"
+        username: "{{ vcenter.username }}"
+        password: "{{ vcenter.password }}"
+        validate_certs: "{{ validate_certs }}"
+        datacenter: "{{ datacenter.name }}"
+        name: "{{bootstrap_name}}"
+        state: shutdown-guest
         
     # - name: Add bootstrap host to inventory
     #   add_host:
