@@ -42,8 +42,8 @@ vm_details:
     guest_id: "rhel9_64Guest"
     memory_mb: 16096
     num_cpus: 4
-    state: poweredon
-    wait_for_ip_address: true
+    state: poweredoff
+    wait_for_ip_address: false
     networks:
       - name: "VM Network"
         device_type: vmxnet3
