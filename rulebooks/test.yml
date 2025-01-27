@@ -1,1 +1,21 @@
-fdsafds
+- name: Trigger Workflow on GitHub Commit
+  hosts: localhost
+  sources:
+    - ansible.eda.webhook:
+        url: /trigger
+        port: 8080
+  rules:
+    - name: Trigger build and deploy on GitHub commit
+      condition: >
+         "push" in  event.payload.event.events
+      actions:
+        - debug:
+            msg: Event Trigger with a action
+            
+        - run_job_template:
+            name: "Build and Push Docker Image"
+            organization: Default
+            job_args:
+              extra_vars:
+                repo_url: "{{ event.payload.event.repository.clone_url }}"
+               
