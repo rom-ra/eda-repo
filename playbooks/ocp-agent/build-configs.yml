@@ -5,6 +5,11 @@
   vars_files:
     - configs.yml
   tasks:
+    - name: Read SSH public key using slurp
+      slurp:
+        src: "{{ ssh_key_path}}.pub"
+      register: ssh_public_key
+      
     - name: Install dependencies
       dnf:
         name:
@@ -17,11 +22,17 @@
       template:
         src: install-config.j2
         dest: "{{ OCP_DIR }}/install-config.yaml"
+        owner: root
+        group: root
+        mode: "0644"
 
     - name: Create agent-config
       template:
         src: agent-config.j2
         dest: "{{ OCP_DIR }}/agent-config.yaml"
+        owner: root
+        group: root
+        mode: "0644"
 
     - name: Generate ISO
       command: 
