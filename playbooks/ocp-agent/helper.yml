@@ -3,14 +3,28 @@ helper:
   template: "rhel9_templete"
   name: "OCP-Helper"
   guest_id: "{{ helper.guest_id }}"
+  customization:
+    autologon: true
+    dns_servers:
+      - 192.168.1.20
+      - 8.8.8.8   
+  memory_mb: 16096
+  num_cpus: 4
   state: poweredon
   wait_for_ip_address: true
-  customization: "{{ helper.customization}}"
-  hardware:
-    num_cpus: "{{ helper.num_cpus }}"
-    memory_mb: "{{ helper.memory_mb }}"
-  networks: "{{ helper.networks }}"
-  disk: "{{ helper.disk}}"
+  networks: 
+    - name: "VM Network"
+      device_type: vmxnet3
+      ip: "192.168.1.122"
+      netmask: "255.255.255.0"
+      gateway: "192.168.1.1"
+      dns_servers:
+        - 192.168.1.20
+        - 8.8.8.8
+  disk: 
+    - size_gb: 80
+      type: thin
+      datastore: "datastore-14"
 
 
 
