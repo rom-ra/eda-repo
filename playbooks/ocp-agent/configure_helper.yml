@@ -127,6 +127,13 @@
         owner: root
         group: root
         mode: "0644"
+        
+    - name: Start and enable haproxy
+      systemd:
+        name: haproxy
+        state: started
+        enabled: yes
+      ignore_errors: yes    
       
     # Step 7: Create OCP install directory
     - name: Create OCP install directory
