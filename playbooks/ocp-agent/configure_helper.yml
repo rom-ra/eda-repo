@@ -1,0 +1,110 @@
+- name: Configure remote host
+  hosts: ocp_helpers
+  become: true
+  gather_facts: false
+  vars_files:
+    - configs.yml
+  tasks:
+    # Step 1: Disable SELinux
+    - name: Disable SELinux in configuration file
+      lineinfile:
+        path: /etc/selinux/config
+        regexp: '^SELINUX='
+        line: 'SELINUX=disabled'
+        state: present
+        backrefs: yes
+
+    - name: Stop and disable SELinux immediately (runtime)
+      command: setenforce 0
+      ignore_errors: true
+
+    - name: Stop and disable firewalld service
+      systemd:
+        name: firewalld
+        state: stopped
+        enabled: no
+
+    - name: Register with Red Hat Subscription Manager
+      command: >
+        subscription-manager register --force
+        --username="{{ rhsm_username }}"
+        --password="{{ rhsm_password }}" 
+      register: subscription_register
+
+    - name: Verify subscription registration
+      debug:
+        msg: "Subscription registration result: {{ subscription_register.stdout }}"
+
+    - name: Attach subscription if registration succeeded
+      command: subscription-manager attach --auto
+      when: subscription_register.rc == 0    
+
+    # Step 3: Generate SSH key
+    - name: Check if SSH key exists
+      stat:
+        path: "{{ ssh_key_path }}"
+      register: ssh_key_status
+
+    - name: Generate SSH key if it does not exist
+      command: ssh-keygen -f "{{ ssh_key_path }}" -N ""
+      when: not ssh_key_status.stat.exists
+    # Step 4: Install HAProxy
+    - name: Install HAProxy
+      package:
+        name: haproxy
+        state: present
+
+    - name: Install WebServer
+      package:
+        name: httpd
+        state: present
+
+    # Step 5: Download and install OpenShift Installer
+    - name: Download OpenShift Installer
+      get_url:
+        url: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-install-linux.tar.gz
+        dest: /tmp/openshift-install-linux.tar.gz
+
+    - name: Extract OpenShift Installer
+      command: tar -xvf /tmp/openshift-install-linux.tar.gz -C /usr/local/bin/
+      args:
+        creates: /usr/local/bin/openshift-install
+
+    - name: Verify OpenShift Installer installation
+      command: openshift-install version
+      register: openshift_installer_version
+      ignore_errors: yes
+
+    - name: Show OpenShift Installer version
+      debug:
+        msg: "OpenShift Installer version: {{ openshift_installer_version.stdout }}"
+
+    # Step 6: Download and install OpenShift Client (oc and kubectl)
+    - name: Download OpenShift Client
+      get_url:
+        url: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz
+        dest: /root/openshift-client-linux.tar.gz
+
+    - name: Extract OpenShift Client binaries
+      command: tar -xvf /root/openshift-client-linux.tar.gz
+     
+
+    - name: Move oc and kubectl to /usr/local/bin
+      command: mv oc kubectl /usr/local/bin/
+     
+
+    - name: Verify OpenShift Client installation
+      command: oc version
+      register: openshift_client_version
+      ignore_errors: yes
+
+    - name: Show OpenShift Client version
+      debug:
+        msg: "OpenShift Client version: {{ openshift_client_version.stdout }}"
+
+    # Step 7: Create OCP install directory
+    - name: Create OCP install directory
+      file:
+        path: "/root/ocp-agent"
+        state: directory
+        mode: '0755'
