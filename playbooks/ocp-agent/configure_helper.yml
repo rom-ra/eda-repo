@@ -101,7 +101,33 @@
     - name: Show OpenShift Client version
       debug:
         msg: "OpenShift Client version: {{ openshift_client_version.stdout }}"
+        
+    - name: Check if nameserver is present in resolv.conf
+      shell: grep -q "{{ nameserver }}" /etc/resolv.conf
+      register: resolv_conf_check
+      failed_when: resolv_conf_check.rc not in [0, 1]
+      changed_when: resolv_conf_check.rc == 1
 
+    - name: Add nameserver to resolv.conf if not present
+      lineinfile:
+        path: /etc/resolv.conf
+        line: "nameserver {{ nameserver }}"
+        state: present
+      when: resolv_conf_check.rc == 1
+
+    - name: Ensure haproxy is installed
+      yum:
+        name: haproxy
+        state: latest
+
+    - name: Create HAProxy configuration
+      template:
+        src: haproxy.cfg.j2
+        dest: "{{ haproxy_config }}"
+        owner: root
+        group: root
+        mode: "0644"
+      
     # Step 7: Create OCP install directory
     - name: Create OCP install directory
       file:
