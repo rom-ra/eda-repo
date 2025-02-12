@@ -1,0 +1,12 @@
+# vars.yml
+vcenter:
+  hostname: "10.1.0.5"
+  username: "r.raafat@vsphere.local"
+  password: "P@ssw0rdroom"
+  
+validate_certs: false  
+
+
+datacenter:
+  name: "Datacenter"
+  cluster: "Non-Prod"
