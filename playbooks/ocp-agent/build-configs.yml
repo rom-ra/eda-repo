@@ -4,6 +4,10 @@
   become: yes
   vars_files:
     - configs.yml
+  vars_prompt:
+    - name: Value
+      prompt: Enter HOST:
+      private: false
   tasks:
     - name: Read SSH public key using slurp
       slurp:
