@@ -1,0 +1,16 @@
+helper:
+  folder: "Romany"
+  template: "rhel9_templete"
+  name: "OCP-Helper"
+  guest_id: "{{ helper.guest_id }}"
+  state: poweredon
+  wait_for_ip_address: true
+  customization: "{{ helper.customization}}"
+  hardware:
+    num_cpus: "{{ helper.num_cpus }}"
+    memory_mb: "{{ helper.memory_mb }}"
+  networks: "{{ helper.networks }}"
+  disk: "{{ helper.disk}}"
+
+
+
