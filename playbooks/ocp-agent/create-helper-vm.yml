@@ -37,7 +37,7 @@
         vm_id: "{{ vm.instance.hw_product_id }}"
       register: vm_info
       until: vm_info.instance.guest.ip_address is defined
-      retries: 10
+      retries: 5
       delay: 30
 
     - name: Add helper to inventory
