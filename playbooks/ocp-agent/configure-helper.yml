@@ -2,6 +2,8 @@
 - name: Configure OCP agent installer
   hosts: ocp_helpers
   become: yes
+  vars_files:
+    - configs.yml
   vars:
     ocp_config:
       cluster_name: "agent"
@@ -25,53 +27,11 @@
           - git
           - jq
         state: present
-
-    - name: Download OpenShift tools
-      block:
-        - name: Get latest stable version
-          uri:
-            url: "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/release.txt"
-          register: ocp_release
-
-        - name: Set version fact
-          set_fact:
-            ocp_version: "{{ (ocp_release.content | b64decode).split('\n') | select('match','^Version:') | first | regex_replace('^Version:\\s+(.*)$','\\1') }}"
-
-        - name: Download installer
-          get_url:
-            url: "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ ocp_version }}/openshift-install-linux.tar.gz"
-            dest: "/tmp/openshift-install.tar.gz"
-
-        - name: Download oc client
-          get_url:
-            url: "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ ocp_version }}/openshift-client-linux.tar.gz"
-            dest: "/tmp/oc-client.tar.gz"
-
-    - name: Install binaries
-      block:
-        - name: Extract openshift-install
-          unarchive:
-            src: /tmp/openshift-install.tar.gz
-            dest: /usr/local/bin
-            remote_src: yes
-            mode: 0755
-
-        - name: Extract oc
-          unarchive:
-            src: /tmp/oc-client.tar.gz
-            dest: /usr/local/bin
-            remote_src: yes
-            mode: 0755
-
-    - name: Create working directory
-      file:
-        path: "~/ocp-agent"
-        state: directory
-
+        
     - name: Create install-config
       template:
         src: install-config.j2
-        dest: "~/ocp-agent/install-config.yaml"
+        dest: "/root/ocp-agent/install-config.yaml"
 
     - name: Create agent-config
       template:
