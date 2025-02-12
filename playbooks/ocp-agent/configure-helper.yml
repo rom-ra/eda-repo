@@ -4,21 +4,6 @@
   become: yes
   vars_files:
     - configs.yml
-  vars:
-    ocp_config:
-      cluster_name: "agent"
-      base_domain: "room.com"
-      pull_secret: "{{ vault_pull_secret }}"
-      ssh_key: "{{ vault_ssh_pubkey }}"
-      rendezvous_ip: "192.168.1.100"
-      masters:
-        - { mac: "00:11:22:33:44:55", ip: "192.168.1.101" }
-        - { mac: "AA:BB:CC:DD:EE:FF", ip: "192.168.1.102" }
-        - { mac: "66:77:88:99:00:11", ip: "192.168.1.103" }
-      workers:
-        - { mac: "22:33:44:55:66:77", ip: "192.168.1.201" }
-        - { mac: "88:99:00:11:22:33", ip: "192.168.1.202" }
-
   tasks:
     - name: Install dependencies
       dnf:
@@ -31,14 +16,14 @@
     - name: Create install-config
       template:
         src: install-config.j2
-        dest: "/root/ocp-agent/install-config.yaml"
+        dest: "{{ OCP_DIR }}/install-config.yaml"
 
     - name: Create agent-config
       template:
         src: agent-config.j2
-        dest: "~/ocp-agent/agent-config.yaml"
+        dest: "{{ OCP_DIR }}/agent-config.yaml"
 
     - name: Generate ISO
       command: 
-        cmd: openshift-install agent create image --dir ~/ocp-agent --log-level=debug
-        chdir: ~/ocp-agent
+        cmd: openshift-install agent create image --dir "{{ OCP_DIR }}" --log-level=debug
+        chdir: "{{ OCP_DIR }}"
