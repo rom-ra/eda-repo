@@ -4,48 +4,37 @@
   gather_facts: false
   var_files: 
     - vcenter_vars.yml
-  vars:
-    vmware:
-      hostname: "{{
-      username: {{
-      password: "{{ vault_vmware_password }}"
-      datacenter: DC1
-      cluster: Cluster1
-      folder: "/DC1/vm/OCP"
-      template: "rhel9-template"
-      vm_name: "ocp-helper"
-      datastore: vsanDatastore
-      networks:
-        - name: VM Network
-      customization:
-        hostname: "ocp-helper"
-        domain: "room.com"
-        dns_servers: ["192.168.1.180"]
+    - helper.yml
   tasks:
     - name: Create helper VM
       community.vmware.vmware_guest:
-        validate_certs: no
-        hostname: "{{ vmware.hostname }}"
-        username: "{{ vmware.username }}"
-        password: "{{ vmware.password }}"
-        datacenter: "{{ vmware.datacenter }}"
-        cluster: "{{ vmware.cluster }}"
-        folder: "{{ vmware.folder }}"
-        name: "{{ vmware.vm_name }}"
-        template: "{{ vmware.template }}"
-        datastore: "{{ vmware.datastore }}"
-        networks: "{{ vmware.networks }}"
-        customization: "{{ vmware.customization }}"
-        state: poweredon
-      register: vm_result
+        hostname: "{{ vcenter.hostname }}"
+        username: "{{ vcenter.username }}"
+        password: "{{ vcenter.password }}"
+        validate_certs: "{{ validate_certs }}"
+        datacenter: "{{ datacenter.name }}"
+        cluster: "{{ datacenter.cluster }}"
+        folder: "{{ helper.folder }}"
+        template: "{{ helper.template }}"
+        name: "{{ helper.name }}"
+        guest_id: "{{ helper.guest_id }}"
+        state: "{{ helper.state}}"
+        wait_for_ip_address: "{{ helper.wait_for_ip_address }}"
+        customization: "{{ helper.customization}}"
+        hardware:
+          num_cpus: "{{ helper.num_cpus }}"
+          memory_mb: "{{ helper.memory_mb }}"
+        networks: "{{ helper.networks }}"
+        disk: "{{ helper.disk}}"
+      register: vm 
 
     - name: Wait for VM IP
       community.vmware.vmware_guest_info:
         validate_certs: no
-        hostname: "{{ vmware.hostname }}"
-        username: "{{ vmware.username }}"
-        password: "{{ vmware.password }}"
-        vm_id: "{{ vm_result.instance.hw_product_id }}"
+        hostname: "{{ vcenter.hostname }}"
+        username: "{{ vcenter.username }}"
+        password: "{{ vcenter.password }}"
+        vm_id: "{{ vm.instance.hw_product_id }}"
       register: vm_info
       until: vm_info.instance.guest.ip_address is defined
       retries: 10
