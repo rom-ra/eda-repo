@@ -105,6 +105,6 @@
     # Step 7: Create OCP install directory
     - name: Create OCP install directory
       file:
-        path: "/root/ocp-agent"
+        path: "{{ OCP_DIR }}"
         state: directory
         mode: '0755'
