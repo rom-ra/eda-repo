@@ -1,0 +1,59 @@
+global
+  log         127.0.0.1 local2
+  pidfile     /var/run/haproxy.pid
+  maxconn     4000
+  daemon
+
+defaults
+  mode                    http
+  log                     global
+  option                  dontlognull
+  option http-server-close
+  option                  redispatch
+  retries                 3
+  timeout http-request    10s
+  timeout queue           1m
+  timeout connect         10s
+  timeout client          1m
+  timeout server          1m
+  timeout http-keep-alive 10s
+  timeout check           10s
+  maxconn                 3000
+
+frontend stats
+  bind *:1936
+  mode            http
+  log             global
+  maxconn 10
+  stats enable
+  stats hide-version
+  stats refresh 30s
+  stats show-node
+  stats show-desc {{ stats_desc }}
+  stats auth {{ haproxy_stats_user }}:{{ haproxy_stats_pass }}
+  stats uri /stats
+
+listen api-server-6443
+  bind *:6443
+  mode tcp
+  {% for vm in vms_info if vm.role in ['bootstrap', 'master'] %}
+  server {{ vm.hostname }} {{ vm.hostname }}.{{ OCP_CLUSTER_NAME }}.{{ OCP_BASE_DOMAIN }}:6443 check inter 1s{% if vm.role == 'bootstrap' %} backup{% endif %}
+
+  {% endfor %}
+
+listen machine-config-server-22623
+  bind *:22623
+  mode tcp
+  {% for vm in vms_info if vm.role in ['bootstrap', 'master'] %}
+  server {{ vm.hostname }} {{ vm.hostname }}.{{ OCP_CLUSTER_NAME }}.{{ OCP_BASE_DOMAIN }}:22623 check inter 1s{% if vm.role == 'bootstrap' %} backup{% endif %}
+
+  {% endfor %}
+
+listen ingress-router-443
+  bind *:443
+  mode tcp
+  balance source
+  {% for vm in vms_info if vm.role == 'worker' %}
+  server {{ vm.hostname }} {{ vm.hostname }}.{{ OCP_CLUSTER_NAME }}.{{ OCP_BASE_DOMAIN }}:443 check inter 1s
+
+  {% endfor %}
