@@ -1,0 +1,45 @@
+apiVersion: v1alpha1
+kind: AgentConfig
+metadata:
+  name: {{ OCP_CLUSTER_NAME }}
+rendezvousIP: {{ rendezvous_ip }}
+hosts:
+  {% for master in masters %}
+  - hostname: master-{{ loop.index }}
+    role: master
+    interfaces:
+      - name: eth0
+        macAddress: "{{ master.mac }}"
+    networkConfig:
+      interfaces:
+        - name: eth0
+          type: ethernet
+          state: up
+          mac-address: "{{ master.mac }}"
+          ipv4:
+            enabled: true
+            address:
+              - ip: {{ master.ip }}
+                prefix-length: 24
+            dhcp: false
+  {% endfor %}
+
+  {% for worker in workers %}
+  - hostname: worker-{{ loop.index }}
+    role: worker
+    interfaces:
+      - name: eth0
+        macAddress: "{{ worker.mac }}"
+    networkConfig:
+      interfaces:
+        - name: eth0
+          type: ethernet
+          state: up
+          mac-address: "{{ worker.mac }}"
+          ipv4:
+            enabled: true
+            address:
+              - ip: {{ worker.ip }}
+                prefix-length: 24
+            dhcp: false
+  {% endfor %}
